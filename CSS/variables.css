@@ -1,0 +1,35 @@
+/* Css variables*/
+:root{
+    
+    --primary-color: #b8d45b;
+    --primary-dark: #8ea83d;
+
+    --dark-color: #17211b;
+    --dark-soft: #263229;
+
+    --text-color: #17211b;
+    --text-muted: #6b746d;
+
+    --background-color: #ffffff;
+    --light-background: #f5f7f2;
+
+    --border-color: #dfe5dc;
+
+    --white: #ffffff;
+
+    --shadow:0 20px 60px rgba(23, 33, 27, 0.09);
+
+    --transition: all 0.3s ease;
+
+    --radius-small: 12px;
+    --radius-medium: 20px;
+    --radius-large: 30px;
+
+
+    --shadow-sm: 0 1px 3px rgba(37,99,241,.08),0 1px 2px rgba(52, 57, 69, 0.05);
+    --shadow-md: 0 4px 16px rgba(37,99,241,.12),0 2px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 40px rgba(37,99,241,.16),0 1px 2px rgba(0, 0, 6, 0.09);
+    --radius:   15px;
+   
+    
+}

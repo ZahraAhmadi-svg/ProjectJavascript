@@ -438,7 +438,6 @@ window.addEventListener(
             return;
         }
 
-
         if (window.innerWidth < 992) {
 
             heroCard.style.transform =

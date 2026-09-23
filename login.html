@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Respair Dawn - Stories, Research, Skills and Growth">
+
+    <title>Login page</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+    <!--Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/variables.css">
+    <link rel="stylesheet" href="CSS/login.css">
+
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <div class="login-card">
+
+            <!-- تصویر -->
+            <div class="login-img">
+                <img src="images/business.jpeg" alt="Login">
+            </div>
+
+
+            <!-- محتوای Login -->
+            <div class="login-content">
+
+                <div class="register-link">
+                    <span>Not a member?</span>
+                    <a href="signup.html">Register now</a>
+                </div>
+
+
+                <h1>Hello Again!</h1>
+
+                <p class="subtitle">
+                    Welcome back, you've been missed!
+                </p>
+
+
+                <form id="loginform">
+
+                    <!-- Username -->
+                    <div class="input-box">
+
+                        <i class="bi bi-person-fill"></i>
+
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="Enter username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="input-box">
+
+                        <i class="bi bi-lock-fill"></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Password"
+                            required
+                        >
+
+                        <i class="bi bi-eye-slash password-icon"></i>
+
+                    </div>
+
+
+                    <!-- Recovery password -->
+                    <div class="forgot-password">
+
+                        <a href="#">
+                            Recovery Password
+                        </a>
+
+                    </div>
+
+
+                    <!-- Login button -->
+                    <button
+                        type="submit"
+                        class="login-btn">
+                        Sign In
+                    </button>
+
+                </form>
+
+
+                <!-- خط -->
+                <div class="or-divider">
+                    <span>Or continue with</span>
+                </div>
+
+
+                <!-- Social Login -->
+                <div class="social-login">
+
+                    <button type="button">
+                        <i class="bi bi-google"></i>
+                    </button>
+
+                    <button type="button">
+                        <i class="bi bi-apple"></i>
+                    </button>
+
+                    <button type="button">
+                        <i class="bi bi-facebook"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+<script src="JS/users.js"></script>
+<script src="JS/login.js"></script>
+
+</html>

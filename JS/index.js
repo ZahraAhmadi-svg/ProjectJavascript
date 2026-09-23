@@ -96,8 +96,7 @@ window.addEventListener(
    Close menu after clicking a link
    ========================================================= */
 
-const navbarCollapse =
-    document.querySelector(".navbar-collapse");
+const navbarCollapse = document.querySelector(".navbar-collapse");
 
 
 navLinks.forEach(function (link) {

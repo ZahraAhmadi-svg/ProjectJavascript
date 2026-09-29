@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Respair Dawn - Inspiring Stories of courage, creativity, persistence and growth.">
+
+    <title>Inspiring Stories | Respair Dawn</title>
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+         ===================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+    <!-- =====================================================
+         PROJECT CSS
+         ===================================================== -->
+
+    <link rel="stylesheet" href="CSS/variables.css">
+
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <link rel="stylesheet" href="CSS/stories.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+
+        <div class="container">
+
+
+            <!-- Logo -->
+
+            <a class="navbar-brand" href="index.html">
+
+                <span class="logo-mark">
+                    R
+                </span>
+
+                <span>
+                    Respair <strong>Dawn</strong>
+                </span>
+
+            </a>
+
+
+            <!-- Mobile Toggle -->
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <!-- Navigation -->
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="index.html">
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="index.html#about">
+                            About
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="index.html#programs">
+                            Programs
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link active" href="stories.html">
+                            Stories
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="research.html">
+                            Research
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="trainings.html">
+                            Trainings
+                        </a>
+
+                    </li>
+
+
+                    <!-- Start Journey -->
+
+                    <li class="nav-item ms-lg-3" id="startJourneyItem">
+
+                        <a href="login.html" class="btn btn-primary">
+                            Start Your Journey
+                        </a>
+
+                    </li>
+
+
+                    <!-- User Menu -->
+
+                    <li class="nav-item user-menu-item" id="userMenuItem" style="display: none;">
+
+                        <button type="button" class="user-menu-button" id="userMenuButton" aria-label="Open user menu">
+
+                            <i class="bi bi-list"></i>
+
+                        </button>
+
+
+                        <div class="user-menu" id="userMenu">
+
+                            <div class="user-menu-header">
+
+                                <div class="user-avatar" id="userAvatar">
+
+                                    <i class="bi bi-person"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong id="menuUserName">
+                                        User
+                                    </strong>
+
+                                    <small id="menuUserStatus">
+                                        Welcome to Respair Dawn
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="user-menu-divider"></div>
+
+
+                            <a href="profile.html" class="user-menu-link">
+
+                                <i class="bi bi-person"></i>
+
+                                <span>
+                                    Profile
+                                </span>
+
+                            </a>
+
+
+                            <a href="my-classes.html" class="user-menu-link">
+
+                                <i class="bi bi-mortarboard"></i>
+
+                                <span>
+                                    My Classes
+                                </span>
+
+                            </a>
+
+
+                            <a href="favorites.html" class="user-menu-link">
+
+                                <i class="bi bi-heart"></i>
+
+                                <span>
+                                    Favorite Stories
+                                </span>
+
+                            </a>
+
+
+                            <a href="saved.html" class="user-menu-link">
+
+                                <i class="bi bi-bookmark"></i>
+
+                                <span>
+                                    Saved Stories
+                                </span>
+
+                            </a>
+
+
+                            <a href="orivan-talks.html" class="user-menu-link">
+
+                                <i class="bi bi-mic"></i>
+
+                                <span>
+                                    Inspiring Talks
+                                </span>
+
+                            </a>
+
+
+                            <a href="settings.html" class="user-menu-link">
+
+                                <i class="bi bi-gear"></i>
+
+                                <span>
+                                    Settings
+                                </span>
+
+                            </a>
+
+
+                            <a href="admin.html" class="user-menu-link" id="managementMenuItem" style="display: none;">
+
+                                <i class="bi bi-speedometer2"></i>
+
+                                <span>
+                                    Management Panel
+                                </span>
+
+                            </a>
+
+
+                            <div class="user-menu-divider"></div>
+
+
+                            <button type="button" class="user-menu-link logout-menu-link" id="logoutButton">
+
+                                <i class="bi bi-box-arrow-right"></i>
+
+                                <span>
+                                    Logout
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             SECTION 1 — HERO
+             ================================================= -->
+
+        <section class="stories-hero">
+
+            <div class="container">
+
+                <div class="row align-items-center">
+
+
+                    <!-- Text -->
+
+                    <div class="col-lg-7">
+
+                        <span class="section-label">
+                            INSPIRING STORIES
+                        </span>
+
+
+                        <h1 class="stories-hero-title">
+
+                            Every journey
+                            <br>
+
+                            begins with
+                            <span>one step.</span>
+
+                        </h1>
+
+
+                        <p class="stories-hero-text">
+
+                            Explore the journeys of people
+                            who faced challenges, discovered
+                            their strengths and created paths
+                            that inspired others.
+
+                        </p>
+
+
+                        <div class="stories-hero-actions">
+
+                            <a href="#exploreStories" class="btn btn-primary">
+
+                                Explore Stories
+
+                                <i class="bi bi-arrow-down"></i>
+
+                            </a>
+
+
+                            <a href="orivan-talks.html" class="stories-outline-btn">
+
+                                Inspiring Talks
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Visual -->
+
+                    <div class="col-lg-5">
+
+                        <div class="stories-hero-visual">
+
+                            <div class="hero-story-shape">
+
+                                <i class="bi bi-quote"></i>
+
+                            </div>
+
+
+                            <div class="hero-story-card">
+
+                                <span>
+                                    STORIES
+                                </span>
+
+                                <strong>
+                                    Learn from journeys.
+                                </strong>
+
+                                <p>
+                                    Discover ideas,
+                                    challenges and
+                                    turning points.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SECTION 2 — SEARCH & FILTER
+             ================================================= -->
+
+        <section class="stories-explorer" id="exploreStories">
+
+            <div class="container">
+
+
+                <div class="section-heading text-center">
+
+                    <span class="section-label">
+                        EXPLORE
+                    </span>
+
+
+                    <h2 class="section-title">
+                        Find a story that speaks to you.
+                    </h2>
+
+
+                    <p>
+                        Search by name, field or category
+                        and discover a journey that matches
+                        your interests.
+                    </p>
+
+                </div>
+
+
+                <!-- Search -->
+
+                <div class="stories-search-box">
+
+                    <div class="search-input-wrapper">
+
+                        <i class="bi bi-search"></i>
+
+                        <input type="search" id="storySearch" class="form-control"
+                            placeholder="Search stories, people or categories..." autocomplete="off">
+
+                        <button type="button" id="clearStorySearch" class="clear-search-btn" aria-label="Clear search">
+
+                            <i class="bi bi-x"></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Category -->
+
+                    <div class="story-filter-wrapper">
+
+                        <label for="storyCategory" class="visually-hidden">
+                            Category
+                        </label>
+
+
+                        <select id="storyCategory" class="form-select">
+
+                            <option value="all">
+                                All Categories
+                            </option>
+
+                            <option value="Technology">
+                                Technology
+                            </option>
+
+                            <option value="Media & Leadership">
+                                Media & Leadership
+                            </option>
+
+                            <option value="Technology & Business">
+                                Technology & Business
+                            </option>
+
+                            <option value="Education & Activism">
+                                Education & Activism
+                            </option>
+
+                            <option value="Literature">
+                                Literature
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Search Result Info -->
+
+                <div class="story-search-result" id="storySearchResult">
+
+                    <span>
+                        Showing all stories
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SECTION 3 — FEATURED STORIES
+             ================================================= -->
+
+        <section class="featured-stories section-padding">
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        FEATURED
+                    </span>
+
+
+                    <h2 class="section-title">
+                        Stories worth discovering.
+                    </h2>
+
+
+                    <p>
+                        A closer look at journeys shaped by
+                        persistence, creativity and courage.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-4" id="featuredStoriesContainer">
+
+                    <!-- Featured stories generated by JavaScript -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+       <!-- SECTION 5 — ALL STORIES -->
+
+        <section class="all-stories-section section-padding" id="allStories">
+
+            <div class="container">
+
+
+                <div class="stories-section-top">
+
+
+                    <div>
+
+                        <span class="section-label">
+                            ALL STORIES
+                        </span>
+
+
+                        <h2 class="section-title">
+                            Explore every journey.
+                        </h2>
+
+                    </div>
+
+
+                    <div class="stories-count">
+
+                        <span id="storiesCount">
+                            0
+                        </span>
+
+                        Stories
+
+                    </div>
+
+                </div>
+
+
+                <!-- All Stories -->
+
+
+
+                <div class="stories-carousel">
+
+                    <!-- Previous -->
+                    <button type="button" class="story-nav story-prev" id="storyPrev" aria-label="Previous stories">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+
+
+                    <!-- Cards -->
+                    <div class="row g-4" id="storiesContainer">
+                        <!-- JavaScript creates cards -->
+                    </div>
+
+
+                    <!-- Next -->
+                    <button type="button" class="story-nav story-next" id="storyNext" aria-label="Next stories">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+
+                </div>
+
+
+                <!-- No Results -->
+
+                <div class="no-stories-found" id="noStoriesFound" style="display: none;">
+
+                    <div class="no-stories-icon">
+
+                        <i class="bi bi-search"></i>
+
+                    </div>
+
+
+                    <h3>
+                        No stories found.
+                    </h3>
+
+
+                    <p>
+                        Try another name, category
+                        or keyword.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SECTION 6 — CTA
+             ================================================= -->
+
+        <section class="stories-cta">
+
+            <div class="container">
+
+                <div class="stories-cta-content">
+
+                    <span class="section-label">
+                        YOUR STORY CAN START HERE
+                    </span>
+
+
+                    <h2>
+                        Your journey is still being written.
+                    </h2>
+
+
+                    <p>
+                        Discover your interests, build your
+                        skills and find the path that fits you.
+                    </p>
+
+
+                    <div class="stories-cta-actions">
+
+                        <a href="my-path.html" class="btn btn-primary">
+
+                            Start Your Path
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+
+                        <a href="trainings.html" class="stories-outline-btn">
+
+                            Explore Trainings
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="row g-5">
+
+                <div class="col-lg-5">
+
+                    <a href="#home" class="footer-logo">
+
+                        <span class="logo-mark">
+                            R
+                        </span>
+
+                        Respair <strong>Dawn</strong>
+
+                    </a>
+
+
+                    <p>
+
+                        Stories become inspiration.
+                        Skills become opportunities.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-6 col-lg-2">
+
+                    <h4>
+                        Explore
+                    </h4>
+
+                    <a href="#stories">
+                        Orivan Talks
+                    </a>
+
+                    <a href="#research">
+                        Research
+                    </a>
+
+                    <a href="#trainings">
+                        Trainings
+                    </a>
+
+                </div>
+
+
+                <div class="col-6 col-lg-2">
+
+                    <h4>
+                        Platform
+                    </h4>
+
+                    <a href="#about">
+                        About
+                    </a>
+
+                    <a href="#join">
+                        Join
+                    </a>
+
+                    <a href="#home">
+                        Home
+                    </a>
+
+                </div>
+
+
+                <div class="col-lg-3">
+
+                    <h4>
+                        Connect
+                    </h4>
+
+                    <p>
+                        Follow our talks,
+                        stories and learning
+                        opportunities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+                © <span class="current-year">
+                Respair Dawn.
+                All Rights Reserved.
+                </span>
+
+                <span>
+                    Stories • Research • Growth
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+</body>
+
+
+<!-- =====================================================
+         BOOTSTRAP JS
+         ===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- =====================================================
+         PROJECT JS
+         ===================================================== -->
+
+<script src="JS/auth.js"></script>
+
+<script src="JS/auth-guard.js"></script>
+
+<script src="JS/stories.js"></script>
+
+
+
+</html>

@@ -1,0 +1,943 @@
+/* =========================================================
+   RESPAIR DAWN
+   TRAININGS PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+    background: #f8f8f5;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.trainings-navbar {
+    background: rgba(255, 255, 255, 0.96);
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+
+.trainings-navbar .navbar-brand {
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+}
+
+
+.trainings-navbar .nav-link {
+    font-weight: 500;
+
+    margin-left: 0.25rem;
+
+    margin-right: 0.25rem;
+}
+
+
+.trainings-navbar .nav-link.active {
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.trainings-hero {
+    padding-top: 9rem;
+
+    padding-bottom: 5rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(239, 244, 240, 0.95)
+        );
+}
+
+
+.trainings-title {
+    margin-top: 1rem;
+
+    margin-bottom: 1.5rem;
+
+    max-width: 750px;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(
+        3rem,
+        6vw,
+        5.5rem
+    );
+
+    line-height: 1.05;
+
+    letter-spacing: -0.04em;
+}
+
+
+.trainings-subtitle {
+    max-width: 680px;
+
+    font-size: 1.08rem;
+
+    line-height: 1.8;
+
+    opacity: 0.72;
+
+    margin-bottom: 2.5rem;
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.training-stat-row {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 2.5rem;
+}
+
+
+.training-stat {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.25rem;
+}
+
+
+.training-stat strong {
+    font-size: 1.45rem;
+
+    font-weight: 700;
+}
+
+
+.training-stat span {
+    font-size: 0.85rem;
+
+    opacity: 0.6;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* =========================================================
+   HERO LEARNING CARD
+   ========================================================= */
+
+.hero-learning-card {
+    margin-top: 2rem;
+
+    padding: 2.5rem;
+
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.06);
+}
+
+
+.hero-learning-icon {
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 1.5rem;
+
+    border-radius: 16px;
+
+    background: rgba(0, 0, 0, 0.05);
+
+    font-size: 1.5rem;
+}
+
+
+.hero-learning-card h3 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.7rem;
+
+    line-height: 1.3;
+
+    margin-bottom: 1rem;
+}
+
+
+.hero-learning-card p {
+    margin: 0;
+
+    line-height: 1.7;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.trainings-main {
+    padding-top: 5rem;
+
+    padding-bottom: 6rem;
+}
+
+
+/* =========================================================
+   FILTER SECTION
+   ========================================================= */
+
+.training-filter-section {
+    margin-bottom: 3.5rem;
+
+    padding: 1.5rem;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+
+    border-radius: 20px;
+}
+
+
+.filter-label {
+    display: block;
+
+    margin-bottom: 0.55rem;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;
+
+    opacity: 0.65;
+}
+
+
+.training-search-box {
+    position: relative;
+}
+
+
+.training-search-box > i {
+    position: absolute;
+
+    left: 1rem;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 2;
+
+    opacity: 0.5;
+}
+
+
+.training-search-box input {
+    min-height: 48px;
+
+    padding-left: 2.8rem;
+
+    border-radius: 12px;
+}
+
+
+.training-filter {
+    min-height: 48px;
+
+    border-radius: 12px;
+}
+
+
+.reset-training-btn {
+    min-height: 48px;
+
+    border-radius: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RESULTS BAR
+   ========================================================= */
+
+.training-results-bar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-top: 1.5rem;
+
+    padding-top: 1.25rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+
+    font-size: 0.9rem;
+}
+
+
+#resultsCount {
+    font-weight: 700;
+}
+
+
+.results-note {
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   TRAINING CARD
+   ========================================================= */
+
+.training-card {
+    height: 100%;
+
+    padding: 1.6rem;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+
+    border-radius: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+
+    cursor: pointer;
+}
+
+
+.training-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.08);
+
+    border-color: rgba(0, 0, 0, 0.13);
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.training-card-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-bottom: 1.4rem;
+}
+
+
+.training-icon {
+    width: 54px;
+
+    height: 54px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: rgba(0, 0, 0, 0.055);
+
+    font-size: 1.4rem;
+}
+
+
+/* =========================================================
+   TRAINING ACTIONS
+   ========================================================= */
+
+.training-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.35rem;
+}
+
+
+.training-action-btn {
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 1rem;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.training-action-btn:hover {
+    transform: translateY(-2px);
+
+    background: #f5f5f2;
+
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+
+.training-action-btn.active {
+    background: #f1f1ed;
+
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+
+.training-action-btn.purchased {
+    background: #eeeeea;
+
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+.training-category {
+    display: inline-flex;
+
+    align-self: flex-start;
+
+    margin-bottom: 0.75rem;
+
+    padding: 0.35rem 0.7rem;
+
+    border-radius: 30px;
+
+    background: #f1f1ed;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.training-card-title {
+    margin-bottom: 0.8rem;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.45rem;
+
+    line-height: 1.25;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.training-card-description {
+    margin-bottom: 1.4rem;
+
+    font-size: 0.92rem;
+
+    line-height: 1.7;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   CARD META
+   ========================================================= */
+
+.training-card-meta {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 1rem;
+
+    margin-top: auto;
+
+    padding-top: 1rem;
+
+    margin-bottom: 1.25rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+
+    font-size: 0.78rem;
+
+    opacity: 0.65;
+}
+
+
+.training-card-meta span {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.35rem;
+}
+
+
+/* =========================================================
+   DETAILS BUTTON
+   ========================================================= */
+
+.training-details-btn {
+    width: 100%;
+
+    min-height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.55rem;
+
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.training-details-btn:hover {
+    background: #f3f3ef;
+
+    transform: translateY(-1px);
+}
+
+
+.training-details-btn i {
+    transition:
+        transform 0.25s ease;
+}
+
+
+.training-details-btn:hover i {
+    transform: translateX(4px);
+}
+
+
+/* =========================================================
+   ALERT
+   ========================================================= */
+
+.training-system-alert {
+    position: fixed;
+
+    top: 90px;
+
+    right: 25px;
+
+    z-index: 9999;
+
+    width: min(
+        420px,
+        calc(100vw - 40px)
+    );
+
+    animation:
+        trainingAlertIn 0.3s ease;
+}
+
+
+.training-alert-content {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    padding: 1rem 1.15rem;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.12);
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+
+.training-alert-close {
+    width: 28px;
+
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 1.35rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    opacity: 0.6;
+}
+
+
+.training-alert-close:hover {
+    opacity: 1;
+}
+
+
+@keyframes trainingAlertIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   NO RESULTS
+   ========================================================= */
+
+.no-results {
+    padding: 5rem 1rem;
+
+    text-align: center;
+}
+
+
+.no-results-icon {
+    width: 70px;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 1.5rem;
+
+    border-radius: 50%;
+
+    background: #eeeeea;
+
+    font-size: 1.5rem;
+}
+
+
+.no-results h3 {
+    font-family: "Playfair Display", serif;
+
+    margin-bottom: 0.7rem;
+}
+
+
+.no-results p {
+    margin: 0;
+
+    opacity: 0.6;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.trainings-footer {
+    padding-top: 4rem;
+
+    padding-bottom: 1.5rem;
+
+    background: #171817;
+
+    color: #ffffff;
+}
+
+
+.footer-brand {
+    display: inline-block;
+
+    margin-bottom: 1rem;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+}
+
+
+.trainings-footer p {
+    max-width: 420px;
+
+    line-height: 1.7;
+
+    opacity: 0.65;
+}
+
+
+.trainings-footer h4 {
+    margin-bottom: 1rem;
+
+    font-size: 0.9rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+
+.trainings-footer ul {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+
+.trainings-footer li {
+    margin-bottom: 0.55rem;
+}
+
+
+.trainings-footer a {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    opacity: 0.65;
+
+    transition: opacity 0.2s ease;
+}
+
+
+.trainings-footer a:hover {
+    opacity: 1;
+}
+
+
+.footer-small-text {
+    font-size: 0.88rem;
+}
+
+
+.footer-bottom {
+    margin-top: 3rem;
+
+    padding-top: 1.5rem;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.footer-bottom p {
+    margin: 0;
+
+    font-size: 0.8rem;
+
+    opacity: 0.45;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .trainings-hero {
+        padding-top: 8rem;
+    }
+
+    .hero-learning-card {
+        margin-top: 3rem;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .trainings-title {
+        font-size: 3rem;
+    }
+
+
+    .training-stat-row {
+        gap: 1.5rem;
+    }
+
+
+    .training-results-bar {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .training-actions {
+        gap: 0.2rem;
+    }
+
+
+    .training-action-btn {
+        width: 35px;
+
+        height: 35px;
+    }
+
+
+    .training-system-alert {
+        top: 80px;
+
+        right: 20px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .trainings-hero {
+        padding-top: 7.5rem;
+
+        padding-bottom: 3.5rem;
+    }
+
+
+    .trainings-title {
+        font-size: 2.5rem;
+    }
+
+
+    .trainings-main {
+        padding-top: 3rem;
+    }
+
+
+    .training-filter-section {
+        padding: 1rem;
+    }
+
+
+    .training-card {
+        padding: 1.3rem;
+    }
+
+
+    .training-card-title {
+        font-size: 1.3rem;
+    }
+
+}

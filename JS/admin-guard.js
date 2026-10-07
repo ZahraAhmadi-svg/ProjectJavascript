@@ -3,48 +3,93 @@
    ADMIN GUARD
    ========================================================= */
 
-const USER_STORAGE_KEY =
-    "respairUser";
+
+/* =========================================================
+   STORAGE KEY
+   ========================================================= */
+
+const USER_STORAGE_KEY = "respairUser";
 
 
-const savedUser =
-    localStorage.getItem(
-        USER_STORAGE_KEY
-    );
+/* =========================================================
+   GET CURRENT USER
+   ========================================================= */
 
+function getAdminGuardUser() {
 
-if (!savedUser) {
+    const savedUser =
+        localStorage.getItem(USER_STORAGE_KEY);
 
-    window.location.href =
-        "login.html";
-
-} else {
+    if (!savedUser) {
+        return null;
+    }
 
     try {
 
-        const user =
-            JSON.parse(savedUser);
-
-
-        if (
-            user.role !== "admin" &&
-            user.role !== "manager"
-        ) {
-
-            window.location.href =
-                "index.html";
-
-        }
+        return JSON.parse(savedUser);
 
     } catch (error) {
+
+        console.error(
+            "Invalid user session:",
+            error
+        );
 
         localStorage.removeItem(
             USER_STORAGE_KEY
         );
 
-        window.location.href =
-            "login.html";
+        return null;
+    }
+}
 
+
+/* =========================================================
+   ADMIN ACCESS CHECK
+   ========================================================= */
+
+(function checkAdminAccess() {
+
+    const user =
+        getAdminGuardUser();
+
+
+    /* -----------------------------------------------------
+       USER IS NOT LOGGED IN
+    ----------------------------------------------------- */
+
+    if (!user) {
+
+        window.location.replace(
+            "auth.html?redirect=management.html"
+        );
+
+        return;
     }
 
-}
+
+    /* -----------------------------------------------------
+       USER IS LOGGED IN
+       BUT IS NOT ADMIN
+    ----------------------------------------------------- */
+
+    if (user.role !== "admin") {
+
+        window.location.replace(
+            "index.html"
+        );
+
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       ADMIN ACCESS GRANTED
+    ----------------------------------------------------- */
+
+    console.log(
+        "Admin access granted:",
+        user.username
+    );
+
+})();

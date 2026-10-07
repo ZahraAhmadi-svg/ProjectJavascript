@@ -1,0 +1,932 @@
+/* =========================================================
+   RESPAIR DAWN
+   MANAGEMENT PANEL
+   ========================================================= */
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    font-family: "DM Sans", sans-serif;
+
+    background: #f7f8f6;
+
+    color: #1f2a27;
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.management-navbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-bottom: 1px solid #e7ebe8;
+
+    box-shadow:
+        0 4px 20px rgba(31, 42, 39, 0.05);
+
+    backdrop-filter: blur(12px);
+}
+
+
+.management-navbar-inner {
+
+    min-height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.management-brand {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    text-decoration: none;
+
+    color: #1f2a27;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.management-brand:hover {
+
+    color: #1f2a27;
+}
+
+
+.brand-mark {
+
+    width: 40px;
+
+    height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #1f2a27;
+
+    color: #ffffff;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 21px;
+
+    font-weight: 700;
+}
+
+
+.brand-text {
+
+    font-size: 18px;
+
+    letter-spacing: -0.3px;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.management-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #53615c;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.management-title i {
+
+    color: #1f2a27;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.management-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.back-home-btn,
+.logout-btn {
+
+    min-height: 40px;
+
+    padding: 9px 15px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border-radius: 10px;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+
+.back-home-btn {
+
+    text-decoration: none;
+
+    background: #ffffff;
+
+    color: #37433f;
+
+    border: 1px solid #dfe5e1;
+}
+
+
+.back-home-btn:hover {
+
+    color: #1f2a27;
+
+    background: #f2f5f3;
+
+    transform: translateY(-1px);
+}
+
+
+.logout-btn {
+
+    border: 1px solid #1f2a27;
+
+    background: #1f2a27;
+
+    color: #ffffff;
+}
+
+
+.logout-btn:hover {
+
+    background: #34433d;
+
+    border-color: #34433d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.management-main {
+
+    padding: 55px 0 80px;
+}
+
+
+.management-main
+.container-fluid {
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    padding-left: 40px;
+
+    padding-right: 40px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   WELCOME
+   ========================================================= */
+
+.management-welcome {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 40px;
+
+    margin-bottom: 42px;
+}
+
+
+.management-label {
+
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: #73807b;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.management-welcome h1 {
+
+    max-width: 760px;
+
+    margin: 0 0 14px;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: clamp(38px, 5vw, 62px);
+
+    line-height: 1.08;
+
+    letter-spacing: -1.5px;
+
+    color: #1f2a27;
+}
+
+
+.management-welcome h1 span {
+
+    color: #718079;
+}
+
+
+.management-welcome p {
+
+    max-width: 680px;
+
+    margin: 0;
+
+    color: #6c7974;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   ADMIN PROFILE
+   ========================================================= */
+
+.admin-profile-card {
+
+    min-width: 260px;
+
+    padding: 17px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eae7;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 30px rgba(31, 42, 39, 0.06);
+}
+
+
+.admin-avatar {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #eef2ef;
+
+    color: #34433d;
+
+    font-size: 23px;
+}
+
+
+.admin-profile-card small {
+
+    display: block;
+
+    color: #8a9590;
+
+    font-size: 11px;
+}
+
+
+.admin-profile-card strong {
+
+    display: block;
+
+    color: #26332f;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.admin-profile-card span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #7c8984;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.management-stats {
+
+    margin-bottom: 70px;
+}
+
+
+.stat-card {
+
+    height: 100%;
+
+    min-height: 125px;
+
+    padding: 23px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+
+    background: #ffffff;
+
+    border: 1px solid #e6ebe8;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 8px 25px rgba(31, 42, 39, 0.045);
+
+    transition: all 0.25s ease;
+}
+
+
+.stat-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 14px 35px rgba(31, 42, 39, 0.08);
+}
+
+
+.stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #eef2ef;
+
+    color: #35443e;
+
+    font-size: 21px;
+}
+
+
+.stat-card span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #7b8782;
+
+    font-size: 12px;
+}
+
+
+.stat-card strong {
+
+    display: block;
+
+    color: #1f2a27;
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.management-section {
+
+    margin-bottom: 55px;
+}
+
+
+.section-heading {
+
+    margin-bottom: 28px;
+}
+
+
+.section-heading h2 {
+
+    margin: 0 0 8px;
+
+    font-family: "Playfair Display", serif;
+
+    color: #1f2a27;
+
+    font-size: 34px;
+
+    letter-spacing: -0.7px;
+}
+
+
+.section-heading p {
+
+    margin: 0;
+
+    color: #75817c;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   MANAGEMENT CARDS
+   ========================================================= */
+
+.management-card {
+
+    height: 100%;
+
+    min-height: 285px;
+
+    padding: 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eae7;
+
+    border-radius: 19px;
+
+    box-shadow:
+        0 8px 28px rgba(31, 42, 39, 0.045);
+
+    transition: all 0.3s ease;
+}
+
+
+.management-card:hover {
+
+    transform: translateY(-6px);
+
+    border-color: #d5ddd8;
+
+    box-shadow:
+        0 18px 42px rgba(31, 42, 39, 0.09);
+}
+
+
+.management-card-icon {
+
+    width: 54px;
+
+    height: 54px;
+
+    margin-bottom: 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #eef2ef;
+
+    color: #34443d;
+
+    font-size: 22px;
+}
+
+
+.management-card h3 {
+
+    margin: 0 0 11px;
+
+    color: #26332f;
+
+    font-size: 19px;
+
+    font-weight: 700;
+}
+
+
+.management-card p {
+
+    margin: 0 0 23px;
+
+    color: #75817c;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.management-card-btn {
+
+    margin-top: auto;
+
+    padding: 10px 15px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border: 1px solid #dce3df;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #34433d;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+
+.management-card-btn i {
+
+    transition: transform 0.25s ease;
+}
+
+
+.management-card-btn:hover {
+
+    background: #1f2a27;
+
+    border-color: #1f2a27;
+
+    color: #ffffff;
+}
+
+
+.management-card-btn:hover i {
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   ADMIN NOTICE
+   ========================================================= */
+
+.admin-notice {
+
+    padding: 22px 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+
+    background: #f0f3f1;
+
+    border: 1px solid #dfe6e2;
+
+    border-radius: 16px;
+}
+
+
+.admin-notice-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #3c4b45;
+
+    font-size: 19px;
+}
+
+
+.admin-notice h3 {
+
+    margin: 0 0 4px;
+
+    color: #33413c;
+
+    font-size: 14px;
+}
+
+
+.admin-notice p {
+
+    margin: 0;
+
+    color: #77837e;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .management-title {
+
+        display: none;
+    }
+
+
+    .management-welcome {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .admin-profile-card {
+
+        width: 100%;
+
+        max-width: 360px;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .management-main {
+
+        padding-top: 40px;
+
+        padding-bottom: 60px;
+    }
+
+
+    .management-main
+    .container-fluid {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+    }
+
+
+    .management-navbar-inner {
+
+        min-height: 68px;
+    }
+
+
+    .brand-text {
+
+        display: none;
+    }
+
+
+    .back-home-btn span,
+    .logout-btn span {
+
+        display: none;
+    }
+
+
+    .back-home-btn,
+    .logout-btn {
+
+        width: 40px;
+
+        height: 40px;
+
+        padding: 0;
+    }
+
+
+    .management-welcome h1 {
+
+        font-size: 39px;
+    }
+
+
+    .section-heading h2 {
+
+        font-size: 29px;
+    }
+
+
+    .management-card {
+
+        min-height: auto;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .management-main
+    .container-fluid {
+
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+
+    .management-welcome h1 {
+
+        font-size: 34px;
+    }
+
+
+    .admin-profile-card {
+
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .stat-card {
+
+        min-height: 110px;
+
+        padding: 18px;
+    }
+
+
+    .stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 18px;
+    }
+
+
+    .stat-card strong {
+
+        font-size: 22px;
+    }
+
+
+    .management-card {
+
+        padding: 23px;
+    }
+
+
+    .admin-notice {
+
+        align-items: flex-start;
+
+        padding: 19px;
+    }
+
+}

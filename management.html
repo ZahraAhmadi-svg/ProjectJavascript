@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Respair Dawn Management Panel"
+    >
+
+    <title>Management Panel | Respair Dawn</title>
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP 5
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- =====================================================
+         PROJECT CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="CSS/variables.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="CSS/management.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="management-navbar">
+
+        <div class="container-fluid">
+
+            <div class="management-navbar-inner">
+
+
+                <!-- BRAND -->
+
+                <a
+                    href="index.html"
+                    class="management-brand"
+                >
+
+                    <span class="brand-mark">
+                        R
+                    </span>
+
+                    <span class="brand-text">
+                        Respair Dawn
+                    </span>
+
+                </a>
+
+
+                <!-- TITLE -->
+
+                <div class="management-title">
+
+                    <i class="bi bi-shield-lock"></i>
+
+                    <span>
+                        Management Panel
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="management-actions">
+
+                    <a
+                        href="index.html"
+                        class="back-home-btn"
+                    >
+
+                        <i class="bi bi-house"></i>
+
+                        <span>
+                            Home
+                        </span>
+
+                    </a>
+
+
+                    <button
+                        type="button"
+                        class="logout-btn"
+                        id="adminLogoutBtn"
+                    >
+
+                        <i class="bi bi-box-arrow-right"></i>
+
+                        <span>
+                            Logout
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="management-main">
+
+        <div class="container-fluid">
+
+
+            <!-- =================================================
+                 WELCOME
+            ================================================== -->
+
+            <section class="management-welcome">
+
+                <div>
+
+                    <span class="management-label">
+                        ADMINISTRATION
+                    </span>
+
+                    <h1>
+                        Welcome to the
+                        <span>Management Panel.</span>
+                    </h1>
+
+                    <p>
+                        Manage Respair Dawn users, inspiring
+                        stories, training programs and research
+                        content from one place.
+                    </p>
+
+                </div>
+
+
+                <!-- ADMIN PROFILE -->
+
+                <div class="admin-profile-card">
+
+                    <div class="admin-avatar">
+
+                        <i class="bi bi-person-fill"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            Logged in as
+                        </small>
+
+                        <strong id="adminName">
+                            Administrator
+                        </strong>
+
+                        <span id="adminUsername">
+                            @admin
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <section class="management-stats">
+
+                <div class="row g-4">
+
+
+                    <!-- USERS -->
+
+                    <div class="col-md-6 col-xl-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-people"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Registered Users
+                                </span>
+
+                                <strong id="totalUsers">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STORIES -->
+
+                    <div class="col-md-6 col-xl-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-book"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Stories
+                                </span>
+
+                                <strong id="totalStories">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TRAININGS -->
+
+                    <div class="col-md-6 col-xl-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-mortarboard"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Trainings
+                                </span>
+
+                                <strong id="totalTrainings">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ROLE -->
+
+                    <div class="col-md-6 col-xl-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-shield-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Account Role
+                                </span>
+
+                                <strong id="adminRole">
+                                    Admin
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MANAGEMENT
+            ================================================== -->
+
+            <section class="management-section">
+
+                <div class="section-heading">
+
+                    <span class="management-label">
+                        CONTROL CENTER
+                    </span>
+
+                    <h2>
+                        Manage Respair Dawn
+                    </h2>
+
+                    <p>
+                        Select an area to manage your platform.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- USERS -->
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="management-card">
+
+                            <div class="management-card-icon">
+
+                                <i class="bi bi-people-fill"></i>
+
+                            </div>
+
+                            <h3>
+                                User Management
+                            </h3>
+
+                            <p>
+                                View registered accounts and
+                                manage user information.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="management-card-btn"
+                                id="manageUsersBtn"
+                            >
+
+                                Manage Users
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STORIES -->
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="management-card">
+
+                            <div class="management-card-icon">
+
+                                <i class="bi bi-stars"></i>
+
+                            </div>
+
+                            <h3>
+                                Inspiring Talks
+                            </h3>
+
+                            <p>
+                                Add and manage inspiring stories
+                                displayed on Respair Dawn.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="management-card-btn"
+                                id="manageStoriesBtn"
+                            >
+
+                                Manage Stories
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TRAININGS -->
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="management-card">
+
+                            <div class="management-card-icon">
+
+                                <i class="bi bi-mortarboard-fill"></i>
+
+                            </div>
+
+                            <h3>
+                                Trainings
+                            </h3>
+
+                            <p>
+                                Manage training programs and
+                                learning opportunities.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="management-card-btn"
+                                id="manageTrainingsBtn"
+                            >
+
+                                Manage Trainings
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RESEARCH -->
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="management-card">
+
+                            <div class="management-card-icon">
+
+                                <i class="bi bi-clipboard-data"></i>
+
+                            </div>
+
+                            <h3>
+                                Research
+                            </h3>
+
+                            <p>
+                                Manage research questions and
+                                recommendation settings.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="management-card-btn"
+                                id="manageResearchBtn"
+                            >
+
+                                Manage Research
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SETTINGS -->
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="management-card">
+
+                            <div class="management-card-icon">
+
+                                <i class="bi bi-gear-fill"></i>
+
+                            </div>
+
+                            <h3>
+                                Website Settings
+                            </h3>
+
+                            <p>
+                                Configure general settings and
+                                preferences for the website.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="management-card-btn"
+                                id="manageSettingsBtn"
+                            >
+
+                                Settings
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACTIVITY -->
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="management-card">
+
+                            <div class="management-card-icon">
+
+                                <i class="bi bi-activity"></i>
+
+                            </div>
+
+                            <h3>
+                                Activity Overview
+                            </h3>
+
+                            <p>
+                                View basic activity and platform
+                                statistics.
+                            </p>
+
+                            <button
+                                type="button"
+                                class="management-card-btn"
+                                id="activityBtn"
+                            >
+
+                                View Activity
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ADMIN NOTICE
+            ================================================== -->
+
+            <section class="admin-notice">
+
+                <div class="admin-notice-icon">
+
+                    <i class="bi bi-shield-check"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        Administrator Access
+                    </h3>
+
+                    <p>
+                        This page is available only to accounts
+                        with administrator privileges.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="JS/auth-cors.js"></script>
+
+    <script src="JS/admin-guard.js"></script>
+
+    <script src="JS/management.js"></script>
+
+
+    <!-- BOOTSTRAP JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+</body>
+
+</html>

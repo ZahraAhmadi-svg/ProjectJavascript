@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="My Classes - Respair Dawn"
+    >
+
+    <title>My Classes | Respair Dawn</title>
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+         ===================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- =====================================================
+         MY CLASSES CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="CSS/my-classes.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+
+        <div class="container">
+
+
+            <!-- BRAND -->
+
+            <a
+                class="navbar-brand"
+                href="index.html"
+            >
+
+                <span class="brand-mark">
+                    R
+                </span>
+
+                <span>
+                    Respair Dawn
+                </span>
+
+            </a>
+
+
+            <!-- MOBILE TOGGLE -->
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <!-- NAVIGATION -->
+
+            <div
+                class="collapse navbar-collapse"
+                id="mainNavbar"
+            >
+
+                <ul
+                    class="navbar-nav ms-auto align-items-lg-center"
+                >
+
+
+                    <li class="nav-item">
+
+                        <a
+                            href="index.html#home"
+                            class="nav-link"
+                        >
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            href="index.html#about"
+                            class="nav-link"
+                        >
+                            About
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            href="index.html#programs"
+                            class="nav-link"
+                        >
+                            Programs
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            href="index.html#stories"
+                            class="nav-link"
+                        >
+                            Inspiring Talks
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            href="index.html#research"
+                            class="nav-link"
+                        >
+                            Research
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            href="index.html#trainings"
+                            class="nav-link"
+                        >
+                            Trainings
+                        </a>
+
+                    </li>
+
+
+                    <!-- USER MENU -->
+
+                    <li
+                        class="nav-item user-menu-item"
+                        id="userMenuItem"
+                    >
+
+                        <button
+                            class="user-menu-button"
+                            id="userMenuButton"
+                            type="button"
+                            aria-label="Open user menu"
+                        >
+
+                            <i class="bi bi-list"></i>
+
+                        </button>
+
+
+                        <!-- USER DROPDOWN -->
+
+                        <div
+                            class="user-menu"
+                            id="userMenu"
+                        >
+
+
+                            <!-- HEADER -->
+
+                            <div class="user-menu-header">
+
+                                <div
+                                    class="user-avatar"
+                                    id="userAvatar"
+                                >
+                                    U
+                                </div>
+
+                                <div>
+
+                                    <strong id="menuUserName">
+                                        User
+                                    </strong>
+
+                                    <small id="menuUserStatus">
+                                        Welcome to Respair Dawn
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="user-menu-divider"></div>
+
+
+                            <!-- PROFILE -->
+
+                            <a
+                                href="profile.html"
+                                class="user-menu-link"
+                            >
+
+                                <i class="bi bi-person"></i>
+
+                                <span>
+                                    Profile
+                                </span>
+
+                            </a>
+
+
+                            <!-- MY CLASSES -->
+
+                            <a
+                                href="my-classes.html"
+                                class="user-menu-link active-user-link"
+                            >
+
+                                <i class="bi bi-mortarboard"></i>
+
+                                <span>
+                                    My Classes
+                                </span>
+
+                            </a>
+
+
+                            <!-- FAVORITES -->
+
+                            <a
+                                href="favorites.html"
+                                class="user-menu-link"
+                            >
+
+                                <i class="bi bi-heart"></i>
+
+                                <span>
+                                    Favorites
+                                </span>
+
+                            </a>
+
+
+                            <!-- SAVED -->
+
+                            <a
+                                href="saved.html"
+                                class="user-menu-link"
+                            >
+
+                                <i class="bi bi-bookmark"></i>
+
+                                <span>
+                                    Saved
+                                </span>
+
+                            </a>
+
+
+                            <!-- INSPIRING TALKS -->
+
+                            <a
+                                href="orivan-talks.html"
+                                class="user-menu-link"
+                            >
+
+                                <i class="bi bi-stars"></i>
+
+                                <span>
+                                    Inspiring Talks
+                                </span>
+
+                            </a>
+
+
+                            <!-- SETTINGS -->
+
+                            <a
+                                href="settings.html"
+                                class="user-menu-link"
+                            >
+
+                                <i class="bi bi-gear"></i>
+
+                                <span>
+                                    Settings
+                                </span>
+
+                            </a>
+
+
+                            <!-- MANAGEMENT -->
+
+                            <a
+                                href="management.html"
+                                class="user-menu-link"
+                                id="managementMenuItem"
+                                style="display:none;"
+                            >
+
+                                <i class="bi bi-shield-lock"></i>
+
+                                <span>
+                                    Management Panel
+                                </span>
+
+                            </a>
+
+
+                            <div class="user-menu-divider"></div>
+
+
+                            <!-- LOGOUT -->
+
+                            <button
+                                id="logoutButton"
+                                class="user-menu-link logout-menu-link"
+                                type="button"
+                            >
+
+                                <i class="bi bi-box-arrow-right"></i>
+
+                                <span>
+                                    Logout
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="classes-main">
+
+
+        <div class="container">
+
+
+            <!-- =================================================
+                 PAGE INTRO
+                 ================================================= -->
+
+            <section class="page-intro">
+
+                <span class="page-label">
+                    LEARNING SPACE
+                </span>
+
+                <h1>
+                    My <span>Classes.</span>
+                </h1>
+
+                <p>
+                    Keep track of the courses you have chosen
+                    and continue building the skills that matter
+                    for your future.
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 TOP SUMMARY
+                 ================================================= -->
+
+            <section class="classes-summary">
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-mortarboard"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Enrolled Classes
+                        </span>
+
+                        <strong id="totalClasses">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-book-half"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Learning Progress
+                        </span>
+
+                        <strong>
+                            Start
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-lightning-charge"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Next Step
+                        </span>
+
+                        <strong>
+                            Keep Learning
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 TOOLBAR
+                 ================================================= -->
+
+            <section class="classes-toolbar">
+
+
+                <div>
+
+                    <span class="toolbar-label">
+                        YOUR CLASSES
+                    </span>
+
+                    <h2>
+                        Continue your learning
+                    </h2>
+
+                </div>
+
+
+                <div class="class-search">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        id="classSearch"
+                        placeholder="Search classes..."
+                        aria-label="Search classes"
+                    >
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 CLASSES CONTAINER
+                 ================================================= -->
+
+            <section>
+
+                <div
+                    class="classes-grid"
+                    id="classesContainer"
+                >
+                    <!-- JavaScript will insert classes -->
+                </div>
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    class="empty-state"
+                    id="emptyState"
+                    style="display:none;"
+                >
+
+                    <div class="empty-icon">
+
+                        <i class="bi bi-mortarboard"></i>
+
+                    </div>
+
+                    <h3>
+                        No classes yet
+                    </h3>
+
+                    <p>
+                        You have not added any classes yet.
+                        Explore our trainings and choose
+                        something that matches your goals.
+                    </p>
+
+                    <a
+                        href="index.html#trainings"
+                        class="browse-btn"
+                    >
+
+                        <i class="bi bi-compass"></i>
+
+                        Explore Trainings
+
+                    </a>
+
+                </div>
+
+
+                <!-- NO SEARCH RESULT -->
+
+                <div
+                    class="empty-state"
+                    id="noSearchResult"
+                    style="display:none;"
+                >
+
+                    <div class="empty-icon">
+
+                        <i class="bi bi-search"></i>
+
+                    </div>
+
+                    <h3>
+                        No matching classes
+                    </h3>
+
+                    <p>
+                        We could not find a class matching
+                        your search.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="classes-footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Respair Dawn.
+                Learn. Grow. Move forward.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <!-- =====================================================
+         AUTH CORE
+         ===================================================== -->
+
+    <script src="JS/auth-cors.js"></script>
+
+
+    <!-- =====================================================
+         AUTH GUARD
+         ===================================================== -->
+
+    <script src="JS/auth-guard.js"></script>
+
+
+    <!-- =====================================================
+         MY CLASSES JS
+         ===================================================== -->
+
+    <script src="JS/my-classes.js"></script>
+
+</body>
+
+</html>
+

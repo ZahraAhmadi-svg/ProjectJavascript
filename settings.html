@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | Respair Dawn</title>
+
+    <meta
+        name="description"
+        content="Manage your Respair Dawn profile, preferences, and learning settings."
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Shared project styles -->
+    <link rel="stylesheet" href="CSS/variables.css">
+    <link rel="stylesheet" href="CSS/style.css">
+   <link rel="stylesheet" href="my-classes.html">
+    <!-- Settings styles -->
+    <link rel="stylesheet" href="CSS/settings.css">
+</head>
+
+<body class="settings-page">
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+
+        <div class="container">
+
+
+            <!-- BRAND -->
+
+            <a class="navbar-brand" href="index.html">
+
+                <span class="brand-mark">
+                    R
+                </span>
+
+                <span>
+                    Respair Dawn
+                </span>
+
+            </a>
+
+
+            <!-- MOBILE TOGGLE -->
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <!-- NAVIGATION -->
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+
+                    <li class="nav-item">
+
+                        <a href="index.html#home" class="nav-link">
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="index.html#about" class="nav-link">
+                            About
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="index.html#programs" class="nav-link">
+                            Programs
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="index.html#stories" class="nav-link">
+                            Inspiring Talks
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="index.html#research" class="nav-link">
+                            Research
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="index.html#trainings" class="nav-link">
+                            Trainings
+                        </a>
+
+                    </li>
+
+
+                    <!-- USER MENU -->
+
+                    <li class="nav-item user-menu-item" id="userMenuItem">
+
+                        <button class="user-menu-button" id="userMenuButton" type="button" aria-label="Open user menu">
+
+                            <i class="bi bi-list"></i>
+
+                        </button>
+
+
+                        <!-- USER DROPDOWN -->
+
+                        <div class="user-menu" id="userMenu">
+
+
+                            <!-- HEADER -->
+
+                            <div class="user-menu-header">
+
+                                <div class="user-avatar" id="userAvatar">
+                                    U
+                                </div>
+
+                                <div>
+
+                                    <strong id="menuUserName">
+                                        User
+                                    </strong>
+
+                                    <small id="menuUserStatus">
+                                        Welcome to Respair Dawn
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="user-menu-divider"></div>
+
+
+                            <!-- PROFILE -->
+
+                            <a href="profile.html" class="user-menu-link">
+
+                                <i class="bi bi-person"></i>
+
+                                <span>
+                                    Profile
+                                </span>
+
+                            </a>
+
+
+                            <!-- MY CLASSES -->
+
+                            <a href="my-classes.html" class="user-menu-link">
+
+                                <i class="bi bi-mortarboard"></i>
+
+                                <span>
+                                    My Classes
+                                </span>
+
+                            </a>
+
+
+                            <!-- FAVORITES -->
+
+                            <a href="favorites.html" class="user-menu-link">
+
+                                <i class="bi bi-heart"></i>
+
+                                <span>
+                                    Favorites
+                                </span>
+
+                            </a>
+
+
+                            <!-- SAVED -->
+
+                            <a href="saved.html" class="user-menu-link">
+
+                                <i class="bi bi-bookmark"></i>
+
+                                <span>
+                                    Saved
+                                </span>
+
+                            </a>
+
+                            <!-- SETTINGS -->
+
+                            <a href="settings.html" class="user-menu-link  active-user-link">
+
+                                <i class="bi bi-gear"></i>
+
+                                <span>
+                                    Settings
+                                </span>
+
+                            </a>
+
+
+                            <!-- MANAGEMENT -->
+
+                            <a href="management.html" class="user-menu-link" id="managementMenuItem"
+                                style="display:none;">
+
+                                <i class="bi bi-shield-lock"></i>
+
+                                <span>
+                                    Management Panel
+                                </span>
+
+                            </a>
+
+
+                            <div class="user-menu-divider"></div>
+
+
+                            <!-- LOGOUT -->
+
+                            <button id="logoutButton" class="user-menu-link logout-menu-link" type="button">
+
+                                <i class="bi bi-box-arrow-right"></i>
+
+                                <span>
+                                    Logout
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         PAGE HERO
+         ===================================================== -->
+
+    <header class="settings-hero">
+
+        <div class="container">
+
+            <div class="settings-breadcrumb">
+                <a href="index.html">Home</a>
+
+                <i class="bi bi-chevron-right"></i>
+
+                <span>Settings</span>
+            </div>
+
+            <div class="settings-hero-content">
+
+                <span class="settings-eyebrow">
+                    YOUR PERSONAL SPACE
+                </span>
+
+                <h1>
+                    Settings &amp;
+                    <span>Preferences</span>
+                </h1>
+
+                <p>
+                    Make Respair Dawn work for you.
+                    Manage your account, personalize your experience,
+                    and shape your learning journey.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         SETTINGS MAIN
+         ===================================================== -->
+
+    <main class="settings-main">
+
+        <div class="container">
+
+            <!-- Status message -->
+            <div
+                class="settings-status"
+                id="settingsStatus"
+                role="status"
+                aria-live="polite"
+                hidden
+            ></div>
+
+
+            <!-- Not logged in -->
+            <section
+                class="settings-login-notice"
+                id="settingsLoginNotice"
+                hidden
+            >
+
+                <div class="settings-notice-icon">
+                    <i class="bi bi-person-lock"></i>
+                </div>
+
+                <h2>Your account comes first</h2>
+
+                <p>
+                    Please log in to manage your personal settings
+                    and learning preferences.
+                </p>
+
+                <a href="login.html" class="settings-button settings-primary">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Log In
+                </a>
+
+            </section>
+
+
+            <!-- Actual settings -->
+            <div class="settings-layout" id="settingsLayout">
+
+                <!-- Sidebar -->
+                <aside class="settings-sidebar">
+
+                    <div class="settings-sidebar-heading">
+                        ACCOUNT SETTINGS
+                    </div>
+
+                    <a href="#profileSettings" class="settings-sidebar-link active">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Profile Information</span>
+                    </a>
+
+                    <a href="#learningSettings" class="settings-sidebar-link">
+                        <i class="bi bi-book-half"></i>
+                        <span>Learning Preferences</span>
+                    </a>
+
+                    <a href="#notificationSettings" class="settings-sidebar-link">
+                        <i class="bi bi-bell"></i>
+                        <span>Notifications</span>
+                    </a>
+
+                    <a href="#appearanceSettings" class="settings-sidebar-link">
+                        <i class="bi bi-palette"></i>
+                        <span>Appearance</span>
+                    </a>
+
+                    <a href="#privacySettings" class="settings-sidebar-link">
+                        <i class="bi bi-shield-lock"></i>
+                        <span>Privacy &amp; Account</span>
+                    </a>
+
+                    <div class="settings-sidebar-note">
+                        <i class="bi bi-lightbulb"></i>
+
+                        <p>
+                            Small steps every day can lead to
+                            meaningful progress.
+                        </p>
+                    </div>
+
+                </aside>
+
+
+                <!-- Settings content -->
+                <div class="settings-content">
+
+                    <!-- =====================================
+                         PROFILE
+                         ===================================== -->
+
+                    <section
+                        class="settings-card"
+                        id="profileSettings"
+                    >
+
+                        <div class="settings-card-heading">
+
+                            <div class="settings-card-icon">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+
+                            <div>
+                                <h2>Profile Information</h2>
+
+                                <p>
+                                    Keep your personal information up to date.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <form id="profileSettingsForm">
+
+                            <div class="settings-profile-preview">
+
+                                <div class="settings-large-avatar" id="profileAvatar">
+                                    U
+                                </div>
+
+                                <div>
+                                    <strong id="profilePreviewName">
+                                        Your Name
+                                    </strong>
+
+                                    <p id="profilePreviewEmail">
+                                        Your email address
+                                    </p>
+
+                                    <span class="settings-avatar-note">
+                                        Your account initials are used as your avatar.
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="settingsFullName"
+                                        class="settings-label"
+                                    >
+                                        Full Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control settings-input"
+                                        id="settingsFullName"
+                                        name="fullName"
+                                        placeholder="Enter your full name"
+                                        maxlength="100"
+                                        required
+                                    >
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="settingsUsername"
+                                        class="settings-label"
+                                    >
+                                        Username
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control settings-input"
+                                        id="settingsUsername"
+                                        name="username"
+                                        placeholder="Enter your username"
+                                        maxlength="50"
+                                    >
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="settingsEmail"
+                                        class="settings-label"
+                                    >
+                                        Email Address
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        class="form-control settings-input"
+                                        id="settingsEmail"
+                                        name="email"
+                                        placeholder="you@example.com"
+                                        readonly
+                                        aria-describedby="emailHelp"
+                                    >
+
+                                    <small id="emailHelp" class="settings-help">
+                                        Email changes are not supported in this version.
+                                    </small>
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="settingsBio"
+                                        class="settings-label"
+                                    >
+                                        About Me
+                                    </label>
+
+                                    <textarea
+                                        class="form-control settings-input"
+                                        id="settingsBio"
+                                        name="bio"
+                                        rows="4"
+                                        maxlength="300"
+                                        placeholder="Tell us a little about yourself..."
+                                    ></textarea>
+
+                                    <div class="settings-character-count">
+                                        <span id="bioCharacterCount">0</span>/300
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="settings-form-actions">
+
+                                <button
+                                    type="reset"
+                                    class="settings-button settings-secondary"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="settings-button settings-primary"
+                                >
+                                    <i class="bi bi-check2"></i>
+                                    Save Profile
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         LEARNING PREFERENCES
+                         ===================================== -->
+
+                    <section
+                        class="settings-card"
+                        id="learningSettings"
+                    >
+
+                        <div class="settings-card-heading">
+
+                            <div class="settings-card-icon">
+                                <i class="bi bi-book-half"></i>
+                            </div>
+
+                            <div>
+                                <h2>Learning Preferences</h2>
+
+                                <p>
+                                    Personalize your learning experience.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <form id="learningSettingsForm">
+
+                            <div class="settings-field-group">
+
+                                <label
+                                    for="preferredLearning"
+                                    class="settings-label"
+                                >
+                                    Preferred Learning Area
+                                </label>
+
+                                <select
+                                    class="form-select settings-input"
+                                    id="preferredLearning"
+                                >
+                                    <option value="">Choose an area</option>
+                                    <option value="programming">Programming</option>
+                                    <option value="artificial-intelligence">
+                                        Artificial Intelligence
+                                    </option>
+                                    <option value="cybersecurity">
+                                        Cybersecurity
+                                    </option>
+                                    <option value="data-science">
+                                        Data Science
+                                    </option>
+                                    <option value="web-development">
+                                        Web Development
+                                    </option>
+                                    <option value="design">Design</option>
+                                    <option value="research">Research</option>
+                                    <option value="other">Other</option>
+                                </select>
+
+                            </div>
+
+                            <div class="settings-field-group">
+
+                                <label
+                                    for="learningGoal"
+                                    class="settings-label"
+                                >
+                                    My Learning Goal
+                                </label>
+
+                                <select
+                                    class="form-select settings-input"
+                                    id="learningGoal"
+                                >
+                                    <option value="personal-growth">
+                                        Personal Growth
+                                    </option>
+
+                                    <option value="career-development">
+                                        Career Development
+                                    </option>
+
+                                    <option value="academic-success">
+                                        Academic Success
+                                    </option>
+
+                                    <option value="research">
+                                        Research &amp; Innovation
+                                    </option>
+
+                                    <option value="new-skills">
+                                        Learn New Skills
+                                    </option>
+                                </select>
+
+                            </div>
+
+                            <div class="settings-field-group">
+
+                                <label
+                                    for="dailyLearningTime"
+                                    class="settings-label"
+                                >
+                                    Daily Learning Target
+                                </label>
+
+                                <select
+                                    class="form-select settings-input"
+                                    id="dailyLearningTime"
+                                >
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60">1 hour</option>
+                                    <option value="90">1.5 hours</option>
+                                    <option value="120">2 hours</option>
+                                </select>
+
+                                <small class="settings-help">
+                                    Choose a realistic target you can maintain.
+                                </small>
+
+                            </div>
+
+                            <div class="settings-form-actions">
+
+                                <button
+                                    type="button"
+                                    class="settings-button settings-primary"
+                                    id="saveLearningSettings"
+                                >
+                                    <i class="bi bi-check2"></i>
+                                    Save Preferences
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         NOTIFICATIONS
+                         ===================================== -->
+
+                    <section
+                        class="settings-card"
+                        id="notificationSettings"
+                    >
+
+                        <div class="settings-card-heading">
+
+                            <div class="settings-card-icon">
+                                <i class="bi bi-bell"></i>
+                            </div>
+
+                            <div>
+                                <h2>Notifications</h2>
+
+                                <p>
+                                    Choose which updates you want to receive.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-option">
+
+                            <div class="settings-option-text">
+                                <strong>Learning Reminders</strong>
+
+                                <p>
+                                    Remind me to spend time learning.
+                                </p>
+                            </div>
+
+                            <label class="settings-switch">
+                                <input
+                                    type="checkbox"
+                                    id="learningReminders"
+                                >
+                                <span class="settings-switch-slider"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="settings-option">
+
+                            <div class="settings-option-text">
+                                <strong>New Trainings</strong>
+
+                                <p>
+                                    Keep me informed about new learning opportunities.
+                                </p>
+                            </div>
+
+                            <label class="settings-switch">
+                                <input
+                                    type="checkbox"
+                                    id="trainingNotifications"
+                                >
+                                <span class="settings-switch-slider"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="settings-option">
+
+                            <div class="settings-option-text">
+                                <strong>Inspiring Talks</strong>
+
+                                <p>
+                                    Let me know when new inspiring stories are available.
+                                </p>
+                            </div>
+
+                            <label class="settings-switch">
+                                <input
+                                    type="checkbox"
+                                    id="storyNotifications"
+                                >
+                                <span class="settings-switch-slider"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="settings-option">
+
+                            <div class="settings-option-text">
+                                <strong>Research Updates</strong>
+
+                                <p>
+                                    Keep me updated about research content.
+                                </p>
+                            </div>
+
+                            <label class="settings-switch">
+                                <input
+                                    type="checkbox"
+                                    id="researchNotifications"
+                                >
+                                <span class="settings-switch-slider"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="settings-form-actions">
+
+                            <button
+                                type="button"
+                                class="settings-button settings-primary"
+                                id="saveNotificationSettings"
+                            >
+                                <i class="bi bi-check2"></i>
+                                Save Notifications
+                            </button>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         APPEARANCE
+                         ===================================== -->
+
+                    <section
+                        class="settings-card"
+                        id="appearanceSettings"
+                    >
+
+                        <div class="settings-card-heading">
+
+                            <div class="settings-card-icon">
+                                <i class="bi bi-palette"></i>
+                            </div>
+
+                            <div>
+                                <h2>Appearance</h2>
+
+                                <p>
+                                    Choose how the settings page looks.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-theme-options">
+
+                            <label class="settings-theme-option">
+
+                                <input
+                                    type="radio"
+                                    name="settingsTheme"
+                                    value="light"
+                                    checked
+                                >
+
+                                <span class="settings-theme-preview theme-preview-light">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+
+                                <span class="settings-theme-label">
+                                    <i class="bi bi-sun"></i>
+                                    Light
+                                </span>
+
+                            </label>
+
+                            <label class="settings-theme-option">
+
+                                <input
+                                    type="radio"
+                                    name="settingsTheme"
+                                    value="dark"
+                                >
+
+                                <span class="settings-theme-preview theme-preview-dark">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+
+                                <span class="settings-theme-label">
+                                    <i class="bi bi-moon"></i>
+                                    Dark
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                        <p class="settings-help settings-theme-help">
+                            This theme preference applies to the Settings page.
+                        </p>
+
+                        <div class="settings-form-actions">
+
+                            <button
+                                type="button"
+                                class="settings-button settings-primary"
+                                id="saveAppearanceSettings"
+                            >
+                                <i class="bi bi-check2"></i>
+                                Save Appearance
+                            </button>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         PRIVACY AND ACCOUNT
+                         ===================================== -->
+
+                    <section
+                        class="settings-card"
+                        id="privacySettings"
+                    >
+
+                        <div class="settings-card-heading">
+
+                            <div class="settings-card-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+
+                            <div>
+                                <h2>Privacy &amp; Account</h2>
+
+                                <p>
+                                    Review your account and stored preferences.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-option settings-account-option">
+
+                            <div class="settings-option-text">
+                                <strong>Account Information</strong>
+
+                                <p>
+                                    Your account details are stored locally
+                                    in this browser in the current project version.
+                                </p>
+                            </div>
+
+                            <i class="bi bi-database-check settings-account-icon"></i>
+
+                        </div>
+
+                        <div class="settings-danger-zone">
+
+                            <div>
+                                <h3>Log Out</h3>
+
+                                <p>
+                                    End your current session on this device.
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="settings-button settings-danger"
+                                id="privacyLogoutButton"
+                            >
+                                <i class="bi bi-box-arrow-right"></i>
+                                Log Out
+                            </button>
+
+                        </div>
+
+                        <div class="settings-danger-zone settings-reset-zone">
+
+                            <div>
+                                <h3>Reset Preferences</h3>
+
+                                <p>
+                                    Restore your learning, notification,
+                                    and appearance preferences to their defaults.
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="settings-button settings-secondary"
+                                id="resetSettingsButton"
+                            >
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                                Reset Preferences
+                            </button>
+
+                        </div>
+
+                        <p class="settings-help settings-storage-note">
+                            This is a front-end demonstration. It does not
+                            provide server-side security, cloud synchronization,
+                            or account deletion.
+                        </p>
+
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="settings-footer">
+
+        <div class="container">
+
+            <a href="index.html" class="settings-footer-brand">
+                Respair <strong>Dawn</strong>
+            </a>
+
+            <p>
+                Stories become inspiration. Skills become opportunities.
+            </p>
+
+            <span>
+                &copy; <span id="settingsCurrentYear"></span>
+                Respair Dawn. Keep growing.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Settings logic -->
+    <script src="JS/auth-cors.js"></script>
+     <script src="JS/auth-guard.js"></script>
+      <script src="JS/index.js"></script>
+       <script src="JS/settings.js"></script>
+        
+
+</body>
+</html>

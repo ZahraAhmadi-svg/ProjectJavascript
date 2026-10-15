@@ -1,1974 +1,1162 @@
+
 /* =========================================================
    RESPAIR DAWN
    TRAININGS SYSTEM
-   ---------------------------------------------------------
-   Features:
-   1. 24 Training Courses
-   2. Search
-   3. Category Filter
-   4. Level Filter
-   5. Save Training
-   6. Favorite Training
-   7. Purchase Training
-   8. Login Check
-   9. Research Completion Check
-   10. Training Details Access Control
    ========================================================= */
 
-
-/* =========================================================
-   TRAININGS DATA
-   ========================================================= */
-
-const trainings = [
-
-    {
-        id: "python-fundamentals",
-        title: "Python Fundamentals",
-        category: "Technology",
-        level: "Beginner",
-        duration: "6 Weeks",
-        icon: "bi-code-slash",
-
-        description:
-            "Learn the fundamentals of Python programming and build a strong foundation for future technology projects.",
-
-        skills: [
-            "Python Syntax",
-            "Variables",
-            "Data Types",
-            "Conditions",
-            "Loops",
-            "Functions"
-        ],
-
-        interests: [
-            "Programming",
-            "Technology",
-            "Software Development"
-        ],
-
-        goals: [
-            "Learn Programming",
-            "Build Projects",
-            "Start a Technology Career"
-        ]
-    },
-
-
-    {
-        id: "web-development-essentials",
-        title: "Web Development Essentials",
-        category: "Technology",
-        level: "Beginner",
-        duration: "8 Weeks",
-        icon: "bi-globe",
-
-        description:
-            "Learn how websites work and build modern responsive web pages using HTML, CSS, Bootstrap and JavaScript.",
-
-        skills: [
-            "HTML",
-            "CSS",
-            "Bootstrap",
-            "JavaScript",
-            "Responsive Design"
-        ],
-
-        interests: [
-            "Web Development",
-            "Programming",
-            "Technology"
-        ],
-
-        goals: [
-            "Build Websites",
-            "Become a Web Developer",
-            "Freelancing"
-        ]
-    },
-
-
-    {
-        id: "cybersecurity-fundamentals",
-        title: "Cybersecurity Fundamentals",
-        category: "Cybersecurity",
-        level: "Beginner",
-        duration: "8 Weeks",
-        icon: "bi-shield-lock",
-
-        description:
-            "Understand the fundamental concepts of cybersecurity, threats, vulnerabilities and security practices.",
-
-        skills: [
-            "Cybersecurity Basics",
-            "Network Security",
-            "Threats",
-            "Vulnerabilities",
-            "Security Principles"
-        ],
-
-        interests: [
-            "Cybersecurity",
-            "Networks",
-            "Security"
-        ],
-
-        goals: [
-            "Learn Cybersecurity",
-            "Security Career",
-            "Prepare for Advanced Study"
-        ]
-    },
-
-
-    {
-        id: "artificial-intelligence",
-        title: "Introduction to Artificial Intelligence",
-        category: "Artificial Intelligence",
-        level: "Intermediate",
-        duration: "8 Weeks",
-        icon: "bi-robot",
-
-        description:
-            "Explore the fundamental concepts of Artificial Intelligence and understand how intelligent systems solve problems.",
-
-        skills: [
-            "AI Concepts",
-            "Machine Learning Basics",
-            "Problem Solving",
-            "Data Concepts"
-        ],
-
-        interests: [
-            "Artificial Intelligence",
-            "Technology",
-            "Research"
-        ],
-
-        goals: [
-            "Learn AI",
-            "Start AI Projects",
-            "Prepare for Advanced Study"
-        ]
-    },
-
-
-    {
-        id: "data-analysis-python",
-        title: "Data Analysis with Python",
-        category: "Data",
-        level: "Intermediate",
-        duration: "7 Weeks",
-        icon: "bi-bar-chart",
-
-        description:
-            "Learn how to work with data, clean datasets, analyze information and create meaningful insights using Python.",
-
-        skills: [
-            "Python",
-            "Pandas",
-            "Data Cleaning",
-            "Data Analysis",
-            "Visualization"
-        ],
-
-        interests: [
-            "Data",
-            "Python",
-            "Research"
-        ],
-
-        goals: [
-            "Become a Data Analyst",
-            "Research",
-            "Data Projects"
-        ]
-    },
-
-
-    {
-        id: "cryptography-fundamentals",
-        title: "Cryptography Fundamentals",
-        category: "Cybersecurity",
-        level: "Intermediate",
-        duration: "6 Weeks",
-        icon: "bi-key",
-
-        description:
-            "Learn the principles of cryptography, encryption, hashing, keys and secure communication.",
-
-        skills: [
-            "Encryption",
-            "Decryption",
-            "Hashing",
-            "Symmetric Cryptography",
-            "Asymmetric Cryptography"
-        ],
-
-        interests: [
-            "Cryptography",
-            "Cybersecurity",
-            "Security"
-        ],
-
-        goals: [
-            "Learn Cryptography",
-            "Cybersecurity Research",
-            "Security Career"
-        ]
-    },
-
-
-    {
-        id: "graphic-design",
-        title: "Graphic Design Fundamentals",
-        category: "Design",
-        level: "Beginner",
-        duration: "6 Weeks",
-        icon: "bi-palette",
-
-        description:
-            "Develop fundamental graphic design skills and learn how visual communication works.",
-
-        skills: [
-            "Visual Design",
-            "Typography",
-            "Color Theory",
-            "Composition"
-        ],
-
-        interests: [
-            "Design",
-            "Creative Arts",
-            "Visual Communication"
-        ],
-
-        goals: [
-            "Learn Design",
-            "Create Visual Content",
-            "Freelancing"
-        ]
-    },
-
-
-    {
-        id: "ui-ux-design",
-        title: "UI/UX Design Essentials",
-        category: "Design",
-        level: "Beginner",
-        duration: "7 Weeks",
-        icon: "bi-layout-text-window",
-
-        description:
-            "Learn how to design useful, accessible and user-friendly digital experiences.",
-
-        skills: [
-            "UI Design",
-            "UX Principles",
-            "Wireframing",
-            "User Research"
-        ],
-
-        interests: [
-            "Design",
-            "Technology",
-            "User Experience"
-        ],
-
-        goals: [
-            "Become a UI/UX Designer",
-            "Build Digital Products",
-            "Freelancing"
-        ]
-    },
-
-
-    {
-        id: "digital-marketing",
-        title: "Digital Marketing",
-        category: "Business",
-        level: "Beginner",
-        duration: "6 Weeks",
-        icon: "bi-megaphone",
-
-        description:
-            "Understand digital marketing strategies and learn how businesses reach audiences online.",
-
-        skills: [
-            "Digital Marketing",
-            "Social Media",
-            "Content Strategy",
-            "Audience Research"
-        ],
-
-        interests: [
-            "Business",
-            "Marketing",
-            "Media"
-        ],
-
-        goals: [
-            "Start Marketing Career",
-            "Grow a Business",
-            "Freelancing"
-        ]
-    },
-
-
-    {
-        id: "entrepreneurship-fundamentals",
-        title: "Entrepreneurship Fundamentals",
-        category: "Business",
-        level: "Beginner",
-        duration: "6 Weeks",
-        icon: "bi-lightbulb",
-
-        description:
-            "Learn how ideas become opportunities and understand the fundamentals of entrepreneurship.",
-
-        skills: [
-            "Business Ideas",
-            "Market Research",
-            "Planning",
-            "Problem Solving"
-        ],
-
-        interests: [
-            "Business",
-            "Entrepreneurship",
-            "Innovation"
-        ],
-
-        goals: [
-            "Start a Business",
-            "Develop Ideas",
-            "Entrepreneurship"
-        ]
-    },
-
-
-    {
-        id: "leadership-teamwork",
-        title: "Leadership & Teamwork",
-        category: "Leadership",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-people",
-
-        description:
-            "Develop leadership skills, teamwork, responsibility and effective decision-making.",
-
-        skills: [
-            "Leadership",
-            "Teamwork",
-            "Decision Making",
-            "Responsibility"
-        ],
-
-        interests: [
-            "Leadership",
-            "Personal Development",
-            "Teamwork"
-        ],
-
-        goals: [
-            "Become a Better Leader",
-            "Team Management",
-            "Career Growth"
-        ]
-    },
-
-
-    {
-        id: "communication-skills",
-        title: "Communication Skills",
-        category: "Personal Development",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-chat-dots",
-
-        description:
-            "Improve communication, listening, clarity and confidence in everyday and professional situations.",
-
-        skills: [
-            "Communication",
-            "Listening",
-            "Confidence",
-            "Professional Communication"
-        ],
-
-        interests: [
-            "Communication",
-            "Personal Development",
-            "Career"
-        ],
-
-        goals: [
-            "Improve Communication",
-            "Career Growth",
-            "Build Confidence"
-        ]
-    },
-
-
-    {
-        id: "english-academic-professional",
-        title: "English for Academic & Professional Growth",
-        category: "Language",
-        level: "Beginner",
-        duration: "8 Weeks",
-        icon: "bi-translate",
-
-        description:
-            "Develop practical English skills for academic environments, professional communication and future opportunities.",
-
-        skills: [
-            "Vocabulary",
-            "Grammar",
-            "Academic English",
-            "Professional Communication"
-        ],
-
-        interests: [
-            "English",
-            "Education",
-            "Career"
-        ],
-
-        goals: [
-            "Improve English",
-            "Study Abroad",
-            "Professional Growth"
-        ]
-    },
-
-
-    {
-        id: "academic-writing-research",
-        title: "Academic Writing & Research Skills",
-        category: "Research",
-        level: "Intermediate",
-        duration: "6 Weeks",
-        icon: "bi-journal-text",
-
-        description:
-            "Learn how to search for reliable information, organize ideas and write academic research effectively.",
-
-        skills: [
-            "Research",
-            "Academic Writing",
-            "Citation",
-            "Critical Reading"
-        ],
-
-        interests: [
-            "Research",
-            "Education",
-            "Academic Writing"
-        ],
-
-        goals: [
-            "Write Research Papers",
-            "Academic Growth",
-            "Research Career"
-        ]
-    },
-
-
-    {
-        id: "critical-thinking",
-        title: "Critical Thinking & Problem Solving",
-        category: "Personal Development",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-puzzle",
-
-        description:
-            "Learn how to analyze problems, question assumptions and develop practical solutions.",
-
-        skills: [
-            "Critical Thinking",
-            "Analysis",
-            "Problem Solving",
-            "Decision Making"
-        ],
-
-        interests: [
-            "Problem Solving",
-            "Research",
-            "Innovation"
-        ],
-
-        goals: [
-            "Improve Thinking",
-            "Solve Problems",
-            "Personal Growth"
-        ]
-    },
-
-
-    {
-        id: "project-management",
-        title: "Project Management Fundamentals",
-        category: "Management",
-        level: "Intermediate",
-        duration: "6 Weeks",
-        icon: "bi-kanban",
-
-        description:
-            "Learn how to plan, organize and manage projects from beginning to completion.",
-
-        skills: [
-            "Planning",
-            "Project Management",
-            "Time Management",
-            "Team Coordination"
-        ],
-
-        interests: [
-            "Management",
-            "Leadership",
-            "Business"
-        ],
-
-        goals: [
-            "Manage Projects",
-            "Career Development",
-            "Leadership"
-        ]
-    },
-
-
-    {
-        id: "financial-literacy",
-        title: "Financial Literacy",
-        category: "Finance",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-wallet2",
-
-        description:
-            "Understand personal finance, budgeting, saving and responsible financial decision-making.",
-
-        skills: [
-            "Budgeting",
-            "Saving",
-            "Financial Planning",
-            "Money Management"
-        ],
-
-        interests: [
-            "Finance",
-            "Business",
-            "Personal Development"
-        ],
-
-        goals: [
-            "Manage Money",
-            "Financial Independence",
-            "Personal Growth"
-        ]
-    },
-
-
-    {
-        id: "public-speaking",
-        title: "Public Speaking & Presentation",
-        category: "Communication",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-mic",
-
-        description:
-            "Build confidence and learn how to present ideas clearly to individuals and audiences.",
-
-        skills: [
-            "Public Speaking",
-            "Presentation",
-            "Confidence",
-            "Storytelling"
-        ],
-
-        interests: [
-            "Communication",
-            "Leadership",
-            "Personal Development"
-        ],
-
-        goals: [
-            "Improve Speaking",
-            "Academic Presentations",
-            "Career Growth"
-        ]
-    },
-
-
-    {
-        id: "content-creation",
-        title: "Content Creation & Storytelling",
-        category: "Media",
-        level: "Beginner",
-        duration: "6 Weeks",
-        icon: "bi-camera-video",
-
-        description:
-            "Learn how to create meaningful content and communicate ideas through storytelling.",
-
-        skills: [
-            "Content Creation",
-            "Storytelling",
-            "Writing",
-            "Media"
-        ],
-
-        interests: [
-            "Media",
-            "Creative Arts",
-            "Writing"
-        ],
-
-        goals: [
-            "Create Content",
-            "Build an Online Presence",
-            "Freelancing"
-        ]
-    },
-
-
-    {
-        id: "photography",
-        title: "Photography Fundamentals",
-        category: "Creative Arts",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-camera",
-
-        description:
-            "Learn the fundamentals of photography, composition, lighting and visual storytelling.",
-
-        skills: [
-            "Photography",
-            "Composition",
-            "Lighting",
-            "Visual Storytelling"
-        ],
-
-        interests: [
-            "Photography",
-            "Creative Arts",
-            "Media"
-        ],
-
-        goals: [
-            "Improve Photography",
-            "Creative Projects",
-            "Freelancing"
-        ]
-    },
-
-
-    {
-        id: "career-development",
-        title: "Career Development & CV Building",
-        category: "Career",
-        level: "Beginner",
-        duration: "4 Weeks",
-        icon: "bi-briefcase",
-
-        description:
-            "Learn how to understand your strengths, build a professional CV and prepare for career opportunities.",
-
-        skills: [
-            "CV Writing",
-            "Career Planning",
-            "Self Assessment",
-            "Interview Preparation"
-        ],
-
-        interests: [
-            "Career",
-            "Professional Development",
-            "Personal Development"
-        ],
-
-        goals: [
-            "Find a Job",
-            "Build a CV",
-            "Career Growth"
-        ]
-    },
-
-
-    {
-        id: "freelancing-remote-work",
-        title: "Freelancing & Remote Work",
-        category: "Career",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-laptop",
-
-        description:
-            "Learn the fundamentals of freelancing, remote work, personal branding and client communication.",
-
-        skills: [
-            "Freelancing",
-            "Remote Work",
-            "Client Communication",
-            "Personal Branding"
-        ],
-
-        interests: [
-            "Freelancing",
-            "Technology",
-            "Career"
-        ],
-
-        goals: [
-            "Start Freelancing",
-            "Remote Work",
-            "Build Income Skills"
-        ]
-    },
-
-
-    {
-        id: "digital-entrepreneurship",
-        title: "Digital Entrepreneurship",
-        category: "Entrepreneurship",
-        level: "Intermediate",
-        duration: "6 Weeks",
-        icon: "bi-rocket",
-
-        description:
-            "Explore how digital products, services and online businesses can become real opportunities.",
-
-        skills: [
-            "Digital Business",
-            "Business Models",
-            "Product Ideas",
-            "Online Strategy"
-        ],
-
-        interests: [
-            "Entrepreneurship",
-            "Technology",
-            "Business"
-        ],
-
-        goals: [
-            "Build an Online Business",
-            "Develop Digital Products",
-            "Entrepreneurship"
-        ]
-    },
-
-
-    {
-        id: "innovation-creative-thinking",
-        title: "Innovation & Creative Thinking",
-        category: "Innovation",
-        level: "Beginner",
-        duration: "5 Weeks",
-        icon: "bi-stars",
-
-        description:
-            "Develop creative thinking and learn how to turn problems into innovative ideas and solutions.",
-
-        skills: [
-            "Creative Thinking",
-            "Innovation",
-            "Idea Generation",
-            "Problem Solving"
-        ],
-
-        interests: [
-            "Innovation",
-            "Creativity",
-            "Research"
-        ],
-
-        goals: [
-            "Develop Ideas",
-            "Innovation Projects",
-            "Creative Growth"
-        ]
+/*
+   امکانات:
+   1. نمایش 8 آموزش در هر صفحه
+   2. نمایش 24 آموزش پیش‌فرض
+   3. جست‌وجو و فیلتر دسته‌بندی
+   4. صفحه‌بندی و تغییر خودکار صفحه
+   5. ذخیره آموزش‌ها
+   6. علاقه‌مندی آموزش‌ها
+   7. خرید آزمایشی آموزش‌ها
+   8. API برای مدیریت آموزش‌ها در آینده
+*/
+
+(() => {
+    "use strict";
+
+    /* =====================================================
+       1. SETTINGS
+    ===================================================== */
+
+    const STORAGE_KEYS = {
+        trainings: "respairTrainings",
+        saved: "respairSavedTrainings",
+        favorites: "respairFavoriteTrainings",
+        purchased: "respairPurchasedTrainings"
+    };
+
+
+    /* =========================================================
+       PAGE-SPECIFIC TRAINING SLIDER SETTINGS
+       ========================================================= */
+
+    const trainingIsHomePage =
+        window.location.pathname === "/" ||
+        window.location.pathname.endsWith("/index.html");
+
+    const ITEMS_PER_PAGE = trainingIsHomePage ? 4 : 8;
+    const AUTO_CHANGE_INTERVAL = trainingIsHomePage ? 5000 : 6000;
+
+    /* =====================================================
+       2. DEFAULT TRAININGS — 24 ITEMS
+    ===================================================== */
+
+    const defaultTrainings = [
+        {
+            id: "html-css-fundamentals",
+            title: "HTML & CSS Fundamentals",
+            category: "Web Development",
+            level: "Beginner",
+            duration: "4 weeks",
+            price: 0,
+            lessons: 18,
+            image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80",
+            description: "Learn the foundations of web development and build your first responsive web pages."
+        },
+        {
+            id: "javascript-essentials",
+            title: "JavaScript Essentials",
+            category: "Web Development",
+            level: "Beginner",
+            duration: "6 weeks",
+            price: 19,
+            lessons: 24,
+            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+            description: "Understand variables, functions, arrays, objects, and interactive web development."
+        },
+        {
+            id: "python-programming",
+            title: "Python Programming",
+            category: "Programming",
+            level: "Beginner",
+            duration: "8 weeks",
+            price: 25,
+            lessons: 32,
+            image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=900&q=80",
+            description: "Start programming with Python through practical examples and small projects."
+        },
+        {
+            id: "c-programming",
+            title: "C Programming from Zero",
+            category: "Programming",
+            level: "Beginner",
+            duration: "7 weeks",
+            price: 22,
+            lessons: 28,
+            image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80",
+            description: "Learn C syntax, conditions, loops, functions, arrays, and pointers step by step."
+        },
+        {
+            id: "java-fundamentals",
+            title: "Java Fundamentals",
+            category: "Programming",
+            level: "Beginner",
+            duration: "8 weeks",
+            price: 25,
+            lessons: 30,
+            image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80",
+            description: "Build a strong foundation in Java programming and object-oriented concepts."
+        },
+        {
+            id: "data-structures",
+            title: "Data Structures & Algorithms",
+            category: "Programming",
+            level: "Intermediate",
+            duration: "8 weeks",
+            price: 29,
+            lessons: 30,
+            image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=80",
+            description: "Explore arrays, linked lists, stacks, queues, trees, searching, and sorting."
+        },
+        {
+            id: "sql-database",
+            title: "SQL & Database Basics",
+            category: "Data Science",
+            level: "Beginner",
+            duration: "5 weeks",
+            price: 18,
+            lessons: 20,
+            image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=900&q=80",
+            description: "Learn database design, SQL queries, filtering, joins, and data organization."
+        },
+        {
+            id: "data-analysis",
+            title: "Data Analysis with Python",
+            category: "Data Science",
+            level: "Intermediate",
+            duration: "7 weeks",
+            price: 27,
+            lessons: 26,
+            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
+            description: "Analyze datasets, clean data, and discover useful patterns with Python."
+        },
+        {
+            id: "machine-learning",
+            title: "Introduction to Machine Learning",
+            category: "Artificial Intelligence",
+            level: "Intermediate",
+            duration: "8 weeks",
+            price: 35,
+            lessons: 28,
+            image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=900&q=80",
+            description: "Discover machine learning concepts, datasets, model training, and evaluation."
+        },
+        {
+            id: "ai-fundamentals",
+            title: "Artificial Intelligence Basics",
+            category: "Artificial Intelligence",
+            level: "Beginner",
+            duration: "5 weeks",
+            price: 24,
+            lessons: 20,
+            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80",
+            description: "Understand AI concepts, common applications, and responsible AI practices."
+        },
+        {
+            id: "deep-learning",
+            title: "Deep Learning Introduction",
+            category: "Artificial Intelligence",
+            level: "Intermediate",
+            duration: "9 weeks",
+            price: 39,
+            lessons: 32,
+            image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=900&q=80",
+            description: "Explore neural networks and the foundations of modern deep learning."
+        },
+        {
+            id: "cybersecurity-basics",
+            title: "Cybersecurity Fundamentals",
+            category: "Cybersecurity",
+            level: "Beginner",
+            duration: "6 weeks",
+            price: 26,
+            lessons: 22,
+            image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=900&q=80",
+            description: "Learn security principles, common threats, safe practices, and risk awareness."
+        },
+        {
+            id: "network-security",
+            title: "Network Security Essentials",
+            category: "Cybersecurity",
+            level: "Intermediate",
+            duration: "7 weeks",
+            price: 32,
+            lessons: 26,
+            image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80",
+            description: "Study network protection, access control, firewalls, and security monitoring."
+        },
+        {
+            id: "cryptography-basics",
+            title: "Introduction to Cryptography",
+            category: "Cybersecurity",
+            level: "Intermediate",
+            duration: "6 weeks",
+            price: 30,
+            lessons: 24,
+            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+            description: "Understand encryption, hashing, digital signatures, and cryptographic principles."
+        },
+        {
+            id: "ui-ux-design",
+            title: "UI/UX Design Fundamentals",
+            category: "Design",
+            level: "Beginner",
+            duration: "5 weeks",
+            price: 21,
+            lessons: 20,
+            image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=900&q=80",
+            description: "Learn user-centered design, wireframes, visual hierarchy, and usability."
+        },
+        {
+            id: "graphic-design",
+            title: "Graphic Design Essentials",
+            category: "Design",
+            level: "Beginner",
+            duration: "6 weeks",
+            price: 23,
+            lessons: 22,
+            image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=900&q=80",
+            description: "Explore composition, typography, color theory, and visual communication."
+        },
+        {
+            id: "responsive-bootstrap",
+            title: "Responsive Design with Bootstrap",
+            category: "Web Development",
+            level: "Beginner",
+            duration: "4 weeks",
+            price: 17,
+            lessons: 16,
+            image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
+            description: "Create responsive layouts with Bootstrap components and its grid system."
+        },
+        {
+            id: "git-github",
+            title: "Git & GitHub for Beginners",
+            category: "Programming",
+            level: "Beginner",
+            duration: "3 weeks",
+            price: 0,
+            lessons: 12,
+            image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?auto=format&fit=crop&w=900&q=80",
+            description: "Learn version control, repositories, commits, branches, and collaboration."
+        },
+        {
+            id: "professional-communication",
+            title: "Professional Communication",
+            category: "Professional Skills",
+            level: "Beginner",
+            duration: "4 weeks",
+            price: 15,
+            lessons: 14,
+            image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80",
+            description: "Improve workplace communication, teamwork, listening, and presentation skills."
+        },
+        {
+            id: "time-management",
+            title: "Time Management & Productivity",
+            category: "Professional Skills",
+            level: "Beginner",
+            duration: "3 weeks",
+            price: 12,
+            lessons: 10,
+            image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=900&q=80",
+            description: "Plan your goals, organize tasks, and build sustainable study habits."
+        },
+        {
+            id: "career-development",
+            title: "Career Development for Students",
+            category: "Professional Skills",
+            level: "Beginner",
+            duration: "4 weeks",
+            price: 16,
+            lessons: 12,
+            image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
+            description: "Prepare a CV, explore career paths, and build a professional portfolio."
+        },
+        {
+            id: "public-speaking",
+            title: "Public Speaking & Presentation",
+            category: "Professional Skills",
+            level: "Beginner",
+            duration: "4 weeks",
+            price: 14,
+            lessons: 12,
+            image: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=900&q=80",
+            description: "Develop confidence, structure presentations, and communicate ideas clearly."
+        },
+        {
+            id: "api-web-development",
+            title: "APIs & Web Integration",
+            category: "Web Development",
+            level: "Intermediate",
+            duration: "5 weeks",
+            price: 24,
+            lessons: 18,
+            image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80",
+            description: "Understand HTTP requests, JSON data, APIs, and connecting web applications."
+        },
+        {
+            id: "research-skills",
+            title: "Research Skills for Students",
+            category: "Professional Skills",
+            level: "Beginner",
+            duration: "3 weeks",
+            price: 0,
+            lessons: 10,
+            image: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=900&q=80",
+            description: "Learn to find credible sources, organize evidence, and present research clearly."
+        }
+    ];
+
+    /* =====================================================
+       3. STORAGE HELPERS
+    ===================================================== */
+
+    function readArray(key) {
+        try {
+            const value = JSON.parse(localStorage.getItem(key));
+            return Array.isArray(value) ? value : [];
+        } catch (error) {
+            console.error("Could not read storage:", key, error);
+            return [];
+        }
     }
 
-];
-
-
-/* =========================================================
-   STORAGE KEYS
-   ========================================================= */
-
-const STORAGE_KEYS = {
-
-    saved: "respairSavedTrainings",
-
-    favorites: "respairFavoriteTrainings",
-
-    purchased: "respairPurchasedTrainings",
-
-    research: "respairResearchCompleted"
-
-};
-
-
-/* =========================================================
-   GET STORAGE DATA
-   ========================================================= */
-
-function getStorageArray(key) {
-
-    try {
-
-        const data = JSON.parse(
-            localStorage.getItem(key)
-        );
-
-        return Array.isArray(data) ? data : [];
-
-    } catch (error) {
-
-        return [];
-
+    function writeArray(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch (error) {
+            console.error("Could not save storage:", key, error);
+            alert("Your browser could not save this change.");
+            return false;
+        }
     }
 
-}
+    function initializeStorage() {
+        try {
+            const existing = localStorage.getItem(STORAGE_KEYS.trainings);
 
+            if (existing === null) {
+                writeArray(STORAGE_KEYS.trainings, defaultTrainings);
+                return;
+            }
 
-/* =========================================================
-   SAVE ARRAY TO STORAGE
-   ========================================================= */
+            const parsed = JSON.parse(existing);
 
-function saveStorageArray(key, data) {
-
-    localStorage.setItem(
-        key,
-        JSON.stringify(data)
-    );
-
-}
-
-
-/* =========================================================
-   LOGIN CHECK
-   ========================================================= */
-
-function isUserLoggedIn() {
-
-    const user =
-        localStorage.getItem("respairUser");
-
-    const userData =
-        localStorage.getItem("respairUserData");
-
-    return Boolean(user || userData);
-
-}
-
-
-/* =========================================================
-   RESEARCH CHECK
-   ========================================================= */
-
-function hasCompletedResearch() {
-
-    const value =
-        localStorage.getItem(
-            STORAGE_KEYS.research
-        );
-
-    return value === "true";
-
-}
-
-
-/* =========================================================
-   PURCHASE CHECK
-   ========================================================= */
-
-function isTrainingPurchased(trainingId) {
-
-    const purchased =
-        getStorageArray(
-            STORAGE_KEYS.purchased
-        );
-
-    return purchased.includes(trainingId);
-
-}
-
-
-/* =========================================================
-   SHOW MESSAGE
-   ========================================================= */
-
-function showTrainingMessage(message) {
-
-    const oldAlert =
-        document.querySelector(".training-system-alert");
-
-    if (oldAlert) {
-        oldAlert.remove();
+            if (!Array.isArray(parsed)) {
+                writeArray(STORAGE_KEYS.trainings, defaultTrainings);
+            }
+        } catch (error) {
+            console.error("Training storage initialization failed:", error);
+            writeArray(STORAGE_KEYS.trainings, defaultTrainings);
+        }
     }
 
-    const alertBox =
-        document.createElement("div");
+    function getAllTrainings() {
+        initializeStorage();
+        return readArray(STORAGE_KEYS.trainings);
+    }
 
-    alertBox.className =
-        "training-system-alert";
+    /* =========================================================
+       USER-SPECIFIC TRAINING STORAGE
+       
+    ========================================================= */
 
-    alertBox.innerHTML = `
+    const TRAINING_DATA_FIELDS = {
+        respairSavedTrainings: "saved",
+        respairFavoriteTrainings: "favorites",
+        respairPurchasedTrainings: "classes"
+    };
 
-        <div class="training-alert-content">
+    function getTrainingUserData() {
+        // Use the existing account helper when available.
+        if (typeof window.getCurrentUserData === "function") {
+            const data = window.getCurrentUserData();
 
-            <span>${message}</span>
-
-            <button
-                type="button"
-                class="training-alert-close"
-            >
-                &times;
-            </button>
-
-        </div>
-
-    `;
-
-    document.body.appendChild(alertBox);
-
-    const closeButton =
-        alertBox.querySelector(
-            ".training-alert-close"
-        );
-
-    closeButton.addEventListener(
-        "click",
-        () => alertBox.remove()
-    );
-
-    setTimeout(() => {
-
-        if (alertBox) {
-            alertBox.remove();
+            if (data && typeof data === "object") {
+                return data;
+            }
         }
 
-    }, 4000);
+        // Fallback to the existing per-user storage structure.
+        try {
+            const user = JSON.parse(localStorage.getItem("respairUser"));
 
-}
+            if (!user) {
+                return null;
+            }
 
+            const userId = String(
+                user.id || user.email || user.username || "default-user"
+            );
 
-/* =========================================================
-   ACCESS CHECK
-   ========================================================= */
+            const allData = JSON.parse(
+                localStorage.getItem("respairUserData") || "{}"
+            );
 
-function canOpenTraining(trainingId) {
+            if (!allData[userId]) {
+                allData[userId] = {
+                    classes: [],
+                    favorites: [],
+                    saved: []
+                };
 
-    /* -----------------------------------------
-       STEP 1 — LOGIN
-       ----------------------------------------- */
+                localStorage.setItem(
+                    "respairUserData",
+                    JSON.stringify(allData)
+                );
+            }
 
-    if (!isUserLoggedIn()) {
+            const data = allData[userId];
 
-        showTrainingMessage(
-            "Please log in before accessing training details."
-        );
+            data.classes = Array.isArray(data.classes) ? data.classes : [];
+            data.favorites = Array.isArray(data.favorites) ? data.favorites : [];
+            data.saved = Array.isArray(data.saved) ? data.saved : [];
 
-        setTimeout(() => {
-
-            window.location.href = "login.html";
-
-        }, 900);
-
-        return false;
-
+            return data;
+        } catch (error) {
+            console.error("Could not load current user's data:", error);
+            return null;
+        }
     }
 
-
-    /* -----------------------------------------
-       STEP 2 — RESEARCH
-       ----------------------------------------- */
-
-    if (!hasCompletedResearch()) {
-
-        showTrainingMessage(
-            "Please complete the Research questions before accessing training details."
-        );
-
-        setTimeout(() => {
-
-            window.location.href =
-                "index.html#research";
-
-        }, 1000);
-
-        return false;
-
-    }
-
-
-    /* -----------------------------------------
-       STEP 3 — PURCHASE
-       ----------------------------------------- */
-
-    if (!isTrainingPurchased(trainingId)) {
-
-        showTrainingMessage(
-            "Please purchase this training before opening its details."
-        );
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =========================================================
-   OPEN TRAINING DETAILS
-   ========================================================= */
-
-function openTrainingDetails(trainingId) {
-
-    if (!canOpenTraining(trainingId)) {
-        return;
-    }
-
-    window.location.href =
-        `training-details.html?id=${encodeURIComponent(trainingId)}`;
-
-}
-
-
-/* =========================================================
-   SAVE TRAINING
-   ========================================================= */
-
-function toggleSavedTraining(trainingId, button) {
-
-    if (!isUserLoggedIn()) {
-
-        showTrainingMessage(
-            "Please log in to save trainings."
-        );
-
-        setTimeout(() => {
-
-            window.location.href =
-                "login.html";
-
-        }, 900);
-
-        return;
-
-    }
-
-    let saved =
-        getStorageArray(
-            STORAGE_KEYS.saved
-        );
-
-    const index =
-        saved.indexOf(trainingId);
-
-    if (index === -1) {
-
-        saved.push(trainingId);
-
-        button.classList.add("active");
-
-        button.setAttribute(
-            "title",
-            "Remove from saved"
-        );
-
-        showTrainingMessage(
-            "Training saved successfully."
-        );
-
-    } else {
-
-        saved.splice(index, 1);
-
-        button.classList.remove("active");
-
-        button.setAttribute(
-            "title",
-            "Save training"
-        );
-
-        showTrainingMessage(
-            "Training removed from saved."
-        );
-
-    }
-
-    saveStorageArray(
-        STORAGE_KEYS.saved,
-        saved
-    );
-
-}
-
-
-/* =========================================================
-   FAVORITE TRAINING
-   ========================================================= */
-
-function toggleFavoriteTraining(trainingId, button) {
-
-    if (!isUserLoggedIn()) {
-
-        showTrainingMessage(
-            "Please log in to add trainings to favorites."
-        );
-
-        setTimeout(() => {
-
-            window.location.href =
-                "login.html";
-
-        }, 900);
-
-        return;
-
-    }
-
-    let favorites =
-        getStorageArray(
-            STORAGE_KEYS.favorites
-        );
-
-    const index =
-        favorites.indexOf(trainingId);
-
-    if (index === -1) {
-
-        favorites.push(trainingId);
-
-        button.classList.add("active");
-
-        button.setAttribute(
-            "title",
-            "Remove from favorites"
-        );
-
-        showTrainingMessage(
-            "Training added to favorites."
-        );
-
-    } else {
-
-        favorites.splice(index, 1);
-
-        button.classList.remove("active");
-
-        button.setAttribute(
-            "title",
-            "Add to favorites"
-        );
-
-        showTrainingMessage(
-            "Training removed from favorites."
-        );
-
-    }
-
-    saveStorageArray(
-        STORAGE_KEYS.favorites,
-        favorites
-    );
-
-}
-
-
-/* =========================================================
-   PURCHASE TRAINING
-   ========================================================= */
-
-function purchaseTraining(trainingId) {
-
-    if (!isUserLoggedIn()) {
-
-        showTrainingMessage(
-            "Please log in before purchasing a training."
-        );
-
-        setTimeout(() => {
-
-            window.location.href =
-                "login.html";
-
-        }, 900);
-
-        return;
-
-    }
-
-
-    if (!hasCompletedResearch()) {
-
-        showTrainingMessage(
-            "Please complete the Research questions before purchasing a training."
-        );
-
-        setTimeout(() => {
-
-            window.location.href =
-                "index.html#research";
-
-        }, 1000);
-
-        return;
-
-    }
-
-
-    if (isTrainingPurchased(trainingId)) {
-
-        showTrainingMessage(
-            "You already have access to this training."
-        );
-
-        return;
-
-    }
-
-
-    const training =
-        trainings.find(
-            item => item.id === trainingId
-        );
-
-    if (!training) {
-        return;
-    }
-
-
-    /*
-       -----------------------------------------
-       DEMO PAYMENT
-       -----------------------------------------
-
-       This is currently a simulated payment.
-
-       Later we can connect this button to
-       a real payment gateway and backend.
-    */
-
-    const confirmPurchase =
-        confirm(
-            `Purchase "${training.title}"?\n\n` +
-            `After payment, you will be able to access the training details.`
-        );
-
-
-    if (!confirmPurchase) {
-        return;
-    }
-
-
-    let purchased =
-        getStorageArray(
-            STORAGE_KEYS.purchased
-        );
-
-
-    if (!purchased.includes(trainingId)) {
-
-        purchased.push(trainingId);
-
-    }
-
-
-    saveStorageArray(
-        STORAGE_KEYS.purchased,
-        purchased
-    );
-
-
-    showTrainingMessage(
-        "Payment completed successfully. You now have access to this training."
-    );
-
-
-    /*
-       Open details after successful payment
-    */
-
-    setTimeout(() => {
-
-        window.location.href =
-            `training-details.html?id=${encodeURIComponent(trainingId)}`;
-
-    }, 1200);
-
-}
-
-
-/* =========================================================
-   DISPLAY TRAININGS
-   ========================================================= */
-
-function displayTrainings(courseList) {
-
-    const container =
-        document.getElementById(
-            "trainingsContainer"
-        );
-
-    const noResults =
-        document.getElementById(
-            "noResults"
-        );
-
-    const resultsCount =
-        document.getElementById(
-            "resultsCount"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    if (!courseList.length) {
-
-        if (noResults) {
-            noResults.classList.remove("d-none");
+    function saveTrainingUserData(data) {
+        if (!data || typeof data !== "object") {
+            return false;
         }
 
-        if (resultsCount) {
-            resultsCount.textContent =
-                "0 trainings";
+        // Use the project's existing save helper when available.
+        if (typeof window.saveCurrentUserData === "function") {
+            try {
+                const result = window.saveCurrentUserData(data);
+                return result !== false;
+            } catch (error) {
+                console.error("Could not save user data:", error);
+                return false;
+            }
         }
 
-        return;
+        try {
+            const user = JSON.parse(localStorage.getItem("respairUser"));
 
+            if (!user) {
+                return false;
+            }
+
+            const userId = String(
+                user.id || user.email || user.username || "default-user"
+            );
+
+            const allData = JSON.parse(
+                localStorage.getItem("respairUserData") || "{}"
+            );
+
+            allData[userId] = data;
+
+            localStorage.setItem(
+                "respairUserData",
+                JSON.stringify(allData)
+            );
+
+            return true;
+        } catch (error) {
+            console.error("Could not save current user's data:", error);
+            return false;
+        }
     }
 
+    function getIds(storageKey) {
+        const field = TRAINING_DATA_FIELDS[storageKey];
 
-    if (noResults) {
-        noResults.classList.add("d-none");
+        if (!field) {
+            return [];
+        }
+
+        const data = getTrainingUserData();
+
+        if (!data) {
+            return [];
+        }
+
+        if (!Array.isArray(data[field])) {
+            data[field] = [];
+        }
+
+        return data[field].map(item => {
+            return typeof item === "string" ? item : item?.id;
+        }).filter(Boolean).map(String);
     }
 
-
-    if (resultsCount) {
-
-        resultsCount.textContent =
-            `${courseList.length} training${courseList.length > 1 ? "s" : ""}`;
-
+    function isSelected(storageKey, id) {
+        return getIds(storageKey).includes(String(id));
     }
 
-
-    const saved =
-        getStorageArray(
-            STORAGE_KEYS.saved
-        );
-
-    const favorites =
-        getStorageArray(
-            STORAGE_KEYS.favorites
-        );
-
-    const purchased =
-        getStorageArray(
-            STORAGE_KEYS.purchased
-        );
-
-
-    courseList.forEach(training => {
-
-        const isSaved =
-            saved.includes(training.id);
-
-        const isFavorite =
-            favorites.includes(training.id);
-
-        const isPurchased =
-            purchased.includes(training.id);
-
-
-        const col =
-            document.createElement("div");
-
-        col.className =
-            "col-md-6 col-xl-4";
-
-
-        col.innerHTML = `
-
-            <article
-                class="training-card"
-                data-training-id="${training.id}"
-            >
-
-                <!-- CARD HEADER -->
-
-                <div class="training-card-header">
-
-                    <div class="training-icon">
-
-                        <i class="bi ${training.icon}"></i>
-
-                    </div>
-
-
-                    <div class="training-actions">
-
-                        <!-- SAVE -->
-
-                        <button
-                            type="button"
-                            class="training-action-btn save-training-btn ${isSaved ? "active" : ""}"
-                            data-action="save"
-                            data-id="${training.id}"
-                            title="${isSaved ? "Remove from saved" : "Save training"}"
-                            aria-label="Save training"
-                        >
-
-                            <i class="bi ${isSaved ? "bi-bookmark-fill" : "bi-bookmark"}"></i>
-
-                        </button>
-
-
-                        <!-- FAVORITE -->
-
-                        <button
-                            type="button"
-                            class="training-action-btn favorite-training-btn ${isFavorite ? "active" : ""}"
-                            data-action="favorite"
-                            data-id="${training.id}"
-                            title="${isFavorite ? "Remove from favorites" : "Add to favorites"}"
-                            aria-label="Favorite training"
-                        >
-
-                            <i class="bi ${isFavorite ? "bi-heart-fill" : "bi-heart"}"></i>
-
-                        </button>
-
-
-                        <!-- PURCHASE -->
-
-                        <button
-                            type="button"
-                            class="training-action-btn purchase-training-btn ${isPurchased ? "purchased" : ""}"
-                            data-action="purchase"
-                            data-id="${training.id}"
-                            title="${isPurchased ? "Purchased" : "Purchase training"}"
-                            aria-label="Purchase training"
-                        >
-
-                            <i class="bi ${isPurchased ? "bi-check-circle-fill" : "bi-cart3"}"></i>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- CATEGORY -->
-
-                <span class="training-category">
-
-                    ${training.category}
-
-                </span>
-
-
-                <!-- TITLE -->
-
-                <h3 class="training-card-title">
-
-                    ${training.title}
-
-                </h3>
-
-
-                <!-- DESCRIPTION -->
-
-                <p class="training-card-description">
-
-                    ${training.description}
-
-                </p>
-
-
-                <!-- META -->
-
-                <div class="training-card-meta">
-
-                    <span>
-
-                        <i class="bi bi-bar-chart"></i>
-
-                        ${training.level}
-
-                    </span>
-
-
-                    <span>
-
-                        <i class="bi bi-clock"></i>
-
-                        ${training.duration}
-
-                    </span>
-
-                </div>
-
-
-                <!-- ACCESS BUTTON -->
-
-                <button
-                    type="button"
-                    class="training-details-btn"
-                    data-action="details"
-                    data-id="${training.id}"
+    function toggleSelection(storageKey, id) {
+        const field = TRAINING_DATA_FIELDS[storageKey];
+        const data = getTrainingUserData();
+
+        if (!field || !data) {
+            alert("Please sign in to save trainings to your account.");
+            return null;
+        }
+
+        if (!Array.isArray(data[field])) {
+            data[field] = [];
+        }
+
+        const normalizedId = String(id);
+        const ids = data[field].map(item => {
+            return typeof item === "string" ? item : item?.id;
+        }).filter(Boolean).map(String);
+
+        const exists = ids.includes(normalizedId);
+
+        data[field] = exists
+            ? ids.filter(itemId => itemId !== normalizedId)
+            : [...ids, normalizedId];
+
+        if (!saveTrainingUserData(data)) {
+            return null;
+        }
+
+        return !exists;
+    }
+
+    /* Add an enrolled training to the user's classes. */
+    function addTrainingToClasses(id) {
+        const data = getTrainingUserData();
+
+        if (!data) {
+            alert("Please sign in before enrolling in a training.");
+            return false;
+        }
+
+        if (!Array.isArray(data.classes)) {
+            data.classes = [];
+        }
+
+        const normalizedId = String(id);
+
+        const ids = data.classes.map(item => {
+            return typeof item === "string" ? item : item?.id;
+        }).filter(Boolean).map(String);
+
+        if (!ids.includes(normalizedId)) {
+            data.classes = [...ids, normalizedId];
+        }
+
+        return saveTrainingUserData(data);
+    }
+    /* =====================================================
+       4. PAGE STATE
+    ===================================================== */
+
+    let currentPage = 1;
+    let filteredTrainings = [];
+    let autoChangeTimer = null;
+    let isPaused = false;
+
+    const elements = {};
+
+    /* =====================================================
+       5. HTML ESCAPING
+    ===================================================== */
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, character => {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            };
+
+            return entities[character];
+        });
+    }
+
+    function formatPrice(price) {
+        const amount = Number(price) || 0;
+        return amount === 0 ? "Free" : "$" + amount.toFixed(2);
+    }
+
+    /* =====================================================
+       6. CREATE ONE TRAINING CARD
+    ===================================================== */
+
+    function createTrainingCard(training) {
+        const id = String(training.id);
+        const title = escapeHTML(training.title);
+        const category = escapeHTML(training.category);
+        const level = escapeHTML(training.level || "Beginner");
+        const duration = escapeHTML(training.duration || "Self-paced");
+        const description = escapeHTML(training.description || "");
+        const image = escapeHTML(training.image || "");
+        const price = Number(training.price) || 0;
+
+        const isSaved = isSelected(STORAGE_KEYS.saved, id);
+        const isFavorite = isSelected(STORAGE_KEYS.favorites, id);
+
+        const detailsUrl = "training-details.html?id=" +
+            encodeURIComponent(id);
+
+        return `
+        <article class="training-card" data-training-id="${escapeHTML(id)}">
+
+            <div class="training-card-image-wrap">
+                <img
+                    class="training-card-image"
+                    src="${image}"
+                    alt="${title}"
+                    loading="lazy"
+                    onerror="this.style.opacity='0.25';"
                 >
 
-                    ${
-                        isPurchased
-                            ? "Open Training"
-                            : "Purchase to Access"
-                    }
+                <span class="training-card-category">
+                    ${category}
+                </span>
 
-                    <i class="bi bi-arrow-right"></i>
+                <div class="training-card-actions">
 
-                </button>
+                    <button
+                        type="button"
+                        class="training-icon-button ${isSaved ? "is-active" : ""}"
+                        data-action="save"
+                        data-id="${escapeHTML(id)}"
+                        aria-label="${isSaved ? "Remove saved training" : "Save training"}"
+                        aria-pressed="${isSaved}"
+                        title="${isSaved ? "Remove from saved" : "Save training"}"
+                    >
+                        <i class="bi ${isSaved ? "bi-bookmark-fill" : "bi-bookmark"}"></i>
+                    </button>
 
-            </article>
+                    <button
+                        type="button"
+                        class="training-icon-button ${isFavorite ? "is-favorite" : ""}"
+                        data-action="favorite"
+                        data-id="${escapeHTML(id)}"
+                        aria-label="${isFavorite ? "Remove favorite" : "Add to favorites"}"
+                        aria-pressed="${isFavorite}"
+                        title="${isFavorite ? "Remove favorite" : "Add to favorites"}"
+                    >
+                        <i class="bi ${isFavorite ? "bi-heart-fill" : "bi-heart"}"></i>
+                    </button>
 
-        `;
+                </div>
+            </div>
 
+            <div class="training-card-body">
 
-        container.appendChild(col);
+                <div class="training-card-meta">
+                    <span>
+                        <i class="bi bi-bar-chart"></i>
+                        ${level}
+                    </span>
 
-    });
+                    <span>
+                        <i class="bi bi-clock"></i>
+                        ${duration}
+                    </span>
+                </div>
 
+                <h3 class="training-card-title">
+                    <a href="${detailsUrl}">
+                        ${title}
+                    </a>
+                </h3>
 
-    attachTrainingEvents();
+                <p class="training-card-description">
+                    ${description}
+                </p>
 
-}
+                <div class="training-card-footer">
 
+                    <span class="training-card-price ${price === 0 ? "is-free" : ""}">
+                        ${formatPrice(price)}
+                    </span>
 
-/* =========================================================
-   ATTACH EVENTS
-   ========================================================= */
+                    <a
+                        href="${detailsUrl}"
+                        class="training-details-button"
+                    >
+                        View Details
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
 
-function attachTrainingEvents() {
+                </div>
 
-    const container =
-        document.getElementById(
-            "trainingsContainer"
-        );
-
-    if (!container) {
-        return;
+            </div>
+        </article>
+    `;
     }
 
+    /* =====================================================
+       7. SEARCH AND CATEGORY FILTER
+    ===================================================== */
 
-    container
-        .querySelectorAll(
-            "[data-action]"
-        )
-        .forEach(button => {
+    function applyFilters() {
+        const keyword = elements.search.value.trim().toLowerCase();
+        const category = elements.category.value;
 
-            button.addEventListener(
-                "click",
-                function (event) {
+        const allTrainings = getAllTrainings();
 
-                    event.stopPropagation();
-
-
-                    const action =
-                        this.dataset.action;
-
-                    const trainingId =
-                        this.dataset.id;
-
-
-                    /* SAVE */
-
-                    if (action === "save") {
-
-                        toggleSavedTraining(
-                            trainingId,
-                            this
-                        );
-
-                        updateTrainingActionIcon(
-                            this,
-                            "save"
-                        );
-
-                        return;
-
-                    }
-
-
-                    /* FAVORITE */
-
-                    if (action === "favorite") {
-
-                        toggleFavoriteTraining(
-                            trainingId,
-                            this
-                        );
-
-                        updateTrainingActionIcon(
-                            this,
-                            "favorite"
-                        );
-
-                        return;
-
-                    }
-
-
-                    /* PURCHASE */
-
-                    if (action === "purchase") {
-
-                        purchaseTraining(
-                            trainingId
-                        );
-
-                        return;
-
-                    }
-
-
-                    /* DETAILS */
-
-                    if (action === "details") {
-
-                        openTrainingDetails(
-                            trainingId
-                        );
-
-                    }
-
-                }
-            );
-
-        });
-
-
-    /*
-       Clicking the card itself
-       also attempts to open details.
-    */
-
-    container
-        .querySelectorAll(
-            ".training-card"
-        )
-        .forEach(card => {
-
-            card.addEventListener(
-                "click",
-                function () {
-
-                    const trainingId =
-                        this.dataset.trainingId;
-
-                    openTrainingDetails(
-                        trainingId
-                    );
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   UPDATE SAVE / FAVORITE ICON
-   ========================================================= */
-
-function updateTrainingActionIcon(
-    button,
-    type
-) {
-
-    if (type === "save") {
-
-        const isActive =
-            button.classList.contains(
-                "active"
-            );
-
-        const icon =
-            button.querySelector("i");
-
-        if (icon) {
-
-            icon.className =
-                isActive
-                    ? "bi bi-bookmark-fill"
-                    : "bi bi-bookmark";
-
-        }
-
-    }
-
-
-    if (type === "favorite") {
-
-        const isActive =
-            button.classList.contains(
-                "active"
-            );
-
-        const icon =
-            button.querySelector("i");
-
-        if (icon) {
-
-            icon.className =
-                isActive
-                    ? "bi bi-heart-fill"
-                    : "bi bi-heart";
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   FILTER TRAININGS
-   ========================================================= */
-
-function filterTrainings() {
-
-    const searchInput =
-        document.getElementById(
-            "trainingSearch"
-        );
-
-    const categoryFilter =
-        document.getElementById(
-            "categoryFilter"
-        );
-
-    const levelFilter =
-        document.getElementById(
-            "levelFilter"
-        );
-
-
-    const searchTerm =
-        searchInput
-            ? searchInput.value
-                .trim()
-                .toLowerCase()
-            : "";
-
-
-    const selectedCategory =
-        categoryFilter
-            ? categoryFilter.value
-            : "";
-
-
-    const selectedLevel =
-        levelFilter
-            ? levelFilter.value
-            : "";
-
-
-    const filtered =
-        trainings.filter(training => {
-
+        filteredTrainings = allTrainings.filter(training => {
             const searchableText = [
-
                 training.title,
-
                 training.category,
-
                 training.description,
+                training.level
+            ].join(" ").toLowerCase();
 
-                ...training.skills,
-
-                ...training.interests,
-
-                ...training.goals
-
-            ]
-                .join(" ")
-                .toLowerCase();
-
-
-            const matchesSearch =
-                !searchTerm ||
-                searchableText.includes(
-                    searchTerm
-                );
-
+            const matchesKeyword = searchableText.includes(keyword);
 
             const matchesCategory =
-                !selectedCategory ||
-                training.category ===
-                selectedCategory;
+                category === "all" || training.category === category;
 
-
-            const matchesLevel =
-                !selectedLevel ||
-                training.level ===
-                selectedLevel;
-
-
-            return (
-                matchesSearch &&
-                matchesCategory &&
-                matchesLevel
-            );
-
+            return matchesKeyword && matchesCategory;
         });
 
-
-    displayTrainings(filtered);
-
-}
-
-
-/* =========================================================
-   RESET FILTERS
-   ========================================================= */
-
-function resetTrainingFilters() {
-
-    const searchInput =
-        document.getElementById(
-            "trainingSearch"
+        const totalPages = Math.max(
+            1,
+            Math.ceil(filteredTrainings.length / ITEMS_PER_PAGE)
         );
 
-    const categoryFilter =
-        document.getElementById(
-            "categoryFilter"
+        if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
+
+        renderTrainings();
+    }
+
+    /* =====================================================
+       8. RENDER CARDS
+    ===================================================== */
+
+    function renderTrainings() {
+        const totalItems = filteredTrainings.length;
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+        if (totalItems === 0) {
+            elements.grid.innerHTML = "";
+            elements.empty.hidden = false;
+            elements.pagination.hidden = true;
+            return;
+        }
+
+        elements.empty.hidden = true;
+        elements.pagination.hidden = false;
+
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const pageItems = filteredTrainings.slice(
+            startIndex,
+            startIndex + ITEMS_PER_PAGE
         );
 
-    const levelFilter =
-        document.getElementById(
-            "levelFilter"
+        elements.grid.innerHTML = pageItems
+            .map(createTrainingCard)
+            .join("");
+
+        elements.prev.disabled = currentPage <= 1;
+        elements.next.disabled = currentPage >= totalPages;
+
+        renderPageNumbers(totalPages);
+
+        const firstItem = startIndex + 1;
+        const lastItem = Math.min(
+            startIndex + ITEMS_PER_PAGE,
+            totalItems
         );
 
-
-    if (searchInput) {
-        searchInput.value = "";
+        elements.pageInfo.textContent =
+            `${firstItem}–${lastItem} of ${totalItems}`;
     }
 
-    if (categoryFilter) {
-        categoryFilter.value = "";
+    /* =====================================================
+       9. PAGE NUMBERS
+    ===================================================== */
+
+    function renderPageNumbers(totalPages) {
+        elements.pageNumbers.innerHTML = "";
+
+        for (let page = 1; page <= totalPages; page++) {
+            const button = document.createElement("button");
+
+            button.type = "button";
+            button.className = "training-page-number";
+            button.textContent = page;
+            button.setAttribute("aria-label", `Page ${page}`);
+
+            if (page === currentPage) {
+                button.classList.add("is-current");
+                button.setAttribute("aria-current", "page");
+            }
+
+            button.addEventListener("click", () => {
+                goToPage(page);
+            });
+
+            elements.pageNumbers.appendChild(button);
+        }
     }
 
-    if (levelFilter) {
-        levelFilter.value = "";
-    }
+    /* =====================================================
+       10. NAVIGATION
+    ===================================================== */
 
-
-    displayTrainings(trainings);
-
-}
-
-
-/* =========================================================
-   EVENT LISTENERS
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-
-        /* Initial display */
-
-        displayTrainings(
-            trainings
+    function goToPage(page) {
+        const totalPages = Math.ceil(
+            filteredTrainings.length / ITEMS_PER_PAGE
         );
 
-
-        /* Search */
-
-        const searchInput =
-            document.getElementById(
-                "trainingSearch"
-            );
-
-        if (searchInput) {
-
-            searchInput.addEventListener(
-                "input",
-                filterTrainings
-            );
-
+        if (totalPages === 0) {
+            currentPage = 1;
+            renderTrainings();
+            return;
         }
 
+        currentPage = Math.max(1, Math.min(page, totalPages));
 
-        /* Category */
-
-        const categoryFilter =
-            document.getElementById(
-                "categoryFilter"
-            );
-
-        if (categoryFilter) {
-
-            categoryFilter.addEventListener(
-                "change",
-                filterTrainings
-            );
-
-        }
-
-
-        /* Level */
-
-        const levelFilter =
-            document.getElementById(
-                "levelFilter"
-            );
-
-        if (levelFilter) {
-
-            levelFilter.addEventListener(
-                "change",
-                filterTrainings
-            );
-
-        }
-
-
-        /* Reset */
-
-        const resetButton =
-            document.getElementById(
-                "resetFilters"
-            );
-
-        if (resetButton) {
-
-            resetButton.addEventListener(
-                "click",
-                resetTrainingFilters
-            );
-
-        }
-
+        renderTrainings();
     }
-);
+
+    function nextPage() {
+        const totalPages = Math.ceil(
+            filteredTrainings.length / ITEMS_PER_PAGE
+        );
+
+        if (currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        } else if (totalPages > 1) {
+            goToPage(1);
+        }
+    }
+
+    function previousPage() {
+        const totalPages = Math.ceil(
+            filteredTrainings.length / ITEMS_PER_PAGE
+        );
+
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        } else if (totalPages > 1) {
+            goToPage(totalPages);
+        }
+    }
+
+    /* =====================================================
+       11. SAVE AND FAVORITE
+    ===================================================== */
+
+    function handleToggle(action, id) {
+        const user = getTrainingUserData();
+
+        if (!user) {
+            const currentPage =
+                window.location.pathname +
+                window.location.search +
+                window.location.hash;
+
+            window.location.href =
+                "login.html?redirect=" +
+                encodeURIComponent(currentPage);
+
+            return;
+        }
+
+        const key = action === "save"
+            ? STORAGE_KEYS.saved
+            : STORAGE_KEYS.favorites;
+
+        toggleSelection(key, id);
+
+        renderTrainings();
+
+        document.dispatchEvent(
+            new CustomEvent("respair:training-updated", {
+                detail: {
+                    action,
+                    id,
+                    active: isSelected(key, id)
+                }
+            })
+        );
+    }
+
+    /* =====================================================
+       12. DEMO ENROLLMENT
+    ===================================================== */
+
+
+
+    function handleEnrollment() {
+        if (!currentTraining) {
+            return;
+        }
+
+        const id = String(currentTraining.id);
+
+        // Check whether the user is signed in.
+        if (!getDetailUserData()) {
+            const redirectUrl =
+                "training-details.html?id=" +
+                encodeURIComponent(id);
+
+            window.location.href =
+                "login.html?redirect=" +
+                encodeURIComponent(redirectUrl);
+
+            return;
+        }
+
+        // Do not enroll the same user twice.
+        if (isSelected("purchased", id)) {
+            alert("You are already enrolled in this training.");
+            return;
+        }
+
+        // Send the user to the payment page.
+        window.location.href =
+            "payment.html?id=" + encodeURIComponent(id);
+    }
+    /* =====================================================
+       13. CARD BUTTON EVENTS
+    ===================================================== */
+
+    function handleGridClick(event) {
+        const button = event.target.closest("[data-action]");
+
+        if (!button || !elements.grid.contains(button)) {
+            return;
+        }
+
+        const action = button.dataset.action;
+        const id = button.dataset.id;
+
+        if (!id) {
+            return;
+        }
+
+        if (action === "save" || action === "favorite") {
+            handleToggle(action, id);
+        }
+
+        if (action === "buy") {
+            handleEnrollment(id);
+        }
+    }
+
+    /* =====================================================
+       14. AUTO-ROTATION
+    ===================================================== */
+
+    function stopAutoChange() {
+        if (autoChangeTimer !== null) {
+            clearInterval(autoChangeTimer);
+            autoChangeTimer = null;
+        }
+    }
+
+    function startAutoChange() {
+        stopAutoChange();
+
+        autoChangeTimer = setInterval(() => {
+            if (isPaused) {
+                return;
+            }
+
+            if (
+                document.activeElement === elements.search ||
+                document.activeElement === elements.category
+            ) {
+                return;
+            }
+
+            const totalPages = Math.ceil(
+                filteredTrainings.length / ITEMS_PER_PAGE
+            );
+
+            if (totalPages > 1) {
+                nextPage();
+            }
+        }, AUTO_CHANGE_INTERVAL);
+    }
+
+    /* =====================================================
+       15. ADMIN MANAGEMENT API
+       Use window.RespairTrainingAdmin in the management panel.
+    ===================================================== */
+
+    window.RespairTrainingAdmin = {
+        getAll() {
+            return getAllTrainings();
+        },
+
+        save(training) {
+            if (!training || typeof training !== "object") {
+                throw new Error("A valid training object is required.");
+            }
+
+            if (!training.id || !training.title || !training.category) {
+                throw new Error(
+                    "Training id, title, and category are required."
+                );
+            }
+
+            const all = getAllTrainings();
+            const index = all.findIndex(
+                item => String(item.id) === String(training.id)
+            );
+
+            const cleanedTraining = {
+                ...training,
+                id: String(training.id),
+                title: String(training.title).trim(),
+                category: String(training.category).trim(),
+                description: String(training.description || "").trim(),
+                level: String(training.level || "Beginner"),
+                duration: String(training.duration || "Self-paced"),
+                image: String(training.image || ""),
+                price: Math.max(0, Number(training.price) || 0),
+                lessons: Math.max(0, Number(training.lessons) || 0)
+            };
+
+            if (index >= 0) {
+                all[index] = cleanedTraining;
+            } else {
+                all.push(cleanedTraining);
+            }
+
+            if (!writeArray(STORAGE_KEYS.trainings, all)) {
+                return false;
+            }
+
+            applyFilters();
+            return true;
+        },
+
+        remove(id) {
+            const all = getAllTrainings().filter(
+                item => String(item.id) !== String(id)
+            );
+
+            const success = writeArray(STORAGE_KEYS.trainings, all);
+
+            if (success) {
+                applyFilters();
+            }
+
+            return success;
+        },
+
+        refresh() {
+            applyFilters();
+        }
+    };
+
+    /* =====================================================
+       16. INITIALIZATION
+    ===================================================== */
+
+    function initializeTrainings() {
+        const section = document.getElementById("trainings");
+
+        if (!section) {
+            return;
+        }
+
+        elements.grid = document.getElementById("trainingGrid");
+        elements.search = document.getElementById("trainingSearch");
+        elements.category = document.getElementById("trainingCategory");
+        elements.empty = document.getElementById("trainingEmpty");
+        elements.prev = document.getElementById("trainingPrev");
+        elements.next = document.getElementById("trainingNext");
+        elements.pageNumbers = document.getElementById("trainingPageNumbers");
+        elements.pageInfo = document.getElementById("trainingPageInfo");
+        elements.pagination = section.querySelector(".trainings-pagination");
+
+        const requiredElements = [
+            elements.grid,
+            elements.search,
+            elements.category,
+            elements.empty,
+            elements.prev,
+            elements.next,
+            elements.pageNumbers,
+            elements.pageInfo,
+            elements.pagination
+        ];
+
+        if (requiredElements.some(element => !element)) {
+            console.error(
+                "Trainings section is missing one or more required HTML elements."
+            );
+            return;
+        }
+
+        initializeStorage();
+
+        elements.search.addEventListener("input", () => {
+            currentPage = 1;
+            applyFilters();
+        });
+
+        elements.category.addEventListener("change", () => {
+            currentPage = 1;
+            applyFilters();
+        });
+
+        elements.prev.addEventListener("click", previousPage);
+        elements.next.addEventListener("click", nextPage);
+        elements.grid.addEventListener("click", handleGridClick);
+
+        section.addEventListener("mouseenter", () => {
+            isPaused = true;
+        });
+
+        section.addEventListener("mouseleave", () => {
+            isPaused = false;
+        });
+
+        section.addEventListener("focusin", () => {
+            isPaused = true;
+        });
+
+        section.addEventListener("focusout", event => {
+            if (!section.contains(event.relatedTarget)) {
+                isPaused = false;
+            }
+        });
+
+        window.addEventListener("storage", event => {
+            if (
+                event.key === STORAGE_KEYS.trainings ||
+                event.key === STORAGE_KEYS.saved ||
+                event.key === STORAGE_KEYS.favorites ||
+                event.key === STORAGE_KEYS.purchased
+            ) {
+                applyFilters();
+            }
+        });
+
+        applyFilters();
+        startAutoChange();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeTrainings,
+            { once: true }
+        );
+    } else {
+        initializeTrainings();
+    }
+
+})();

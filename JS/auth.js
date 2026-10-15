@@ -1318,7 +1318,7 @@ function generateUserId(role) {
    ========================================================= */
 
 function isValidEmail(email) {
-
+ 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
         email
     );

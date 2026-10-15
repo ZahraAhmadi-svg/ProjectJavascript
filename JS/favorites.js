@@ -2,989 +2,670 @@
 /* =========================================================
    RESPAIR DAWN
    FAVORITES PAGE
+   ---------------------------------------------------------
+   Supports:
+   1. Favorite stories
+   2. Favorite trainings
+   3. Per-user localStorage
+   4. Removing favorites
+   5. Filtering stories and trainings
    ========================================================= */
 
+(() => {
+    "use strict";
 
-/* =========================================================
-   GLOBAL STATE
-   ========================================================= */
+    /* =====================================================
+       1. ELEMENTS
+    ===================================================== */
 
-let allFavorites = [];
+    const grid = document.getElementById("favoritesGrid");
+    const countElement = document.getElementById("favoritesCount");
+    const messageElement = document.getElementById("favoritesMessage");
+    const filterButtons = document.querySelectorAll("[data-filter]");
 
-let filteredFavorites = [];
-
-let currentFilter = "all";
-
-
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        initializeFavorites();
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZE PAGE
-   ========================================================= */
-
-function initializeFavorites() {
-
-    const user = getCurrentUser();
-
-    if (!user) {
+    if (!grid || !countElement) {
         return;
     }
 
-    setupUserMenu(user);
-
-    loadFavorites();
-
-    setupFilters();
-
-    setupSearch();
-
-    applyFilters();
-
-}
-
-
-/* =========================================================
-   USER MENU
-   ========================================================= */
-
-function setupUserMenu(user) {
-
-    const userMenuButton =
-        document.getElementById("userMenuButton");
-
-    const userMenu =
-        document.getElementById("userMenu");
-
-    const userAvatar =
-        document.getElementById("userAvatar");
-
-    const menuUserName =
-        document.getElementById("menuUserName");
-
-    const menuUserStatus =
-        document.getElementById("menuUserStatus");
-
-    const managementMenuItem =
-        document.getElementById("managementMenuItem");
-
-    const logoutButton =
-        document.getElementById("logoutButton");
+    let currentFilter = "all";
 
 
     /* =====================================================
-       USER NAME
-       ===================================================== */
+       2. SMALL HELPERS
+    ===================================================== */
 
-    if (menuUserName) {
+    function readJSON(key, fallback = null) {
+        try {
+            const value = localStorage.getItem(key);
 
-        menuUserName.textContent =
-            user.name ||
-            user.username ||
-            "User";
-
-    }
-
-
-    /* =====================================================
-       USER STATUS
-       ===================================================== */
-
-    if (menuUserStatus) {
-
-        menuUserStatus.textContent =
-            user.role === "admin"
-                ? "Administrator"
-                : "Student";
-
-    }
-
-
-    /* =====================================================
-       AVATAR
-       ===================================================== */
-
-    if (userAvatar) {
-
-        const name =
-            user.name ||
-            user.username ||
-            "User";
-
-        userAvatar.textContent =
-            name.charAt(0).toUpperCase();
-
-    }
-
-
-    /* =====================================================
-       ADMIN MENU
-       ===================================================== */
-
-    if (
-        managementMenuItem &&
-        user.role === "admin"
-    ) {
-
-        managementMenuItem.style.display = "block";
-
-    }
-
-
-    /* =====================================================
-       MENU TOGGLE
-       ===================================================== */
-
-    if (
-        userMenuButton &&
-        userMenu
-    ) {
-
-        userMenuButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.stopPropagation();
-
-                const isOpen =
-                    userMenu.classList.toggle("show");
-
-                userMenuButton.setAttribute(
-                    "aria-expanded",
-                    isOpen ? "true" : "false"
-                );
-
+            if (value === null) {
+                return fallback;
             }
-        );
+
+            return JSON.parse(value);
+        } catch (error) {
+            console.error("Could not read:", key, error);
+            return fallback;
+        }
+    }
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, character => {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            };
+
+            return entities[character];
+        });
+    }
+
+    function normalizeIds(items) {
+        if (!Array.isArray(items)) {
+            return [];
+        }
+
+        return [...new Set(
+            items
+                .map(item => {
+                    if (typeof item === "string" || typeof item === "number") {
+                        return String(item);
+                    }
+
+                    if (item && item.id !== undefined && item.id !== null) {
+                        return String(item.id);
+                    }
+
+                    return "";
+                })
+                .filter(Boolean)
+        )];
+    }
 
 
-        document.addEventListener(
-            "click",
-            function (event) {
+    /* =====================================================
+       3. CURRENT USER
+    ===================================================== */
 
-                if (
-                    !userMenu.contains(event.target) &&
-                    !userMenuButton.contains(event.target)
-                ) {
+    function getUser() {
+        if (typeof window.getCurrentUser === "function") {
+            try {
+                const user = window.getCurrentUser();
 
-                    userMenu.classList.remove("show");
-
-                    userMenuButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
+                if (user) {
+                    return user;
                 }
-
+            } catch (error) {
+                console.error("getCurrentUser failed:", error);
             }
+        }
+
+        return readJSON("respairUser", null);
+    }
+
+
+    function getUserKey(user) {
+        if (!user) {
+            return null;
+        }
+
+        return String(
+            user.id ||
+            user.email ||
+            user.username ||
+            "default-user"
         );
-
     }
 
 
     /* =====================================================
-       LOGOUT
-       ===================================================== */
-
-    if (logoutButton) {
-
-        logoutButton.addEventListener(
-            "click",
-            logoutUser
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-function logoutUser() {
-
-    localStorage.removeItem("respairUser");
-
-    localStorage.removeItem("respairLoggedIn");
-
-    sessionStorage.removeItem(
-        "respairAdminAuthenticated"
-    );
-
-    window.location.href = "auth.html";
-
-}
-
-
-/* =========================================================
-   LOAD FAVORITES
-   ========================================================= */
-
-function loadFavorites() {
-
-    const userData =
-        getCurrentUserData();
-
-
-    if (
-        !userData ||
-        !Array.isArray(userData.favorites)
-    ) {
-
-        allFavorites = [];
-
-        filteredFavorites = [];
-
-        updateFavoriteCount();
-
-        return;
-
-    }
-
-
-    allFavorites =
-        userData.favorites
-            .map(normalizeFavorite)
-            .filter(Boolean);
-
-
-    filteredFavorites =
-        [...allFavorites];
-
-
-    updateFavoriteCount();
-
-}
-
-
-/* =========================================================
-   NORMALIZE FAVORITE
-
-   مهم:
-   این تابع فقط اطلاعات را برای صفحه Favorites
-   آماده می‌کند.
-
-   هیچ چیزی در Training / Stories تغییر نمی‌دهد.
-   ========================================================= */
-
-function normalizeFavorite(item) {
-
-    if (!item) {
-        return null;
-    }
-
-
-    /* =====================================================
-       IF ONLY AN ID WAS SAVED
-       ===================================================== */
-
-    if (typeof item === "string") {
-
-        return {
-
-            id: item,
-
-            title: item,
-
-            type: "training",
-
-            category: "Training",
-
-            description:
-                "Discover this learning opportunity on Respair Dawn.",
-
-            image:
-                "images/training-default.jpg",
-
-            year: "",
-
-            author: ""
-
-        };
-
-    }
-
-
-    /* =====================================================
-       DETERMINE TYPE
-       ===================================================== */
-
-    let type =
-        item.type ||
-        (
-            item.storyId
-                ? "story"
-                : "training"
-        );
-
-
-    type =
-        String(type).toLowerCase();
-
-
-    /* =====================================================
-       ONLY ACCEPT OUR TWO FAVORITE TYPES
-       ===================================================== */
-
-    if (
-        type !== "story" &&
-        type !== "training"
-    ) {
-
-        type = item.storyId
-            ? "story"
-            : "training";
-
-    }
-
-
-    /* =====================================================
-       RETURN NORMALIZED COPY
-
-       Important:
-       We create a NEW object.
-       We do NOT modify the original item.
-       ===================================================== */
-
-    return {
-
-        id:
-            item.id ||
-            item.courseId ||
-            item.storyId ||
-            item.title ||
-            "",
-
-        title:
-            item.title ||
-            item.name ||
-            "Untitled",
-
-        type: type,
-
-        category:
-            item.category ||
-            (
-                type === "story"
-                    ? "Inspiring Talk"
-                    : "Training"
-            ),
-
-        description:
-            item.description ||
-            "Discover more on Respair Dawn.",
-
-        image:
-            item.image ||
-            item.thumbnail ||
-            (
-                type === "story"
-                    ? "images/stories/default.jpg"
-                    : "images/training-default.jpg"
-            ),
-
-        year:
-            item.year ||
-            "",
-
-        author:
-            item.author ||
-            ""
-
-    };
-
-}
-
-
-/* =========================================================
-   UPDATE FAVORITE COUNT
-   ========================================================= */
-
-function updateFavoriteCount() {
-
-    const countElement =
-        document.getElementById("favoriteCount");
-
-
-    if (countElement) {
-
-        countElement.textContent =
-            allFavorites.length;
-
-    }
-
-}
-
-
-/* =========================================================
-   FILTER TABS
-   ========================================================= */
-
-function setupFilters() {
-
-    const buttons =
-        document.querySelectorAll(".favorite-tab");
-
-
-    buttons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    buttons.forEach(
-                        function (item) {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    button.classList.add("active");
-
-
-                    currentFilter =
-                        button.dataset.filter ||
-                        "all";
-
-
-                    applyFilters();
-
+       4. LOAD USER DATA
+    ===================================================== */
+
+    function getUserData() {
+        /*
+           Prefer the existing project helper.
+        */
+
+        if (typeof window.getCurrentUserData === "function") {
+            try {
+                const data = window.getCurrentUserData();
+
+                if (data && typeof data === "object") {
+                    data.favorites = normalizeIds(data.favorites);
+                    return data;
                 }
-            );
-
+            } catch (error) {
+                console.error("Could not load user data:", error);
+            }
         }
-    );
 
-}
+        /*
+           Fallback to the existing localStorage structure.
+        */
 
+        const user = getUser();
+        const userKey = getUserKey(user);
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
+        if (!userKey) {
+            return null;
+        }
 
-function setupSearch() {
+        const allData = readJSON("respairUserData", {});
 
-    const searchInput =
-        document.getElementById("favoriteSearch");
+        if (!allData || typeof allData !== "object") {
+            return null;
+        }
 
+        /*
+           Match the user key used by the existing Training code.
+        */
 
-    if (!searchInput) {
-        return;
+        const data = allData[userKey];
+
+        if (!data || typeof data !== "object") {
+            return null;
+        }
+
+        data.favorites = normalizeIds(data.favorites);
+        data.saved = Array.isArray(data.saved) ? data.saved : [];
+        data.classes = Array.isArray(data.classes) ? data.classes : [];
+
+        return data;
     }
 
 
-    searchInput.addEventListener(
-        "input",
-        function () {
+    /* =====================================================
+       5. SAVE USER DATA
+    ===================================================== */
 
-            applyFilters();
-
+    function saveUserData(data) {
+        if (!data || typeof data !== "object") {
+            return false;
         }
-    );
 
-}
+        /*
+           Prefer the existing project's save helper.
+        */
 
+        if (typeof window.saveCurrentUserData === "function") {
+            try {
+                const result = window.saveCurrentUserData(data);
 
-/* =========================================================
-   APPLY FILTERS
-   ========================================================= */
-
-function applyFilters() {
-
-    const searchInput =
-        document.getElementById("favoriteSearch");
-
-
-    const searchValue =
-        searchInput
-            ? searchInput.value
-                .trim()
-                .toLowerCase()
-            : "";
-
-
-    filteredFavorites =
-        allFavorites.filter(
-            function (favorite) {
-
-                /* -----------------------------------------
-                   TYPE FILTER
-                   ----------------------------------------- */
-
-                const matchesFilter =
-                    currentFilter === "all" ||
-                    favorite.type === currentFilter;
-
-
-                if (!matchesFilter) {
+                if (result === false) {
                     return false;
                 }
 
-
-                /* -----------------------------------------
-                   SEARCH
-                   ----------------------------------------- */
-
-                if (!searchValue) {
-                    return true;
-                }
-
-
-                const title =
-                    String(
-                        favorite.title || ""
-                    ).toLowerCase();
-
-
-                const category =
-                    String(
-                        favorite.category || ""
-                    ).toLowerCase();
-
-
-                const description =
-                    String(
-                        favorite.description || ""
-                    ).toLowerCase();
-
-
-                const author =
-                    String(
-                        favorite.author || ""
-                    ).toLowerCase();
-
-
-                return (
-                    title.includes(searchValue) ||
-                    category.includes(searchValue) ||
-                    description.includes(searchValue) ||
-                    author.includes(searchValue)
-                );
-
+                return true;
+            } catch (error) {
+                console.error("saveCurrentUserData failed:", error);
             }
+        }
+
+        /*
+           Fallback: save to respairUserData[userKey].
+        */
+
+        const user = getUser();
+        const userKey = getUserKey(user);
+
+        if (!userKey) {
+            return false;
+        }
+
+        const allData = readJSON("respairUserData", {});
+
+        if (!allData || typeof allData !== "object") {
+            return false;
+        }
+
+        allData[userKey] = data;
+
+        try {
+            localStorage.setItem(
+                "respairUserData",
+                JSON.stringify(allData)
+            );
+
+            return true;
+        } catch (error) {
+            console.error("Could not save favorites:", error);
+            return false;
+        }
+    }
+
+
+    /* =====================================================
+       6. GET ALL STORIES
+    ===================================================== */
+
+    function getStories() {
+        let defaultStories = [];
+
+        /*
+           JS/stories.js defines the global stories array.
+        */
+
+        try {
+            if (typeof stories !== "undefined" && Array.isArray(stories)) {
+                defaultStories = stories;
+            }
+        } catch (error) {
+            console.error("Could not read stories:", error);
+        }
+
+        /*
+           Include stories added by the admin.
+        */
+
+        const adminStories = readJSON("respairAdminStories", []);
+
+        const combined = [
+            ...defaultStories,
+            ...(Array.isArray(adminStories) ? adminStories : [])
+        ];
+
+        /*
+           Avoid duplicate story IDs.
+        */
+
+        const uniqueStories = new Map();
+
+        combined.forEach(story => {
+            if (story && story.id !== undefined) {
+                uniqueStories.set(String(story.id), story);
+            }
+        });
+
+        return [...uniqueStories.values()];
+    }
+
+
+    /* =====================================================
+       7. GET ALL TRAININGS
+    ===================================================== */
+
+    function getTrainings() {
+        /*
+           The Training system saves its course list here.
+        */
+
+        const trainings = readJSON("respairTrainings", []);
+
+        return Array.isArray(trainings) ? trainings : [];
+    }
+
+
+    /* =====================================================
+       8. BUILD FAVORITE ITEMS
+    ===================================================== */
+
+    function getFavoriteItems() {
+        const userData = getUserData();
+
+        if (!userData) {
+            return [];
+        }
+
+        const favoriteIds = normalizeIds(userData.favorites);
+
+        const allStories = getStories();
+        const allTrainings = getTrainings();
+
+        const storyMap = new Map(
+            allStories.map(item => [String(item.id), item])
         );
 
+        const trainingMap = new Map(
+            allTrainings.map(item => [String(item.id), item])
+        );
+
+        const items = [];
+
+        favoriteIds.forEach(id => {
+            /*
+               First, match against stories.
+            */
+
+            if (storyMap.has(id)) {
+                const story = storyMap.get(id);
+
+                items.push({
+                    id,
+                    type: "story",
+                    title: story.name || story.title || "Untitled Story",
+                    category: story.category || "Inspiring Story",
+                    description: story.description || "",
+                    image: story.image || "",
+                    meta: story.year || "",
+                    url: "details.html?id=" + encodeURIComponent(id)
+                });
+
+                return;
+            }
+
+            /*
+               Then, match against training courses.
+            */
+
+            if (trainingMap.has(id)) {
+                const training = trainingMap.get(id);
+
+                items.push({
+                    id,
+                    type: "training",
+                    title: training.title || "Untitled Training",
+                    category: training.category || "Training",
+                    description: training.description || "",
+                    image: training.image || "",
+                    meta: [
+                        training.level || "",
+                        training.duration || ""
+                    ].filter(Boolean).join(" · "),
+                    url: "training-details.html?id=" + encodeURIComponent(id)
+                });
+
+                return;
+            }
+
+            /*
+               If a previously favorited item no longer exists in
+               the current list, do not display a fake card.
+            */
+        });
+
+        return items;
+    }
+
+
+    /* =====================================================
+       9. CREATE FAVORITE CARD
+    ===================================================== */
+
+    function createFavoriteCard(item) {
+        const isStory = item.type === "story";
+
+        const typeLabel = isStory ? "Inspiring Story" : "Training";
+
+        const imageHTML = item.image
+            ? `
+                <img
+                    class="favorite-image"
+                    src="${escapeHTML(item.image)}"
+                    alt="${escapeHTML(item.title)}"
+                    loading="lazy"
+                    onerror="this.style.display='none';"
+                >
+            `
+            : `
+                <div
+                    class="favorite-image d-flex align-items-center justify-content-center"
+                    aria-label="No image available"
+                >
+                    <i class="bi ${isStory ? "bi-book-half" : "bi-mortarboard"}"
+                       style="font-size: 3rem; color: #718139;"></i>
+                </div>
+            `;
+
+        return `
+            <article class="favorite-card" data-favorite-id="${escapeHTML(item.id)}">
+
+                <div class="favorite-image-wrap">
+                    ${imageHTML}
+
+                    <span class="favorite-type">
+                        ${typeLabel}
+                    </span>
+
+                    <button
+                        type="button"
+                        class="favorite-heart"
+                        data-remove-favorite="${escapeHTML(item.id)}"
+                        aria-label="Remove ${escapeHTML(item.title)} from favorites"
+                        title="Remove from favorites"
+                    >
+                        <i class="bi bi-heart-fill"></i>
+                    </button>
+                </div>
+
+                <div class="favorite-body">
+
+                    <div class="favorite-category">
+                        ${escapeHTML(item.category)}
+                    </div>
+
+                    <h3 class="favorite-title">
+                        ${escapeHTML(item.title)}
+                    </h3>
+
+                    ${
+                        item.meta
+                            ? `<div class="favorite-meta">${escapeHTML(item.meta)}</div>`
+                            : ""
+                    }
+
+                    <p class="favorite-description">
+                        ${escapeHTML(item.description)}
+                    </p>
+
+                    <a class="favorite-link" href="${escapeHTML(item.url)}">
+                        ${isStory ? "Read Story" : "View Training"}
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </article>
+        `;
+    }
+
+
+    /* =====================================================
+       10. EMPTY STATE
+    ===================================================== */
+
+    function showEmptyState(title, description, showExploreLink = true) {
+        grid.innerHTML = `
+            <div class="favorites-empty">
+
+                <div class="favorites-empty-icon">
+                    <i class="bi bi-heart"></i>
+                </div>
+
+                <h3>${escapeHTML(title)}</h3>
+
+                <p>${escapeHTML(description)}</p>
+
+                ${
+                    showExploreLink
+                        ? `
+                            <a href="index.html" class="favorite-link"
+                               style="max-width: 220px; margin: 20px auto 0;">
+                                Explore Respair Dawn
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        `
+                        : ""
+                }
+
+            </div>
+        `;
+    }
+
+
+    /* =====================================================
+       11. RENDER FAVORITES
+    ===================================================== */
+
+    function renderFavorites() {
+        const user = getUser();
+
+        if (!user) {
+            countElement.textContent = "0";
+
+            messageElement.textContent =
+                "Sign in to see the favorites saved to your account.";
+
+            showEmptyState(
+                "Sign in to view your favorites",
+                "Your favorite stories and training courses are connected to your account.",
+                false
+            );
+
+            grid.innerHTML += `
+                <div style="grid-column: 1 / -1; text-align: center;">
+                    <a href="login.html" class="favorite-link"
+                       style="max-width: 200px; margin: 20px auto;">
+                        Sign In
+                    </a>
+                </div>
+            `;
+
+            return;
+        }
+
+        const allItems = getFavoriteItems();
+
+        const visibleItems = allItems.filter(item => {
+            return currentFilter === "all" || item.type === currentFilter;
+        });
+
+        countElement.textContent = String(allItems.length);
+
+        messageElement.textContent = allItems.length
+            ? "Your favorite stories and training courses are saved here."
+            : "Your collection is currently empty.";
+
+        if (allItems.length === 0) {
+            showEmptyState(
+                "No favorites yet",
+                "Tap the heart on a story or training card to add it to this collection."
+            );
+
+            return;
+        }
+
+        if (visibleItems.length === 0) {
+            showEmptyState(
+                currentFilter === "story"
+                    ? "No favorite stories"
+                    : "No favorite trainings",
+                "Choose the heart on an item to add it to this section."
+            );
+
+            return;
+        }
+
+        grid.innerHTML = visibleItems
+            .map(createFavoriteCard)
+            .join("");
+    }
+
+
+    /* =====================================================
+       12. REMOVE FAVORITE
+    ===================================================== */
+
+    function removeFavorite(id) {
+        const userData = getUserData();
+
+        if (!userData) {
+            messageElement.textContent =
+                "Please sign in to manage your favorites.";
+
+            return;
+        }
+
+        const normalizedId = String(id);
+
+        userData.favorites = normalizeIds(userData.favorites)
+            .filter(favoriteId => favoriteId !== normalizedId);
+
+        if (!saveUserData(userData)) {
+            messageElement.textContent =
+                "Could not save the change. Please check your browser storage.";
+
+            return;
+        }
+
+        messageElement.textContent = "Removed from your favorites.";
+
+        renderFavorites();
+
+        /*
+           Notify other page components, if they listen for this event.
+        */
+
+        document.dispatchEvent(
+            new CustomEvent("respair:favorites-updated", {
+                detail: {
+                    id: normalizedId
+                }
+            })
+        );
+    }
+
+
+    /* =====================================================
+       13. FILTER BUTTONS
+    ===================================================== */
+
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            currentFilter = button.dataset.filter || "all";
+
+            filterButtons.forEach(filterButton => {
+                filterButton.classList.toggle(
+                    "active",
+                    filterButton === button
+                );
+            });
+
+            renderFavorites();
+        });
+    });
+
+
+    /* =====================================================
+       14. REMOVE BUTTON EVENTS
+    ===================================================== */
+
+    grid.addEventListener("click", event => {
+        const button = event.target.closest("[data-remove-favorite]");
+
+        if (!button) {
+            return;
+        }
+
+        event.preventDefault();
+
+        removeFavorite(button.dataset.removeFavorite);
+    });
+
+
+    /* =====================================================
+       15. UPDATE WHEN STORAGE CHANGES
+    ===================================================== */
+
+    window.addEventListener("storage", event => {
+        if (
+            event.key === "respairUser" ||
+            event.key === "respairUserData" ||
+            event.key === "respairTrainings" ||
+            event.key === "respairAdminStories"
+        ) {
+            renderFavorites();
+        }
+    });
+
+
+    /* =====================================================
+       16. INITIALIZE
+    ===================================================== */
 
     renderFavorites();
 
-}
-
-
-/* =========================================================
-   RENDER FAVORITES
-   ========================================================= */
-
-function renderFavorites() {
-
-    const grid =
-        document.getElementById("favoritesGrid");
-
-    const emptyState =
-        document.getElementById("emptyState");
-
-    const noResultsState =
-        document.getElementById("noResultsState");
-
-
-    if (!grid) {
-        return;
-    }
-
-
-    grid.innerHTML = "";
-
-
-    /* =====================================================
-       NO FAVORITES
-       ===================================================== */
-
-    if (allFavorites.length === 0) {
-
-        grid.style.display = "none";
-
-
-        if (emptyState) {
-            emptyState.style.display = "flex";
-        }
-
-
-        if (noResultsState) {
-            noResultsState.style.display = "none";
-        }
-
-
-        return;
-
-    }
-
-
-    /* =====================================================
-       NO FILTER RESULTS
-       ===================================================== */
-
-    if (filteredFavorites.length === 0) {
-
-        grid.style.display = "none";
-
-
-        if (emptyState) {
-            emptyState.style.display = "none";
-        }
-
-
-        if (noResultsState) {
-            noResultsState.style.display = "flex";
-        }
-
-
-        return;
-
-    }
-
-
-    /* =====================================================
-       SHOW GRID
-       ===================================================== */
-
-    grid.style.display = "grid";
-
-
-    if (emptyState) {
-        emptyState.style.display = "none";
-    }
-
-
-    if (noResultsState) {
-        noResultsState.style.display = "none";
-    }
-
-
-    filteredFavorites.forEach(
-        function (favorite) {
-
-            const card =
-                createFavoriteCard(favorite);
-
-            grid.appendChild(card);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CREATE FAVORITE CARD
-   ========================================================= */
-
-function createFavoriteCard(favorite) {
-
-    const card =
-        document.createElement("article");
-
-
-    card.className = "favorite-card";
-
-
-    const isStory =
-        favorite.type === "story";
-
-
-    card.innerHTML = `
-
-        <div class="favorite-cover">
-
-            <img
-                src="${escapeHTML(
-                    favorite.image
-                )}"
-                alt="${escapeHTML(
-                    favorite.title
-                )}"
-            >
-
-
-            <span class="favorite-type">
-
-                <i class="bi ${
-                    isStory
-                        ? "bi-chat-quote"
-                        : "bi-book"
-                }"></i>
-
-                ${
-                    isStory
-                        ? "Inspiring Talk"
-                        : "Training"
-                }
-
-            </span>
-
-
-            <button
-                type="button"
-                class="favorite-heart-button"
-                data-favorite-id="${escapeHTML(
-                    favorite.id
-                )}"
-                aria-label="Remove from favorites"
-                title="Remove from favorites"
-            >
-
-                <i class="bi bi-heart-fill"></i>
-
-            </button>
-
-        </div>
-
-
-        <div class="favorite-content">
-
-            <span class="favorite-category">
-                ${escapeHTML(
-                    favorite.category
-                )}
-            </span>
-
-
-            <h3>
-                ${escapeHTML(
-                    favorite.title
-                )}
-            </h3>
-
-
-            <p>
-                ${escapeHTML(
-                    favorite.description
-                )}
-            </p>
-
-
-            ${
-                favorite.year
-                    ? `
-                        <span class="favorite-year">
-                            ${escapeHTML(
-                                favorite.year
-                            )}
-                        </span>
-                    `
-                    : ""
-            }
-
-
-            ${
-                favorite.author
-                    ? `
-                        <span class="favorite-author">
-                            ${escapeHTML(
-                                favorite.author
-                            )}
-                        </span>
-                    `
-                    : ""
-            }
-
-
-            <div class="favorite-footer">
-
-                <button
-                    type="button"
-                    class="favorite-open-btn"
-                >
-
-                    ${
-                        isStory
-                            ? "Read Story"
-                            : "Continue Learning"
-                    }
-
-                    <i class="bi bi-arrow-right"></i>
-
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    /* =====================================================
-       REMOVE FROM FAVORITES
-       ===================================================== */
-
-    const heartButton =
-        card.querySelector(
-            ".favorite-heart-button"
-        );
-
-
-    if (heartButton) {
-
-        heartButton.addEventListener(
-            "click",
-            function () {
-
-                removeFavorite(
-                    favorite.id
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       OPEN FAVORITE
-       ===================================================== */
-
-    const openButton =
-        card.querySelector(
-            ".favorite-open-btn"
-        );
-
-
-    if (openButton) {
-
-        openButton.addEventListener(
-            "click",
-            function () {
-
-                openFavorite(favorite);
-
-            }
-        );
-
-    }
-
-
-    return card;
-
-}
-
-
-/* =========================================================
-   REMOVE FAVORITE
-   ========================================================= */
-
-function removeFavorite(favoriteId) {
-
-    const userData =
-        getCurrentUserData();
-
-
-    if (!userData) {
-        return;
-    }
-
-
-    if (
-        !Array.isArray(
-            userData.favorites
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    userData.favorites =
-        userData.favorites.filter(
-            function (item) {
-
-                const id =
-                    typeof item === "string"
-                        ? item
-                        : (
-                            item.id ||
-                            item.courseId ||
-                            item.storyId ||
-                            item.title
-                        );
-
-
-                return id !== favoriteId;
-
-            }
-        );
-
-
-    saveCurrentUserData(userData);
-
-
-    loadFavorites();
-
-    applyFilters();
-
-}
-
-
-/* =========================================================
-   OPEN FAVORITE
-   ========================================================= */
-
-function openFavorite(favorite) {
-
-    if (!favorite || !favorite.id) {
-        return;
-    }
-
-
-    if (favorite.type === "story") {
-
-        window.location.href =
-            "story-details.html?id=" +
-            encodeURIComponent(
-                favorite.id
-            );
-
-        return;
-
-    }
-
-
-    window.location.href =
-        "training-details.html?id=" +
-        encodeURIComponent(
-            favorite.id
-        );
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
+})();

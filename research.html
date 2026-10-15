@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Research & Discover Yourself | Respair Dawn</title>
+    <meta name="description" content="Discover your interests, explore your strengths, and find your learning path with Respair Dawn.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/research.css">
+</head>
+
+<body>
+    <!-- NAVIGATION -->
+   <nav class="navbar navbar-expand-lg fixed-top">
+
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand" href="index.html#home">
+            <span class="logo-mark">R</span>
+            <span>
+                Respair <strong>Dawn</strong>
+            </span>
+        </a>
+
+        <!-- Mobile Navigation Button -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Links -->
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="index.html#home">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="about.html">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="programs.html">
+                        Programs
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="stories.html">
+                        Inspiring Talks
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       href="research.html"
+                       aria-current="page">
+                        Research
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link "
+                       href="trainings.html"
+                       >
+                        Trainings
+                    </a>
+                </li>
+
+                <!-- Start Your Journey -->
+                <li class="nav-item ms-lg-3" id="startJourneyItem">
+
+                    <a
+                        href="login.html"
+                        class="btn btn-primary"
+                        id="startJourneyButton"
+                    >
+                        Start Your Journey
+                    </a>
+
+                </li>
+
+                <!-- User Menu -->
+                <li
+                    class="nav-item user-menu-item"
+                    id="userMenuItem"
+                    style="display: none;"
+                >
+
+                    <button
+                        class="user-menu-button"
+                        id="userMenuButton"
+                        type="button"
+                        aria-label="Open user menu"
+                        aria-expanded="false"
+                    >
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                    <!-- User Dropdown -->
+                    <div class="user-menu" id="userMenu">
+
+                        <!-- User Information -->
+                        <div class="user-menu-header">
+
+                            <div class="user-avatar" id="userAvatar">
+                                <i class="bi bi-person"></i>
+                            </div>
+
+                            <div>
+                                <strong id="menuUserName">User</strong>
+
+                                <small id="menuUserStatus">
+                                    Welcome to Respair Dawn
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="user-menu-divider"></div>
+
+                        <!-- Profile -->
+                        <a href="profile.html" class="user-menu-link">
+                            <i class="bi bi-person-circle"></i>
+                            <span>Profile</span>
+                        </a>
+
+                        <!-- My Classes -->
+                        <a href="my-classes.html" class="user-menu-link">
+                            <i class="bi bi-book"></i>
+                            <span>My Classes</span>
+                        </a>
+
+                        <!-- Favorite Stories -->
+                        <a href="favorites.html" class="user-menu-link">
+                            <i class="bi bi-heart"></i>
+                            <span>Favorite Stories</span>
+                        </a>
+
+                        <!-- Saved Stories -->
+                        <a href="saved.html" class="user-menu-link">
+                            <i class="bi bi-bookmark"></i>
+                            <span>Saved Stories</span>
+                        </a>
+
+                        <!-- Inspiring Talks -->
+                        <a href="orivan-talks.html" class="user-menu-link">
+                            <i class="bi bi-mic"></i>
+                            <span>Inspiring Talks</span>
+                        </a>
+
+                        <!-- Settings -->
+                        <a href="settings.html" class="user-menu-link">
+                            <i class="bi bi-gear"></i>
+                            <span>Settings</span>
+                        </a>
+
+                        <!-- Management Panel -->
+                        <a
+                            href="management.html"
+                            class="user-menu-link"
+                            id="managementMenuItem"
+                            style="display: none;"
+                        >
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Management Panel</span>
+                        </a>
+
+                        <div class="user-menu-divider"></div>
+
+                        <!-- Logout -->
+                        <button
+                            type="button"
+                            class="user-menu-link logout-menu-link"
+                            id="logoutButton"
+                        >
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </button>
+
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+    <main>
+        <!-- HERO -->
+        <section class="research-hero">
+            <div class="container">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7">
+                        <span class="eyebrow">
+                            <i class="bi bi-compass"></i>
+                            YOUR JOURNEY STARTS HERE
+                        </span>
+
+                        <h1>
+                            Discover your strengths.
+                            <span>Shape your future.</span>
+                        </h1>
+
+                        <p class="hero-description">
+                            Everyone has a different path. Explore your interests,
+                            understand your strengths, and discover opportunities
+                            that match the person you want to become.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="#interest-test" class="btn primary-btn">
+                                Discover My Path
+                                <i class="bi bi-arrow-down-right ms-2"></i>
+                            </a>
+
+                            <a href="#ai-guide" class="btn secondary-btn">
+                                Talk to AI Guide
+                                <i class="bi bi-chat-dots ms-2"></i>
+                            </a>
+                        </div>
+
+                        <div class="hero-note">
+                            <i class="bi bi-stars"></i>
+                            10 thoughtful questions. A clearer direction.
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="hero-visual">
+                            <div class="visual-orbit orbit-one"></div>
+                            <div class="visual-orbit orbit-two"></div>
+
+                            <div class="visual-center">
+                                <i class="bi bi-compass"></i>
+                            </div>
+
+                            <div class="floating-card float-top">
+                                <i class="bi bi-lightbulb"></i>
+                                <span>Discover ideas</span>
+                            </div>
+
+                            <div class="floating-card float-left">
+                                <i class="bi bi-code-slash"></i>
+                                <span>Build skills</span>
+                            </div>
+
+                            <div class="floating-card float-right">
+                                <i class="bi bi-rocket-takeoff"></i>
+                                <span>Grow forward</span>
+                            </div>
+
+                            <div class="visual-caption">
+                                Your potential has room to grow.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRODUCTION -->
+        <section class="research-intro section-space">
+            <div class="container">
+                <div class="section-heading text-center">
+                    <span class="eyebrow">A LITTLE SELF-DISCOVERY</span>
+                    <h2>A path that starts <span>with you.</span></h2>
+                    <p>
+                        Use your interests as a starting point, not a limitation.
+                        Your answers can help you explore what to learn next.
+                    </p>
+                </div>
+
+                <div class="row g-4 mt-3">
+                    <div class="col-md-4">
+                        <article class="discovery-card">
+                            <div class="discovery-icon">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <h3>Explore</h3>
+                            <p>
+                                Understand the activities and challenges
+                                that naturally interest you.
+                            </p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-4">
+                        <article class="discovery-card">
+                            <div class="discovery-icon">
+                                <i class="bi bi-bar-chart"></i>
+                            </div>
+                            <h3>Understand</h3>
+                            <p>
+                                Review your answers and identify areas
+                                you may want to develop further.
+                            </p>
+                        </article>
+                    </div>
+
+                    <div class="col-md-4">
+                        <article class="discovery-card">
+                            <div class="discovery-icon">
+                                <i class="bi bi-signpost-split"></i>
+                            </div>
+                            <h3>Take action</h3>
+                            <p>
+                                Explore learning opportunities and choose
+                                a practical next step.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTEREST TEST -->
+        <section class="test-section section-space" id="interest-test">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">YOUR PERSONAL DISCOVERY</span>
+                    <h2>Find what <span>inspires you.</span></h2>
+                    <p>
+                        Answer honestly. There are no right or wrong answers.
+                    </p>
+                </div>
+
+                <div class="test-layout">
+                    <div class="test-main">
+                        <div class="test-topline">
+                            <span id="questionCounter">QUESTION 1 OF 10</span>
+                            <span id="progressPercent">10%</span>
+                        </div>
+
+                        <div class="progress test-progress" role="progressbar"
+                             aria-label="Quiz progress"
+                             aria-valuemin="0"
+                             aria-valuemax="100"
+                             aria-valuenow="10"
+                             id="testProgressBar">
+                            <div class="progress-bar" id="testProgress"></div>
+                        </div>
+
+                        <div id="questionArea">
+                            <div class="question-category" id="questionCategory">
+                                YOUR INTERESTS
+                            </div>
+
+                            <h3 id="questionTitle">
+                                What kind of activity makes you curious?
+                            </h3>
+
+                            <p class="question-subtitle" id="questionSubtitle">
+                                Choose the option that feels most like you.
+                            </p>
+
+                            <div id="answerOptions" class="answer-options"></div>
+                        </div>
+
+                        <div class="test-navigation">
+                            <button type="button" class="btn secondary-btn"
+                                    id="previousQuestion" disabled>
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Previous
+                            </button>
+
+                            <button type="button" class="btn primary-btn"
+                                    id="nextQuestion" disabled>
+                                Next Question
+                                <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+
+                        <p class="test-validation" id="testValidation" aria-live="polite"></p>
+                    </div>
+
+                    <aside class="test-sidebar">
+                        <div class="sidebar-icon">
+                            <i class="bi bi-journal-check"></i>
+                        </div>
+                        <h3>A moment for yourself</h3>
+                        <p>
+                            Think about what you enjoy, what you want to learn,
+                            and the problems you would like to solve.
+                        </p>
+
+                        <div class="sidebar-detail">
+                            <i class="bi bi-clock"></i>
+                            <span>About 3–5 minutes</span>
+                        </div>
+
+                        <div class="sidebar-detail">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Your answers stay in this browser</span>
+                        </div>
+
+                        <div class="sidebar-quote">
+                            “The future depends on what you do today.”
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULTS -->
+        <section class="results-section section-space" id="researchResults" hidden>
+            <div class="container">
+                <div class="results-header text-center">
+                    <div class="result-success-icon">
+                        <i class="bi bi-check2"></i>
+                    </div>
+
+                    <span class="eyebrow">YOUR DISCOVERY RESULTS</span>
+                    <h2>Your next chapter <span>starts here.</span></h2>
+                    <p>
+                        These suggestions reflect your answers. They are
+                        a starting point for exploration, not a fixed label.
+                    </p>
+                </div>
+
+                <div class="result-primary-card">
+                    <span class="result-label">YOUR TOP AREA TO EXPLORE</span>
+                    <div class="result-main-content">
+                        <div class="result-area-icon" id="topAreaIcon">
+                            <i class="bi bi-code-slash"></i>
+                        </div>
+                        <div>
+                            <h3 id="topAreaTitle">Programming</h3>
+                            <p id="topAreaDescription"></p>
+                        </div>
+                    </div>
+                    <div class="result-score-row">
+                        <span>Your interest score</span>
+                        <strong id="topAreaScore">0 / 10</strong>
+                    </div>
+                    <div class="progress result-progress">
+                        <div class="progress-bar" id="topAreaProgress"></div>
+                    </div>
+                </div>
+
+                <div class="section-heading result-subheading">
+                    <h2>Your interest <span>map.</span></h2>
+                    <p>Compare your scores across different areas.</p>
+                </div>
+
+                <div class="interest-map" id="interestMap"></div>
+
+                <div class="section-heading result-subheading">
+                    <h2>Ideas for your <span>next step.</span></h2>
+                    <p>Explore relevant courses available in your learning journey.</p>
+                </div>
+
+                <div class="row g-4" id="recommendedCourses"></div>
+
+                <div class="result-actions">
+                    <a href="index.html#trainings" class="btn primary-btn">
+                        Explore All Trainings
+                        <i class="bi bi-arrow-up-right ms-2"></i>
+                    </a>
+
+                    <a href="stories.html" class="btn secondary-btn">
+                        Explore Inspiring Talks
+                        <i class="bi bi-book ms-2"></i>
+                    </a>
+
+                    <button type="button" class="btn secondary-btn" id="retakeTest">
+                        <i class="bi bi-arrow-repeat me-2"></i>
+                        Retake Test
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI GUIDE -->
+        <section class="ai-section section-space" id="ai-guide">
+            <div class="container">
+                <div class="ai-layout">
+                    <div class="ai-intro">
+                        <span class="eyebrow">
+                            <i class="bi bi-stars"></i>
+                            YOUR LEARNING COMPANION
+                        </span>
+
+                        <h2>Questions lead to <span>possibilities.</span></h2>
+
+                        <p>
+                            Need help choosing what to learn? Ask about careers,
+                            programming, artificial intelligence, cybersecurity,
+                            research, or your next learning step.
+                        </p>
+
+                        <div class="suggested-prompts">
+                            <button type="button" class="prompt-chip"
+                                    data-prompt="How can I begin learning programming?">
+                                How do I start programming?
+                            </button>
+
+                            <button type="button" class="prompt-chip"
+                                    data-prompt="What is the difference between AI and cybersecurity?">
+                                AI or cybersecurity?
+                            </button>
+
+                            <button type="button" class="prompt-chip"
+                                    data-prompt="Help me create a beginner-friendly learning plan.">
+                                Create a learning plan
+                            </button>
+                        </div>
+
+                        <p class="ai-privacy-note">
+                            <i class="bi bi-info-circle me-1"></i>
+                            AI replies require a securely configured API endpoint.
+                        </p>
+                    </div>
+
+                    <div class="chat-card">
+                        <div class="chat-header">
+                            <div class="chat-avatar">
+                                <i class="bi bi-stars"></i>
+                            </div>
+                            <div>
+                                <h3>Respair AI Guide</h3>
+                                <span><span class="status-dot"></span> Learning assistant</span>
+                            </div>
+                            <button type="button" class="chat-clear-btn"
+                                    id="clearChat" aria-label="Clear chat">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                        </div>
+
+                        <div class="chat-messages" id="chatMessages"
+                             aria-live="polite">
+                            <div class="chat-message assistant-message">
+                                <div class="message-avatar">
+                                    <i class="bi bi-stars"></i>
+                                </div>
+                                <div class="message-bubble">
+                                    Hello! I'm here to help you explore your
+                                    interests and learning options. What would
+                                    you like to discover today?
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="chat-form" id="chatForm">
+                            <label class="visually-hidden" for="chatInput">
+                                Your question
+                            </label>
+                            <textarea id="chatInput" rows="1" maxlength="2000"
+                                      placeholder="Ask your question..."
+                                      required></textarea>
+                            <button type="submit" id="sendChatMessage"
+                                    aria-label="Send message">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                        </form>
+
+                        <p class="chat-disclaimer">
+                            AI-generated guidance may be imperfect. Review
+                            important decisions carefully.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section class="research-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <span class="eyebrow">YOUR STORY IS STILL UNFOLDING</span>
+                    <h2>Small steps. <span>Meaningful progress.</span></h2>
+                    <p>
+                        Keep learning, keep exploring, and give your potential
+                        the opportunity to grow.
+                    </p>
+                    <a href="index.html#trainings" class="btn cta-btn">
+                        Continue Your Journey
+                        <i class="bi bi-arrow-up-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<footer>
+
+        <div class="container">
+
+            <div class="row g-5">
+
+                <div class="col-lg-5">
+
+                    <a href="#home" class="footer-logo">
+
+                        <span class="logo-mark">
+                            R
+                        </span>
+
+                        Respair <strong>Dawn</strong>
+
+                    </a>
+
+
+                    <p>
+
+                        Stories become inspiration.
+                        Skills become opportunities.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-6 col-lg-2">
+
+                    <h4>
+                        Explore
+                    </h4>
+
+                    <a href="#stories">
+                        Inspiring Talks
+                    </a>
+
+                    <a href="#research">
+                        Research
+                    </a>
+
+                    <a href="#trainings">
+                        Trainings
+                    </a>
+
+                </div>
+
+
+                <div class="col-6 col-lg-2">
+
+                    <h4>
+                        Platform
+                    </h4>
+
+                    <a href="#about">
+                        About
+                    </a>
+
+                    <a href="#join">
+                        Join
+                    </a>
+
+                    <a href="#home">
+                        Home
+                    </a>
+
+                </div>
+
+
+                <div class="col-lg-3">
+
+                    <h4>
+                        Connect
+                    </h4>
+
+                    <p>
+                        Follow our talks,
+                        stories and learning
+                        opportunities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+
+                © <span class="current-year">
+                    Respair Dawn.
+                    All Rights Reserved.
+
+
+                    <span>
+                        Stories • Research • Growth
+                    </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/auth-cors.js"></script>
+    <script src="JS/auth-guard.js"></script>
+    <script src="JS/index.js"></script>
+    <script src="JS/research.js"></script>
+</body>
+</html>

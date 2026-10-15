@@ -1161,6 +1161,134 @@ p {
 }
 
 
+#research .section-label {
+    display: inline-flex;
+    align-items: center;
+    color: #718139;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+}
+
+#research .section-title span {
+    display: block;
+    color: #718139;
+}
+
+#research .research-question {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+#research .research-question > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #edf3db;
+    color: #718139;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+#research .research-question p {
+    margin: 7px 0 0;
+    line-height: 1.7;
+}
+
+#research .research-box {
+    padding: 32px;
+    background: #f5f7f2;
+    border: 1px solid #e4e8da;
+    border-radius: 24px;
+}
+
+#research .research-box > span {
+    display: block;
+    margin-bottom: 24px;
+    color: #718139;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+#research .research-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e4e8da;
+}
+
+#research .research-item:last-of-type {
+    border-bottom: none;
+}
+
+#research .research-item > strong {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #718139;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 14px rgba(23, 33, 27, 0.05);
+}
+
+#research .research-item h4 {
+    margin: 2px 0 7px;
+    color: #17211b;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+#research .research-item p {
+    margin: 0;
+    color: #7b8175;
+    font-size: 0.93rem;
+    line-height: 1.7;
+}
+
+#research .research-explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    color: #718139;
+    font-weight: 700;
+    text-decoration: none;
+    transition: gap 0.2s ease;
+}
+
+#research .research-explore-link:hover {
+    gap: 16px;
+}
+
+@media (max-width: 767.98px) {
+    #research .research-box {
+        padding: 24px 20px;
+    }
+
+    #research .research-item {
+        gap: 13px;
+    }
+
+    #research .research-item > strong {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+
 /* =========================================================
    9. TRAININGS
    ========================================================= */
@@ -2837,4 +2965,80 @@ button:focus-visible {
         width: 100%;
     }
 
+}
+
+
+
+/* =========================================================
+   RESPAIR DAWN - TRAININGS SLIDER CONTROLS
+   ========================================================= */
+
+.trainings-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.training-page-arrow {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d9e4dc;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #3e6e55;
+    cursor: pointer;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.training-page-arrow:hover {
+    background: #3e6e55;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.training-page-arrow:focus-visible {
+    outline: 3px solid #8ca994;
+    outline-offset: 3px;
+}
+
+.training-page-arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.training-page-numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.training-page-info {
+    color: #66756b;
+    font-size: 13px;
+}
+
+#trainingGrid {
+    min-width: 0;
+}
+
+@media (max-width: 576px) {
+    .trainings-pagination {
+        gap: 10px;
+    }
+
+    .training-page-arrow {
+        width: 38px;
+        height: 38px;
+    }
 }

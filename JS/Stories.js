@@ -34,7 +34,7 @@ const stories = [
         name: "Oprah Winfrey",
         category: "Media & Leadership",
         year: "1954 – Present",
-        image: "images/stories/Oprah_Winfrey.jpg",
+        image: "images/stories/Oprah-Winfrey.jpg",
         description:
             "A story of resilience, communication and building a meaningful global influence."
     },
@@ -49,7 +49,7 @@ const stories = [
         name: "Elon Musk",
         category: "Technology & Business",
         year: "1971 – Present",
-        image: "images/stories/Elon_Musk.jpg",
+        image: "images/stories/elon-musk.jpg",
         description:
             "A journey shaped by ambitious ideas, technology, risk and persistence."
     },
@@ -64,7 +64,7 @@ const stories = [
         name: "Malala Yousafzai",
         category: "Education & Activism",
         year: "1997 – Present",
-        image: "images/stories/Malala_Yousafzai.jpg",
+        image: "images/stories/Malala-Yousafzai.jpg",
         description:
             "A story of courage, education and using a voice to create positive change."
     },
@@ -94,7 +94,7 @@ const stories = [
         name: "J.K. Rowling",
         category: "Literature",
         year: "1965 – Present",
-        image: "images/stories/JK_Rowling.jpg",
+        image: "images/stories/jk-rowling.jpg",
         description:
             "A story of rejection, persistence and turning imagination into a global literary success."
     },
@@ -109,7 +109,7 @@ const stories = [
         name: "Jack Ma",
         category: "Business",
         year: "1964 – Present",
-        image: "images/stories/Jack_Ma.jpg",
+        image: "images/stories/jack-ma.jpg",
         description:
             "A journey of persistence, entrepreneurship and building a global technology company."
     },
@@ -139,7 +139,7 @@ const stories = [
         name: "Michael Jordan",
         category: "Sports",
         year: "1963 – Present",
-        image: "images/stories/Michael_Jordan.jpg",
+        image: "images/stories/michael-jordan.jpg",
         description:
             "A journey of discipline, competition, persistence and excellence in basketball."
     },
@@ -154,7 +154,7 @@ const stories = [
         name: "Walt Disney",
         category: "Creativity & Business",
         year: "1901 – 1966",
-        image: "images/stories/Walt_Disney.jpg",
+        image: "images/stories/WaltDisney.jpg",
         description:
             "A story of imagination, creativity, setbacks and building a lasting entertainment company."
     },
@@ -274,7 +274,7 @@ const stories = [
         name: "Vera Wang",
         category: "Fashion",
         year: "1949 – Present",
-        image: "images/stories/Vera_Wang.jpg",
+        image: "images/stories/vera-wang.jpg",
         description:
             "A journey of creativity and building a major career in fashion."
     },
@@ -334,7 +334,7 @@ const stories = [
         name: "Serena Williams",
         category: "Sports",
         year: "1981 – Present",
-        image: "images/stories/Serena_Williams.jpg",
+        image: "images/stories/serena_williams.jpg",
         description:
             "A story of dedication, competition and achievement in professional tennis."
     },
@@ -349,7 +349,7 @@ const stories = [
         name: "Maya Angelou",
         category: "Literature & Writing",
         year: "1928 – 2014",
-        image: "images/stories/Maya_Angelou.jpg",
+        image: "images/stories/maya_angelou.jpg",
         description:
             "A journey of writing, resilience and using words to inspire generations."
     },
@@ -2045,3 +2045,8 @@ function initializeStories() {
 
 initializeStories();
 
+document.querySelectorAll(".story-person-image").forEach(function (img) {
+    img.addEventListener("error", function () {
+        console.error("Image not found:", img.src);
+    });
+});

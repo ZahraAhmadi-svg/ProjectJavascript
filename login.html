@@ -1,120 +1,74 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="description"
+        content="Login or create your Respair Dawn account to explore learning opportunities and inspiring stories.">
 
-    <meta
-        name="description"
-        content="Respair Dawn - Login and Registration"
-    >
+    <meta name="theme-color" content="#f8f6f2">
 
-    <title>Respair Dawn | Account</title>
+    <title>Respair Dawn | Login & Register</title>
 
-
-    <!-- =====================================================
-         GOOGLE FONTS
-         ===================================================== -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet"
-    >
-
-
-    <!-- =====================================================
-         BOOTSTRAP ICONS
-         ===================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
-    >
-
-
-    <!-- =====================================================
-         BOOTSTRAP
-         ===================================================== -->
-
+    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
+    <!-- Project CSS -->
+    <link rel="stylesheet" href="CSS/variables.css">
+    <link rel="stylesheet" href="CSS/auth.css">
 
-    <!-- =====================================================
-         PROJECT CSS
-         ===================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="CSS/variables.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="CSS/auth.css"
-    >
-
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 
 <body>
 
-
     <main class="auth-page">
 
+        <section class="auth-card">
 
-        <div class="auth-card">
+            <!-- =========================================
+                 LEFT VISUAL SECTION
+            ========================================== -->
 
-
-            <!-- =================================================
-                 LEFT IMAGE
-                 ================================================= -->
-
-            <section class="auth-image">
-
-                
-
+            <aside class="auth-image">
 
                 <div class="auth-image-overlay">
 
-                    <a
-                        href="index.html"
-                        class="auth-logo"
-                    >
-                        Respair Dawn
-                    </a>
+                    <a href="index.html" class="auth-logo">
+                        <span class="logo-mark">
+                            <i class="bi bi-stars"></i>
+                        </span>
 
+                        <span>Respair Dawn</span>
+                    </a>
 
                     <div class="image-text">
 
-                        <span>
+                        <span class="eyebrow">
                             YOUR NEXT CHAPTER
                         </span>
 
                         <h1>
-                            Learn.
-                            <br>
-                            Grow.
-                            <br>
+                            Learn.<br>
+                            Grow.<br>
                             <strong>Become.</strong>
                         </h1>
 
@@ -123,35 +77,33 @@
                             Skills become opportunities.
                         </p>
 
+                        <a href="index.html" class="back-home">
+                            <i class="bi bi-arrow-left"></i>
+                            Back to Home
+                        </a>
+
                     </div>
 
-
                     <div class="image-footer">
-
                         <i class="bi bi-stars"></i>
 
                         <span>
-                            Start your journey with us.
+                            Every great journey starts somewhere.
                         </span>
-
                     </div>
 
                 </div>
 
-            </section>
+            </aside>
 
 
-
-            <!-- =================================================
-                 RIGHT CONTENT
-                 ================================================= -->
+            <!-- =========================================
+                 RIGHT FORM SECTION
+            ========================================== -->
 
             <section class="auth-content">
 
-
-                <!-- =================================================
-                     TOP SWITCH
-                     ================================================= -->
+                <!-- Top switch -->
 
                 <div class="auth-switch">
 
@@ -161,106 +113,101 @@
 
                     <button
                         type="button"
-                        id="switchButton"
-                    >
+                        id="switchButton">
                         Register now
                     </button>
 
                 </div>
 
 
+                <!-- Login / Register tabs -->
 
-                <!-- =================================================
-                     LOGIN / REGISTER TABS
-                     ================================================= -->
-
-                <div class="auth-tabs">
+                <div class="auth-tabs" role="tablist"
+                    aria-label="Account options">
 
                     <button
                         type="button"
                         id="loginTab"
                         class="auth-tab active"
-                    >
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="loginSection">
                         Login
                     </button>
-
 
                     <button
                         type="button"
                         id="registerTab"
                         class="auth-tab"
-                    >
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="registerSection">
                         Register
                     </button>
 
                 </div>
 
 
-
-                <!-- =================================================
-                     LOGIN
-                     ================================================= -->
+                <!-- =====================================
+                     LOGIN SECTION
+                ====================================== -->
 
                 <div
                     id="loginSection"
-                    class="auth-section"
-                >
+                    class="auth-section">
 
                     <div class="auth-heading">
 
-                        <p>
+                        <div class="form-icon">
+                            <i class="bi bi-person-lock"></i>
+                        </div>
+
+                        <p class="section-eyebrow">
                             WELCOME BACK
                         </p>
 
-                        <h2>
-                            Hello Again!
-                        </h2>
+                        <h2>Welcome Back!</h2>
 
                         <span>
-                            Welcome back, you've been missed!
+                            Login to continue your journey.
                         </span>
 
                     </div>
 
 
-
                     <div
                         id="loginMessage"
                         class="auth-message"
-                    ></div>
+                        role="status"
+                        aria-live="polite">
+                    </div>
 
 
+                    <form id="loginForm" novalidate>
 
-                    <form
-                        id="loginForm"
-                        novalidate
-                    >
-
-
-                        <!-- Username -->
+                        <!-- Username or email -->
 
                         <div class="form-group">
 
                             <label for="loginUsername">
-                                Username
+                                Username or Email
                             </label>
 
                             <div class="input-box">
 
-                                <i class="bi bi-person-fill"></i>
+                                <i class="bi bi-person"></i>
 
                                 <input
                                     type="text"
                                     id="loginUsername"
-                                    placeholder="Enter username"
+                                    name="loginUsername"
+                                    placeholder="Enter your username or email"
                                     autocomplete="username"
-                                    required
-                                >
+                                    required>
 
                             </div>
 
                         </div>
-
 
 
                         <!-- Password -->
@@ -273,22 +220,24 @@
 
                             <div class="input-box">
 
-                                <i class="bi bi-lock-fill"></i>
+                                <i class="bi bi-lock"></i>
 
                                 <input
                                     type="password"
                                     id="loginPassword"
-                                    placeholder="Password"
+                                    name="loginPassword"
+                                    placeholder="Enter your password"
                                     autocomplete="current-password"
-                                    required
-                                >
+                                    required>
 
                                 <button
                                     type="button"
                                     class="password-toggle"
                                     data-target="loginPassword"
-                                >
+                                    aria-label="Show or hide password">
+
                                     <i class="bi bi-eye-slash"></i>
+
                                 </button>
 
                             </div>
@@ -296,56 +245,65 @@
                         </div>
 
 
+                        <!-- Password recovery placeholder -->
 
                         <div class="forgot-password">
 
-                            <a href="#">
-                                Recovery Password
+                            <a href="#"
+                                id="recoveryLink">
+                                Forgot your password?
                             </a>
 
                         </div>
 
 
+                        <!-- Login button -->
 
                         <button
                             type="submit"
-                            class="auth-button"
-                        >
+                            class="auth-button">
 
-                            <span>
-                                Sign In
-                            </span>
+                            <span>Sign In</span>
 
                             <i class="bi bi-arrow-right"></i>
 
                         </button>
 
-
                     </form>
 
+
+                    <p class="mobile-switch">
+                        Don't have an account?
+
+                        <button
+                            type="button"
+                            id="showRegister">
+                            Register
+                        </button>
+                    </p>
 
                 </div>
 
 
-
-                <!-- =================================================
-                     REGISTER
-                     ================================================= -->
+                <!-- =====================================
+                     REGISTER SECTION
+                ====================================== -->
 
                 <div
                     id="registerSection"
-                    class="auth-section d-none"
-                >
+                    class="auth-section d-none">
 
                     <div class="auth-heading">
 
-                        <p>
+                        <div class="form-icon">
+                            <i class="bi bi-person-plus"></i>
+                        </div>
+
+                        <p class="section-eyebrow">
                             RESPAIR DAWN
                         </p>
 
-                        <h2>
-                            Create Account
-                        </h2>
+                        <h2>Create Account</h2>
 
                         <span>
                             Start your journey with us.
@@ -354,91 +312,17 @@
                     </div>
 
 
-
                     <div
                         id="registerMessage"
                         class="auth-message"
-                    ></div>
+                        role="status"
+                        aria-live="polite">
+                    </div>
 
 
+                    <form id="registerForm" novalidate>
 
-                    <form
-                        id="registerForm"
-                        novalidate
-                    >
-
-
-                        <!-- ACCOUNT TYPE -->
-
-                        <div class="form-group">
-
-                            <label>
-                                Account Type
-                            </label>
-
-
-                            <div class="account-types">
-
-
-                                <label class="account-type">
-
-                                    <input
-                                        type="radio"
-                                        name="accountType"
-                                        value="user"
-                                        checked
-                                    >
-
-                                    <span>
-
-                                        <i class="bi bi-person"></i>
-
-                                        <strong>
-                                            User
-                                        </strong>
-
-                                        <small>
-                                            Learning account
-                                        </small>
-
-                                    </span>
-
-                                </label>
-
-
-
-                                <label class="account-type">
-
-                                    <input
-                                        type="radio"
-                                        name="accountType"
-                                        value="admin"
-                                    >
-
-                                    <span>
-
-                                        <i class="bi bi-shield-lock"></i>
-
-                                        <strong>
-                                            Admin
-                                        </strong>
-
-                                        <small>
-                                            Management account
-                                        </small>
-
-                                    </span>
-
-                                </label>
-
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- FULL NAME -->
+                        <!-- Full name -->
 
                         <div class="form-group">
 
@@ -453,18 +337,17 @@
                                 <input
                                     type="text"
                                     id="registerName"
+                                    name="registerName"
                                     placeholder="Enter your full name"
                                     autocomplete="name"
-                                    required
-                                >
+                                    required>
 
                             </div>
 
                         </div>
 
 
-
-                        <!-- USERNAME -->
+                        <!-- Username -->
 
                         <div class="form-group">
 
@@ -479,23 +362,28 @@
                                 <input
                                     type="text"
                                     id="registerUsername"
+                                    name="registerUsername"
                                     placeholder="Choose a username"
                                     autocomplete="username"
-                                    required
-                                >
+                                    minlength="3"
+                                    maxlength="20"
+                                    required>
 
                             </div>
+
+                            <small class="field-hint">
+                                Use 3–20 letters, numbers or underscores.
+                            </small>
 
                         </div>
 
 
-
-                        <!-- EMAIL -->
+                        <!-- Email -->
 
                         <div class="form-group">
 
                             <label for="registerEmail">
-                                Email
+                                Email Address
                             </label>
 
                             <div class="input-box">
@@ -505,18 +393,17 @@
                                 <input
                                     type="email"
                                     id="registerEmail"
+                                    name="registerEmail"
                                     placeholder="Enter your email"
                                     autocomplete="email"
-                                    required
-                                >
+                                    required>
 
                             </div>
 
                         </div>
 
 
-
-                        <!-- PASSWORD -->
+                        <!-- Password -->
 
                         <div class="form-group">
 
@@ -531,26 +418,32 @@
                                 <input
                                     type="password"
                                     id="registerPassword"
+                                    name="registerPassword"
                                     placeholder="Create a password"
                                     autocomplete="new-password"
-                                    required
-                                >
+                                    minlength="8"
+                                    required>
 
                                 <button
                                     type="button"
                                     class="password-toggle"
                                     data-target="registerPassword"
-                                >
+                                    aria-label="Show or hide password">
+
                                     <i class="bi bi-eye-slash"></i>
+
                                 </button>
 
                             </div>
 
+                            <small class="field-hint">
+                                Use at least 8 characters.
+                            </small>
+
                         </div>
 
 
-
-                        <!-- CONFIRM PASSWORD -->
+                        <!-- Confirm password -->
 
                         <div class="form-group">
 
@@ -565,17 +458,20 @@
                                 <input
                                     type="password"
                                     id="registerConfirmPassword"
+                                    name="registerConfirmPassword"
                                     placeholder="Confirm your password"
                                     autocomplete="new-password"
-                                    required
-                                >
+                                    minlength="8"
+                                    required>
 
                                 <button
                                     type="button"
                                     class="password-toggle"
                                     data-target="registerConfirmPassword"
-                                >
+                                    aria-label="Show or hide password">
+
                                     <i class="bi bi-eye-slash"></i>
+
                                 </button>
 
                             </div>
@@ -583,127 +479,87 @@
                         </div>
 
 
-
-                        <!-- ADMIN VERIFICATION -->
-
-                        <div
-                            id="adminVerification"
-                            class="admin-verification d-none"
-                        >
-
-                            <div class="verification-title">
-
-                                <i class="bi bi-shield-lock-fill"></i>
-
-                                <div>
-
-                                    <strong>
-                                        Admin Verification
-                                    </strong>
-
-                                    <small>
-                                        Enter the admin verification code.
-                                    </small>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <label for="adminCode">
-                                    Verification Code
-                                </label>
-
-                                <div class="input-box">
-
-                                    <i class="bi bi-key"></i>
-
-                                    <input
-                                        type="password"
-                                        id="adminCode"
-                                        placeholder="Enter admin code"
-                                    >
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- TERMS -->
+                        <!-- Terms -->
 
                         <div class="terms">
 
                             <input
                                 type="checkbox"
                                 id="terms"
-                                required
-                            >
+                                name="terms"
+                                required>
 
                             <label for="terms">
-
                                 I agree to the
 
-                                <a href="#">
-                                    Terms & Conditions
+                                <a href="#"
+                                    id="termsLink">
+                                    Terms &amp; Conditions
                                 </a>
-
                             </label>
 
                         </div>
 
 
+                        <!-- Register button -->
 
                         <button
                             type="submit"
-                            class="auth-button"
-                        >
+                            class="auth-button">
 
-                            <span>
-                                Create Account
-                            </span>
+                            <span>Create Account</span>
 
                             <i class="bi bi-arrow-right"></i>
 
                         </button>
 
-
                     </form>
 
+
+                    <p class="mobile-switch">
+                        Already have an account?
+
+                        <button
+                            type="button"
+                            id="showLogin">
+                            Sign In
+                        </button>
+                    </p>
 
                 </div>
 
 
-
-                <!-- =================================================
+                <!-- =====================================
                      SECURITY NOTE
-                     ================================================= -->
+                ====================================== -->
 
                 <div class="security-note">
 
                     <i class="bi bi-shield-check"></i>
 
                     <span>
-                        Account data is stored locally on this device.
+                        Your account information is stored locally
+                        on this device.
                     </span>
 
                 </div>
 
-
             </section>
 
-        </div>
+        </section>
 
     </main>
 
 
+    <!-- =============================================
+         PROJECT JAVASCRIPT
+    ============================================== -->
 
     <script src="JS/auth.js"></script>
 
+    <!-- Mobile form switches -->
+
+   
 </body>
 
 </html>

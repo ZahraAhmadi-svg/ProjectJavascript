@@ -1,40 +1,32 @@
-/* =========================================================
-   RESPAIR DAWN — SETTINGS SYSTEM
-   ---------------------------------------------------------
-   Features:
-   1. Load the current user.
-   2. Save profile settings.
-   3. Save learning preferences.
-   4. Save notification preferences.
-   5. Save light/dark appearance.
-   6. Persist settings in localStorage.
-   7. Manage user menu and logout.
-   ========================================================= */
 
 "use strict";
+
+/* =========================================================
+   RESPAIR DAWN — SETTINGS SYSTEM
+   - Account-specific settings
+   - Profile editing and persistence
+   - Learning preferences
+   - Notification preferences
+   - Appearance settings
+   - Logout and preference reset
+   ========================================================= */
 
 
 /* =========================================================
    1. STORAGE HELPERS
    ========================================================= */
 
-function readStorage(key, fallback = null) {
+function settingsReadStorage(key, fallback = null) {
     try {
         const value = localStorage.getItem(key);
-
-        if (value === null) {
-            return fallback;
-        }
-
-        return JSON.parse(value);
+        return value === null ? fallback : JSON.parse(value);
     } catch (error) {
-        console.warn(`Could not read ${key}:`, error);
+        console.error(`Could not read ${key}:`, error);
         return fallback;
     }
 }
 
-
-function writeStorage(key, value) {
+function settingsWriteStorage(key, value) {
     try {
         localStorage.setItem(key, JSON.stringify(value));
         return true;
@@ -46,13 +38,12 @@ function writeStorage(key, value) {
 
 
 /* =========================================================
-   2. GET CURRENT USER
+   2. CURRENT USER AND STORAGE KEY
    ========================================================= */
 
-function getCurrentUser() {
-    const user = readStorage("respairUser");
+function getSettingsCurrentUser() {
+    const user = settingsReadStorage("respairUser");
 
-    // The current account should be an object.
     if (!user || typeof user !== "object" || Array.isArray(user)) {
         return null;
     }
@@ -60,55 +51,43 @@ function getCurrentUser() {
     return user;
 }
 
+function getSettingsUserName(user) {
+    if (!user) return "User";
 
-
-
-function getUserDisplayName(user) {
-    if (!user) {
-        return "User";
-    }
-
-    const name =
+    return String(
         user.fullName ||
         user.fullname ||
         user.name ||
         user.displayName ||
         user.username ||
         user.userName ||
-        "";
-
-    return String(name).trim() || "User";
+        "User"
+    ).trim() || "User";
 }
 
-
-
-function getUserEmail(user) {
-    if (!user) {
-        return "";
-    }
-
-    return user.email || user.userEmail || "";
+function getSettingsUserEmail(user) {
+    return String(user?.email || user?.userEmail || "").trim();
 }
 
+function getSettingsStorageKey(user) {
+    /*
+       Email is used first to preserve settings created by
+       the previous version of this Settings page.
+       The key remains stable when the username changes.
+    */
 
-function getUserSettingsKey(user) {
-    // Keep each account's settings separate.
-    const identifier = (
-        getUserEmail(user) ||
-        user.id ||
-        user.username ||
-        "default"
-    ).toString().trim().toLowerCase();
+    const identifier =
+        getSettingsUserEmail(user) ||
+        user?.id ||
+        user?.username ||
+        "default";
 
-    return `respairSettings_${encodeURIComponent(identifier)}`;
+    return `respairSettings_${encodeURIComponent(
+        String(identifier).trim().toLowerCase()
+    )}`;
 }
 
-
-/* =========================================================
-   3. DEFAULT SETTINGS
-   ========================================================= */
-
-function getDefaultSettings() {
+function getSettingsDefaults() {
     return {
         profile: {
             fullName: "",
@@ -135,43 +114,46 @@ function getDefaultSettings() {
     };
 }
 
+function getSettingsForCurrentUser() {
+    const defaults = getSettingsDefaults();
 
-function getCurrentSettings() {
-    const saved = readStorage(settingsStorageKey, {});
-    const defaults = getDefaultSettings();
+    const saved = settingsReadStorage(
+        settingsStorageKey,
+        {}
+    );
 
-    const settings = (
-        saved &&
-        typeof saved === "object" &&
-        !Array.isArray(saved)
-    ) ? saved : {};
+    const data =
+        saved && typeof saved === "object" && !Array.isArray(saved)
+            ? saved
+            : {};
 
     return {
         profile: {
             ...defaults.profile,
-            ...(settings.profile || {})
+            ...(data.profile || {})
         },
 
         learning: {
             ...defaults.learning,
-            ...(settings.learning || {})
+            ...(data.learning || {})
         },
 
         notifications: {
             ...defaults.notifications,
-            ...(settings.notifications || {})
+            ...(data.notifications || {})
         },
 
         appearance: {
             ...defaults.appearance,
-            ...(settings.appearance || {})
+            ...(data.appearance || {})
         }
     };
 }
 
 
 /* =========================================================
-   4. DOM ELEMENTS
+   3. DOM ELEMENTS
+   Match both Settings IDs and the shared navbar IDs.
    ========================================================= */
 
 const settingsElements = {
@@ -179,12 +161,23 @@ const settingsElements = {
     loginNotice: document.getElementById("settingsLoginNotice"),
     status: document.getElementById("settingsStatus"),
 
-    userButton: document.getElementById("settingsUserButton"),
-    userDropdown: document.getElementById("settingsUserDropdown"),
+    userButton:
+        document.getElementById("settingsUserButton") ||
+        document.getElementById("userMenuButton"),
 
-    menuAvatar: document.getElementById("menuAvatar"),
+    userDropdown:
+        document.getElementById("settingsUserDropdown") ||
+        document.getElementById("userMenu"),
+
+    menuAvatar:
+        document.getElementById("menuAvatar") ||
+        document.getElementById("userAvatar"),
+
     menuUserName: document.getElementById("menuUserName"),
-    menuUserEmail: document.getElementById("menuUserEmail"),
+
+    menuUserEmail:
+        document.getElementById("menuUserEmail") ||
+        document.getElementById("menuUserStatus"),
 
     profileForm: document.getElementById("profileSettingsForm"),
     fullName: document.getElementById("settingsFullName"),
@@ -211,27 +204,63 @@ const settingsElements = {
     saveAppearance: document.getElementById("saveAppearanceSettings"),
 
     logout: document.getElementById("settingsLogoutButton"),
+    navbarLogout: document.getElementById("logoutButton"),
     privacyLogout: document.getElementById("privacyLogoutButton"),
-    reset: document.getElementById("resetSettingsButton"),
 
+    reset: document.getElementById("resetSettingsButton"),
     currentYear: document.getElementById("settingsCurrentYear")
 };
 
 
 /* =========================================================
-   5. INITIALIZE ACCOUNT
+   4. PAGE STATE
    ========================================================= */
 
-let currentUser = getCurrentUser();
+let currentUser = getSettingsCurrentUser();
 
 let settingsStorageKey = currentUser
-    ? getUserSettingsKey(currentUser)
+    ? getSettingsStorageKey(currentUser)
     : "respairSettings_default";
 
-let currentSettings = getCurrentSettings();
+let currentSettings = getSettingsForCurrentUser();
+let settingsStatusTimeout = null;
 
 
-function initializeAccount() {
+/* =========================================================
+   5. STATUS MESSAGES
+   ========================================================= */
+
+function showSettingsStatus(message, type = "success") {
+    const status = settingsElements.status;
+
+    if (!status) return;
+
+    status.textContent = message;
+    status.classList.toggle("error", type === "error");
+    status.hidden = false;
+
+    if (settingsStatusTimeout) {
+        clearTimeout(settingsStatusTimeout);
+    }
+
+    settingsStatusTimeout = setTimeout(() => {
+        status.hidden = true;
+    }, 4000);
+}
+
+
+/* =========================================================
+   6. ACCOUNT INITIALIZATION
+   ========================================================= */
+
+function initializeSettingsAccount() {
+    if (!settingsElements.layout || !settingsElements.loginNotice) {
+        console.error(
+            "Settings layout elements are missing from settings.html."
+        );
+        return false;
+    }
+
     if (!currentUser) {
         settingsElements.layout.hidden = true;
         settingsElements.loginNotice.hidden = false;
@@ -246,47 +275,26 @@ function initializeAccount() {
     settingsElements.layout.hidden = false;
     settingsElements.loginNotice.hidden = true;
 
+    if (settingsElements.userButton) {
+        settingsElements.userButton.hidden = false;
+    }
+
     return true;
 }
 
 
 /* =========================================================
-   6. STATUS MESSAGE
+   7. AVATAR AND SHARED USER MENU
+   The shared index.js script handles menu opening/closing.
    ========================================================= */
 
-let statusTimeout = null;
-
-
-function showSettingsStatus(message, type = "success") {
-    const status = settingsElements.status;
-
-    status.textContent = message;
-    status.classList.toggle("error", type === "error");
-    status.hidden = false;
-
-    if (statusTimeout) {
-        clearTimeout(statusTimeout);
-    }
-
-    statusTimeout = setTimeout(() => {
-        status.hidden = true;
-    }, 4000);
-}
-
-
-/* =========================================================
-   7. AVATAR AND USER MENU
-   ========================================================= */
-
-function getInitials(name) {
+function getSettingsInitials(name) {
     const words = String(name || "User")
         .trim()
         .split(/\s+/)
         .filter(Boolean);
 
-    if (words.length === 0) {
-        return "U";
-    }
+    if (words.length === 0) return "U";
 
     if (words.length === 1) {
         return words[0].charAt(0).toUpperCase();
@@ -298,26 +306,14 @@ function getInitials(name) {
     ).toUpperCase();
 }
 
-
-
-function updateUserMenu() {
-    if (!currentUser) {
-        return;
-    }
-
-    const savedProfile = currentSettings.profile || {};
+function updateSettingsUserMenu() {
+    if (!currentUser) return;
 
     const name =
-        savedProfile.fullName ||
-        currentUser.fullName ||
-        currentUser.fullname ||
-        currentUser.name ||
-        currentUser.displayName ||
-        currentUser.username ||
-        currentUser.userName ||
-        "User";
+        currentSettings.profile.fullName ||
+        getSettingsUserName(currentUser);
 
-    const email = getUserEmail(currentUser);
+    const email = getSettingsUserEmail(currentUser);
 
     if (settingsElements.menuUserName) {
         settingsElements.menuUserName.textContent = name;
@@ -325,131 +321,80 @@ function updateUserMenu() {
 
     if (settingsElements.menuUserEmail) {
         settingsElements.menuUserEmail.textContent =
-            email || currentUser.role || "Your account";
+            email || "Your account";
     }
 
     if (settingsElements.menuAvatar) {
-        settingsElements.menuAvatar.textContent = getInitials(name);
+        settingsElements.menuAvatar.textContent =
+            getSettingsInitials(name);
     }
 }
-
-
-function toggleUserMenu(forceState) {
-    const button = settingsElements.userButton;
-    const dropdown = settingsElements.userDropdown;
-
-    if (!button || !dropdown) {
-        return;
-    }
-
-    const shouldOpen = typeof forceState === "boolean"
-        ? forceState
-        : dropdown.hidden;
-
-    dropdown.hidden = !shouldOpen;
-
-    button.setAttribute(
-        "aria-expanded",
-        String(shouldOpen)
-    );
-}
-
-
-if (settingsElements.userButton) {
-    settingsElements.userButton.addEventListener("click", () => {
-        toggleUserMenu();
-    });
-}
-
-
-document.addEventListener("click", (event) => {
-    const menu = document.querySelector(".settings-user-menu");
-
-    if (menu && !menu.contains(event.target)) {
-        toggleUserMenu(false);
-    }
-});
-
-
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        toggleUserMenu(false);
-    }
-});
 
 
 /* =========================================================
-   8. LOAD PROFILE INFORMATION
+   8. PROFILE INFORMATION
    ========================================================= */
 
-function loadProfileSettings() {
-    if (!currentUser) {
-        return;
+function updateSettingsProfilePreview() {
+    const fullName =
+        settingsElements.fullName?.value.trim() ||
+        settingsElements.username?.value.trim() ||
+        "Your Name";
+
+    const email = settingsElements.email?.value.trim() || "";
+
+    if (settingsElements.profilePreviewName) {
+        settingsElements.profilePreviewName.textContent = fullName;
     }
+
+    if (settingsElements.profilePreviewEmail) {
+        settingsElements.profilePreviewEmail.textContent =
+            email || "Your email address";
+    }
+
+    if (settingsElements.profileAvatar) {
+        settingsElements.profileAvatar.textContent =
+            getSettingsInitials(fullName);
+    }
+
+    if (settingsElements.bioCharacterCount) {
+        settingsElements.bioCharacterCount.textContent =
+            settingsElements.bio?.value.length || 0;
+    }
+}
+
+function loadSettingsProfile() {
+    if (!currentUser) return;
 
     const profile = currentSettings.profile;
 
-    const fullName =
-    profile.fullName ||
-    currentUser.fullName ||
-    currentUser.fullname ||
-    currentUser.name ||
-    currentUser.displayName ||
-    currentUser.username ||
-    currentUser.userName ||
-    "";
+    if (settingsElements.fullName) {
+        settingsElements.fullName.value =
+            profile.fullName || getSettingsUserName(currentUser);
+    }
 
-    const username = (
-        profile.username ||
-        currentUser.username ||
-        ""
-    );
+    if (settingsElements.username) {
+        settingsElements.username.value =
+            profile.username || currentUser.username || "";
+    }
 
-    const email = getUserEmail(currentUser);
+    if (settingsElements.email) {
+        settingsElements.email.value = getSettingsUserEmail(currentUser);
+    }
 
-    settingsElements.fullName.value = fullName;
-    settingsElements.username.value = username;
-    settingsElements.email.value = email;
-    settingsElements.bio.value = profile.bio || "";
+    if (settingsElements.bio) {
+        settingsElements.bio.value = profile.bio || "";
+    }
 
-    updateProfilePreview();
+    updateSettingsProfilePreview();
 }
-
-
-function updateProfilePreview() {
-    const fullName = (
-        settingsElements.fullName.value.trim() ||
-        settingsElements.username.value.trim() ||
-        "Your Name"
-    );
-
-    const email = settingsElements.email.value.trim();
-
-    settingsElements.profilePreviewName.textContent = fullName;
-    settingsElements.profilePreviewEmail.textContent =
-        email || "Your email address";
-
-    settingsElements.profileAvatar.textContent = getInitials(fullName);
-
-    settingsElements.bioCharacterCount.textContent =
-        settingsElements.bio.value.length;
-}
-
-
-settingsElements.fullName.addEventListener("input", updateProfilePreview);
-settingsElements.username.addEventListener("input", updateProfilePreview);
-
-settingsElements.bio.addEventListener("input", () => {
-    settingsElements.bioCharacterCount.textContent =
-        settingsElements.bio.value.length;
-});
 
 
 /* =========================================================
-   9. SAVE PROFILE
+   9. SAVE PROFILE TO SETTINGS, SESSION AND USER REGISTRY
    ========================================================= */
 
-function saveProfileSettings(event) {
+function saveSettingsProfile(event) {
     event.preventDefault();
 
     if (!currentUser) {
@@ -457,107 +402,192 @@ function saveProfileSettings(event) {
         return;
     }
 
-    if (!settingsElements.profileForm.reportValidity()) {
-        return;
-    }
+    const form = settingsElements.profileForm;
 
-    const fullName = settingsElements.fullName.value.trim();
-    const username = settingsElements.username.value.trim();
-    const bio = settingsElements.bio.value.trim();
+    if (form && !form.reportValidity()) return;
+
+    const fullName = settingsElements.fullName?.value.trim() || "";
+    const username = settingsElements.username?.value.trim() || "";
+    const bio = settingsElements.bio?.value.trim() || "";
 
     if (!fullName) {
         showSettingsStatus("Please enter your full name.", "error");
+        settingsElements.fullName?.focus();
         return;
     }
 
-    // Preserve the existing settings.
-    currentSettings.profile = {
-        fullName,
-        username,
-        bio
+    if (username && !/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+        showSettingsStatus(
+            "Username must contain 3–20 letters, numbers or underscores.",
+            "error"
+        );
+        settingsElements.username?.focus();
+        return;
+    }
+
+    /*
+       Do not allow a username already assigned to another account.
+       The account is matched by its stable ID whenever possible.
+    */
+
+    const users = settingsReadStorage("respairUsers", []);
+    const userList = Array.isArray(users) ? users : [];
+    const currentId = String(currentUser.id || "");
+    const currentEmail = getSettingsUserEmail(currentUser).toLowerCase();
+
+    const duplicateUsername = username
+        ? userList.some(account => {
+            const sameAccount =
+                (currentId && String(account.id || "") === currentId) ||
+                (
+                    currentEmail &&
+                    String(account.email || "").toLowerCase() === currentEmail
+                );
+
+            return !sameAccount &&
+                String(account.username || "").toLowerCase() ===
+                    username.toLowerCase();
+        })
+        : false;
+
+    if (duplicateUsername) {
+        showSettingsStatus(
+            "This username is already used by another account.",
+            "error"
+        );
+        settingsElements.username?.focus();
+        return;
+    }
+
+    const nextSettings = {
+        ...currentSettings,
+        profile: {
+            ...currentSettings.profile,
+            fullName,
+            username,
+            bio
+        }
     };
 
-    if (!writeStorage(settingsStorageKey, currentSettings)) {
+    if (!settingsWriteStorage(settingsStorageKey, nextSettings)) {
+        showSettingsStatus("Could not save your profile settings.", "error");
+        return;
+    }
+
+    /*
+       Update the session's name as well as fullName so that
+       pages using either property show the same display name.
+    */
+
+    const updatedUser = {
+        ...currentUser,
+        name: fullName,
+        fullName,
+        username
+    };
+
+    if (!settingsWriteStorage("respairUser", updatedUser)) {
         showSettingsStatus(
-            "Could not save your profile. Check browser storage.",
+            "Settings were saved, but the current session could not be updated.",
             "error"
         );
         return;
     }
 
     /*
-       Update the current session object while preserving
-       any other properties used by the existing project.
+       Keep the registered account in sync so the updated name
+       survives the next login.
     */
 
-    const updatedUser = {
-        ...currentUser,
-        fullName,
-        username
-    };
+    const matchingIndex = userList.findIndex(account => {
+        if (currentId && String(account.id || "") === currentId) {
+            return true;
+        }
 
-    if (!writeStorage("respairUser", updatedUser)) {
-        showSettingsStatus(
-            "Your settings were saved, but the session profile could not be updated.",
-            "error"
-        );
-        return;
+        return currentEmail &&
+            String(account.email || "").toLowerCase() === currentEmail;
+    });
+
+    if (matchingIndex !== -1) {
+        userList[matchingIndex] = {
+            ...userList[matchingIndex],
+            name: fullName,
+            username
+        };
+
+        if (!settingsWriteStorage("respairUsers", userList)) {
+            showSettingsStatus(
+                "Profile saved for this session, but the registered account could not be updated.",
+                "error"
+            );
+            return;
+        }
     }
 
     currentUser = updatedUser;
+    currentSettings = nextSettings;
 
-    updateProfilePreview();
-    updateUserMenu();
+    updateSettingsProfilePreview();
+    updateSettingsUserMenu();
 
     showSettingsStatus("Your profile settings have been saved.");
 }
 
-
-settingsElements.profileForm.addEventListener(
-    "submit",
-    saveProfileSettings
+settingsElements.fullName?.addEventListener(
+    "input",
+    updateSettingsProfilePreview
 );
 
+settingsElements.username?.addEventListener(
+    "input",
+    updateSettingsProfilePreview
+);
 
-/*
-   Cancel restores the last saved profile instead of
-   leaving unsaved input in the form.
-*/
+settingsElements.bio?.addEventListener("input", () => {
+    if (settingsElements.bioCharacterCount) {
+        settingsElements.bioCharacterCount.textContent =
+            settingsElements.bio.value.length;
+    }
+});
 
-settingsElements.profileForm.addEventListener("reset", (event) => {
+settingsElements.profileForm?.addEventListener(
+    "submit",
+    saveSettingsProfile
+);
+
+settingsElements.profileForm?.addEventListener("reset", event => {
     event.preventDefault();
 
-    currentSettings = getCurrentSettings();
-
-    loadProfileSettings();
+    currentSettings = getSettingsForCurrentUser();
+    loadSettingsProfile();
 
     showSettingsStatus("Unsaved profile changes were discarded.");
 });
 
 
 /* =========================================================
-   10. LOAD LEARNING PREFERENCES
+   10. LEARNING PREFERENCES
    ========================================================= */
 
-function loadLearningSettings() {
+function loadSettingsLearning() {
     const learning = currentSettings.learning;
 
-    settingsElements.preferredLearning.value =
-        learning.preferredLearning;
+    if (settingsElements.preferredLearning) {
+        settingsElements.preferredLearning.value =
+            learning.preferredLearning;
+    }
 
-    settingsElements.learningGoal.value =
-        learning.learningGoal;
+    if (settingsElements.learningGoal) {
+        settingsElements.learningGoal.value = learning.learningGoal;
+    }
 
-    settingsElements.dailyLearningTime.value =
-        learning.dailyLearningTime;
+    if (settingsElements.dailyLearningTime) {
+        settingsElements.dailyLearningTime.value =
+            learning.dailyLearningTime;
+    }
 }
 
-
-/* =========================================================
-   11. SAVE LEARNING PREFERENCES
-   ========================================================= */
-
-function saveLearningSettings() {
+function saveSettingsLearning() {
     if (!currentUser) {
         showSettingsStatus("Please log in first.", "error");
         return;
@@ -565,59 +595,51 @@ function saveLearningSettings() {
 
     currentSettings.learning = {
         preferredLearning:
-            settingsElements.preferredLearning.value,
+            settingsElements.preferredLearning?.value || "",
 
         learningGoal:
-            settingsElements.learningGoal.value,
+            settingsElements.learningGoal?.value || "personal-growth",
 
         dailyLearningTime:
-            settingsElements.dailyLearningTime.value
+            settingsElements.dailyLearningTime?.value || "30"
     };
 
-    if (!writeStorage(settingsStorageKey, currentSettings)) {
-        showSettingsStatus(
-            "Learning preferences could not be saved.",
-            "error"
-        );
+    if (!settingsWriteStorage(settingsStorageKey, currentSettings)) {
+        showSettingsStatus("Learning preferences could not be saved.", "error");
         return;
     }
 
     showSettingsStatus("Your learning preferences have been saved.");
 }
 
-
-settingsElements.saveLearning.addEventListener(
+settingsElements.saveLearning?.addEventListener(
     "click",
-    saveLearningSettings
+    saveSettingsLearning
 );
 
 
 /* =========================================================
-   12. LOAD NOTIFICATIONS
+   11. NOTIFICATION PREFERENCES
    ========================================================= */
 
-const notificationElements = {
+const settingsNotificationElements = {
     learningReminders: settingsElements.learningReminders,
     trainingNotifications: settingsElements.trainingNotifications,
     storyNotifications: settingsElements.storyNotifications,
     researchNotifications: settingsElements.researchNotifications
 };
 
-
-function loadNotificationSettings() {
+function loadSettingsNotifications() {
     const notifications = currentSettings.notifications;
 
-    Object.entries(notificationElements).forEach(([key, element]) => {
-        element.checked = Boolean(notifications[key]);
+    Object.entries(settingsNotificationElements).forEach(([key, element]) => {
+        if (element) {
+            element.checked = Boolean(notifications[key]);
+        }
     });
 }
 
-
-/* =========================================================
-   13. SAVE NOTIFICATIONS
-   ========================================================= */
-
-function saveNotificationSettings() {
+function saveSettingsNotifications() {
     if (!currentUser) {
         showSettingsStatus("Please log in first.", "error");
         return;
@@ -625,127 +647,100 @@ function saveNotificationSettings() {
 
     const notifications = {};
 
-    Object.entries(notificationElements).forEach(([key, element]) => {
-        notifications[key] = element.checked;
+    Object.entries(settingsNotificationElements).forEach(([key, element]) => {
+        notifications[key] = element ? element.checked : false;
     });
 
     currentSettings.notifications = notifications;
 
-    if (!writeStorage(settingsStorageKey, currentSettings)) {
-        showSettingsStatus(
-            "Notification preferences could not be saved.",
-            "error"
-        );
+    if (!settingsWriteStorage(settingsStorageKey, currentSettings)) {
+        showSettingsStatus("Notification preferences could not be saved.", "error");
         return;
     }
 
     showSettingsStatus("Your notification preferences have been saved.");
 }
 
-
-settingsElements.saveNotifications.addEventListener(
+settingsElements.saveNotifications?.addEventListener(
     "click",
-    saveNotificationSettings
+    saveSettingsNotifications
 );
 
 
 /* =========================================================
-   14. APPEARANCE
+   12. APPEARANCE
    ========================================================= */
 
-function getSelectedTheme() {
+function getSettingsSelectedTheme() {
     const selected = document.querySelector(
         'input[name="settingsTheme"]:checked'
     );
 
-    return selected ? selected.value : "light";
+    return selected?.value === "dark" ? "dark" : "light";
 }
 
+function applySettingsTheme(theme) {
+    const normalizedTheme = theme === "dark" ? "dark" : "light";
 
-function applyAppearance(theme) {
     document.body.classList.toggle(
         "settings-dark",
-        theme === "dark"
+        normalizedTheme === "dark"
     );
 
-    const lightThemeRadio = document.querySelector(
-        'input[name="settingsTheme"][value="light"]'
-    );
-
-    const darkThemeRadio = document.querySelector(
-        'input[name="settingsTheme"][value="dark"]'
-    );
-
-    if (lightThemeRadio && darkThemeRadio) {
-        lightThemeRadio.checked = theme === "light";
-        darkThemeRadio.checked = theme === "dark";
-    }
+    document.querySelectorAll('input[name="settingsTheme"]').forEach(radio => {
+        radio.checked = radio.value === normalizedTheme;
+    });
 }
 
-
-function loadAppearanceSettings() {
-    const theme = currentSettings.appearance.theme === "dark"
-        ? "dark"
-        : "light";
-
-    applyAppearance(theme);
+function loadSettingsAppearance() {
+    applySettingsTheme(currentSettings.appearance.theme);
 }
 
-
-function saveAppearanceSettings() {
+function saveSettingsAppearance() {
     if (!currentUser) {
         showSettingsStatus("Please log in first.", "error");
         return;
     }
 
-    const theme = getSelectedTheme();
+    const theme = getSettingsSelectedTheme();
 
     currentSettings.appearance = { theme };
 
-    if (!writeStorage(settingsStorageKey, currentSettings)) {
-        showSettingsStatus(
-            "Appearance preference could not be saved.",
-            "error"
-        );
+    if (!settingsWriteStorage(settingsStorageKey, currentSettings)) {
+        showSettingsStatus("Appearance preference could not be saved.", "error");
         return;
     }
 
-    applyAppearance(theme);
-
-    showSettingsStatus(
-        `Your appearance preference has been saved.`
-    );
+    applySettingsTheme(theme);
+    showSettingsStatus("Your appearance preference has been saved.");
 }
 
-
-settingsElements.saveAppearance.addEventListener(
+settingsElements.saveAppearance?.addEventListener(
     "click",
-    saveAppearanceSettings
+    saveSettingsAppearance
 );
 
 
 /* =========================================================
-   15. RESET PREFERENCES
+   13. RESET PREFERENCES
+   Keep profile information; reset other preferences.
    ========================================================= */
 
-function resetPreferences() {
+function resetSettingsPreferences() {
     if (!currentUser) {
         showSettingsStatus("Please log in first.", "error");
         return;
     }
 
     const confirmed = window.confirm(
-        "Reset your learning, notification, and appearance preferences? " +
-        "Your profile information will not be deleted."
+        "Reset your learning, notification and appearance preferences? " +
+        "Your profile information will remain unchanged."
     );
 
-    if (!confirmed) {
-        return;
-    }
+    if (!confirmed) return;
 
-    const defaults = getDefaultSettings();
+    const defaults = getSettingsDefaults();
 
-    // Keep the profile but reset other preferences.
     currentSettings = {
         ...defaults,
         profile: {
@@ -753,92 +748,71 @@ function resetPreferences() {
         }
     };
 
-    if (!writeStorage(settingsStorageKey, currentSettings)) {
-        showSettingsStatus(
-            "Preferences could not be reset.",
-            "error"
-        );
+    if (!settingsWriteStorage(settingsStorageKey, currentSettings)) {
+        showSettingsStatus("Preferences could not be reset.", "error");
         return;
     }
 
-    loadProfileSettings();
-    loadLearningSettings();
-    loadNotificationSettings();
-    loadAppearanceSettings();
+    loadSettingsLearning();
+    loadSettingsNotifications();
+    loadSettingsAppearance();
+    loadSettingsProfile();
+    updateSettingsUserMenu();
 
     showSettingsStatus("Your preferences have been reset.");
 }
 
-
-settingsElements.reset.addEventListener(
+settingsElements.reset?.addEventListener(
     "click",
-    resetPreferences
+    resetSettingsPreferences
 );
 
 
 /* =========================================================
-   16. LOG OUT
+   14. LOGOUT
+   Preserve accounts, classes, favorites and preferences.
    ========================================================= */
 
-function logoutCurrentUser() {
+function logoutSettingsUser() {
     if (!currentUser) {
         window.location.href = "login.html";
         return;
     }
 
-    const confirmed = window.confirm(
-        "Are you sure you want to log out?"
-    );
+    const confirmed = window.confirm("Are you sure you want to log out?");
 
-    if (!confirmed) {
-        return;
-    }
-
-    /*
-       Remove only the active session key.
-       Keep profile data and saved preferences.
-    */
+    if (!confirmed) return;
 
     try {
         localStorage.removeItem("respairUser");
+        localStorage.removeItem("respairLoggedIn");
+        localStorage.removeItem("loginTime");
+
+        sessionStorage.removeItem("respairAdminAuthenticated");
+
+        window.location.href = "login.html";
     } catch (error) {
-        console.error("Could not clear the session:", error);
-
-        showSettingsStatus(
-            "Could not log out. Please try again.",
-            "error"
-        );
-
-        return;
+        console.error("Could not log out:", error);
+        showSettingsStatus("Could not log out. Please try again.", "error");
     }
-
-    window.location.href = "login.html";
 }
 
-
-settingsElements.logout.addEventListener(
-    "click",
-    logoutCurrentUser
-);
-
-settingsElements.privacyLogout.addEventListener(
-    "click",
-    logoutCurrentUser
-);
+settingsElements.logout?.addEventListener("click", logoutSettingsUser);
+settingsElements.navbarLogout?.addEventListener("click", logoutSettingsUser);
+settingsElements.privacyLogout?.addEventListener("click", logoutSettingsUser);
 
 
 /* =========================================================
-   17. SIDEBAR NAVIGATION
+   15. SIDEBAR AND FOOTER
    ========================================================= */
 
-const sidebarLinks = document.querySelectorAll(
+const settingsSidebarLinks = document.querySelectorAll(
     ".settings-sidebar-link"
 );
 
-
-sidebarLinks.forEach((link) => {
+settingsSidebarLinks.forEach(link => {
     link.addEventListener("click", () => {
-        sidebarLinks.forEach((item) => {
+        settingsSidebarLinks.forEach(item => {
             item.classList.remove("active");
         });
 
@@ -846,33 +820,25 @@ sidebarLinks.forEach((link) => {
     });
 });
 
-
-/* =========================================================
-   18. FOOTER YEAR
-   ========================================================= */
-
-settingsElements.currentYear.textContent =
-    new Date().getFullYear();
+if (settingsElements.currentYear) {
+    settingsElements.currentYear.textContent = new Date().getFullYear();
+}
 
 
 /* =========================================================
-   19. INITIALIZE PAGE
+   16. INITIALIZE PAGE
    ========================================================= */
 
 function initializeSettingsPage() {
-    if (!initializeAccount()) {
-        return;
-    }
+    if (!initializeSettingsAccount()) return;
 
-    currentSettings = getCurrentSettings();
+    currentSettings = getSettingsForCurrentUser();
 
-    updateUserMenu();
-
-    loadProfileSettings();
-    loadLearningSettings();
-    loadNotificationSettings();
-    loadAppearanceSettings();
+    updateSettingsUserMenu();
+    loadSettingsProfile();
+    loadSettingsLearning();
+    loadSettingsNotifications();
+    loadSettingsAppearance();
 }
-
 
 initializeSettingsPage();

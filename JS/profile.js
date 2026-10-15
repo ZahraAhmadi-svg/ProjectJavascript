@@ -2,279 +2,264 @@
 /* =========================================================
    RESPAIR DAWN
    PROFILE PAGE
-   Connected with AUTH system
+   Connected with AUTH / USER DATA system
+   ---------------------------------------------------------
+   Features:
+   1. Read the current logged-in user.
+   2. Support numeric user roles.
+   3. Display profile information.
+   4. Display user statistics.
+   5. Manage navbar user menu.
+   6. Edit name and email.
+   7. Synchronize profile changes with stored accounts.
+   8. Logout and redirect to login.html.
    ========================================================= */
+
+"use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
     /* =====================================================
-       1. GET LOGGED-IN USER
+       1. STORAGE KEYS
        ===================================================== */
 
-    const user = getCurrentUser();
+    const CURRENT_USER_KEY = "respairUser";
+    const USERS_KEY = "respairUsers";
 
-    /*
-       getCurrentUser()
-       از auth-core.js می‌آید.
 
-       اطلاعات کاربر:
+    /* =====================================================
+       2. GET CURRENT USER
+       ===================================================== */
 
-       {
-           id,
-           name,
-           username,
-           email,
-           role,
-           loginAt
-       }
-    */
-
-    if (!user) {
-
-        console.warn(
-            "No logged-in user found."
+    if (typeof getCurrentUser !== "function") {
+        console.error(
+            "getCurrentUser() is missing. Load auth-core.js before profile.js."
         );
-
         return;
     }
 
+    const initialUser = getCurrentUser();
 
-    /* =====================================================
-       2. GET USER DATA
-       ===================================================== */
+    if (!initialUser) {
+        console.warn("No logged-in user found.");
 
-    const userData =
-        getCurrentUserData() || {
-            classes: [],
-            favorites: [],
-            saved: []
-        };
-
-
-    /* =====================================================
-       3. USER INFORMATION
-       ===================================================== */
-
-    let name =
-        user.name ||
-        user.username ||
-        "User";
-
-    const username =
-        user.username ||
-        "username";
-
-    let email =
-        user.email ||
-        "-";
-
-    const role =
-        user.role ||
-        "user";
-
-
-    /* =====================================================
-       4. ELEMENTS - PROFILE PAGE
-       ===================================================== */
-
-    const welcomeName =
-        document.getElementById(
-            "welcomeName"
-        );
-
-    const profileName =
-        document.getElementById(
-            "profileName"
-        );
-
-    const profileUsername =
-        document.getElementById(
-            "profileUsername"
-        );
-
-    const profileEmail =
-        document.getElementById(
-            "profileEmail"
-        );
-
-    const profileRole =
-        document.getElementById(
-            "profileRole"
-        );
-
-
-    /* =====================================================
-       5. DISPLAY USER INFORMATION
-       ===================================================== */
-
-    if (welcomeName) {
-
-        welcomeName.textContent =
-            name;
+        window.location.replace("login.html");
+        return;
     }
-
-    if (profileName) {
-
-        profileName.textContent =
-            name;
-    }
-
-    if (profileUsername) {
-
-        profileUsername.textContent =
-            "@" + username;
-    }
-
-    if (profileEmail) {
-
-        profileEmail.textContent =
-            email;
-    }
-
-    if (profileRole) {
-
-        profileRole.textContent =
-            role === "admin"
-                ? "Administrator"
-                : "Student";
-    }
-
-
-    /* =====================================================
-       6. PROFILE AVATAR
-       ===================================================== */
-
-    const profileAvatar =
-        document.getElementById(
-            "profileAvatar"
-        );
-
 
     /*
-       Example:
-
-       Zahra Ahmadi
-       ↓
-       Z
+       Keep a mutable reference to the current user.
+       It will be updated after profile edits.
     */
 
-    function getFirstLetter(userName) {
+    let user = { ...initialUser };
 
+
+    /* =====================================================
+       3. ROLE HELPERS
+       ===================================================== */
+
+    function normalizeRole(role) {
+        if (typeof role === "number" && role >= 0 && role <= 3) {
+            return role;
+        }
+
+        const value = String(role ?? "").trim().toLowerCase();
+
+        const numericRole = Number(value);
+
+        if (
+            value !== "" &&
+            Number.isInteger(numericRole) &&
+            numericRole >= 0 &&
+            numericRole <= 3
+        ) {
+            return numericRole;
+        }
+
+        const legacyRoles = {
+            user: 0,
+            student: 0,
+            member: 0,
+            manager: 1,
+            editor: 2,
+            admin: 3,
+            administrator: 3
+        };
+
+        return Object.prototype.hasOwnProperty.call(
+            legacyRoles,
+            value
+        ) ? legacyRoles[value] : 0;
+    }
+
+    function getRoleName(role) {
+        const roleNames = {
+            0: "Student",
+            1: "Manager",
+            2: "Editor",
+            3: "Administrator"
+        };
+
+        return roleNames[normalizeRole(role)];
+    }
+
+    function canAccessManagement(role) {
+        const normalizedRole = normalizeRole(role);
+
+        return normalizedRole === 1 || normalizedRole === 3;
+    }
+
+    const roleNumber = normalizeRole(user.role);
+    const roleName = getRoleName(user.role);
+
+
+    /* =====================================================
+       4. GET CURRENT USER DATA
+       ===================================================== */
+
+    function getSafeUserData() {
+        if (typeof getCurrentUserData !== "function") {
+            console.error(
+                "getCurrentUserData() is missing. Check auth-core.js."
+            );
+
+            return {
+                classes: [],
+                favorites: [],
+                saved: []
+            };
+        }
+
+        const data = getCurrentUserData() || {};
+
+        return {
+            ...data,
+            classes: Array.isArray(data.classes) ? data.classes : [],
+            favorites: Array.isArray(data.favorites) ? data.favorites : [],
+            saved: Array.isArray(data.saved) ? data.saved : []
+        };
+    }
+
+
+    /* =====================================================
+       5. PROFILE ELEMENTS
+       ===================================================== */
+
+    const welcomeName = document.getElementById("welcomeName");
+    const profileName = document.getElementById("profileName");
+    const profileUsername = document.getElementById("profileUsername");
+    const profileEmail = document.getElementById("profileEmail");
+    const profileRole = document.getElementById("profileRole");
+    const profileAvatar = document.getElementById("profileAvatar");
+    const profileDate = document.getElementById("profileDate");
+
+
+    /* =====================================================
+       6. USER INFORMATION
+       ===================================================== */
+
+    function getDisplayName() {
         return (
-            userName
-                .trim()
-                .charAt(0)
-                .toUpperCase() || "U"
+            String(user.name || "").trim() ||
+            String(user.username || "").trim() ||
+            "User"
         );
     }
 
-
-    let firstLetter =
-        getFirstLetter(name);
-
-
-    if (profileAvatar) {
-
-        profileAvatar.textContent =
-            firstLetter;
+    function getDisplayEmail() {
+        return String(user.email || "").trim() || "-";
     }
 
-
-    /* =====================================================
-       7. NEW NAVBAR USER MENU
-       ===================================================== */
-
-    const userMenuItem =
-        document.getElementById(
-            "userMenuItem"
-        );
-
-    const userMenuButton =
-        document.getElementById(
-            "userMenuButton"
-        );
-
-    const userMenu =
-        document.getElementById(
-            "userMenu"
-        );
-
-    const userAvatar =
-        document.getElementById(
-            "userAvatar"
-        );
-
-    const menuUserName =
-        document.getElementById(
-            "menuUserName"
-        );
-
-    const menuUserStatus =
-        document.getElementById(
-            "menuUserStatus"
-        );
-
-    const managementMenuItem =
-        document.getElementById(
-            "managementMenuItem"
-        );
-
-    const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
-
-
-    /* =====================================================
-       8. SHOW USER IN NAVBAR
-       ===================================================== */
-
-    if (userMenuItem) {
-
-        userMenuItem.style.display =
-            "block";
+    function getDisplayUsername() {
+        return String(user.username || "").trim() || "username";
     }
 
+    function getFirstLetter(name) {
+        const cleanedName = String(name || "").trim();
 
-    if (userAvatar) {
-
-        userAvatar.textContent =
-            firstLetter;
-    }
-
-
-    if (menuUserName) {
-
-        menuUserName.textContent =
-            name;
-    }
-
-
-    if (menuUserStatus) {
-
-        menuUserStatus.textContent =
-            role === "admin"
-                ? "Administrator"
-                : "Welcome to Respair Dawn";
+        return cleanedName
+            ? cleanedName.charAt(0).toUpperCase()
+            : "U";
     }
 
 
     /* =====================================================
-       9. ADMIN MANAGEMENT PANEL
+       7. DISPLAY PROFILE INFORMATION
        ===================================================== */
 
-    if (managementMenuItem) {
+    function renderProfile() {
+        const name = getDisplayName();
+        const email = getDisplayEmail();
+        const username = getDisplayUsername();
+        const firstLetter = getFirstLetter(name);
 
-        if (role === "admin") {
+        if (welcomeName) {
+            welcomeName.textContent = name;
+        }
 
+        if (profileName) {
+            profileName.textContent = name;
+        }
+
+        if (profileUsername) {
+            profileUsername.textContent = "@" + username;
+        }
+
+        if (profileEmail) {
+            profileEmail.textContent = email;
+        }
+
+        if (profileRole) {
+            profileRole.textContent = getRoleName(user.role);
+        }
+
+        if (profileAvatar) {
+            profileAvatar.textContent = firstLetter;
+        }
+
+        renderNavbar(firstLetter, name);
+    }
+
+
+    /* =====================================================
+       8. NAVBAR ELEMENTS
+       ===================================================== */
+
+    const userMenuItem = document.getElementById("userMenuItem");
+    const userMenuButton = document.getElementById("userMenuButton");
+    const userMenu = document.getElementById("userMenu");
+    const userAvatar = document.getElementById("userAvatar");
+    const menuUserName = document.getElementById("menuUserName");
+    const menuUserStatus = document.getElementById("menuUserStatus");
+    const managementMenuItem = document.getElementById("managementMenuItem");
+    const logoutButton = document.getElementById("logoutButton");
+
+
+    /* =====================================================
+       9. RENDER NAVBAR
+       ===================================================== */
+
+    function renderNavbar(firstLetter, name) {
+        if (userMenuItem) {
+            userMenuItem.style.display = "block";
+        }
+
+        if (userAvatar) {
+            userAvatar.textContent = firstLetter;
+        }
+
+        if (menuUserName) {
+            menuUserName.textContent = name;
+        }
+
+        if (menuUserStatus) {
+            menuUserStatus.textContent = getRoleName(user.role);
+        }
+
+        if (managementMenuItem) {
             managementMenuItem.style.display =
-                "flex";
-
-        } else {
-
-            managementMenuItem.style.display =
-                "none";
+                canAccessManagement(user.role) ? "flex" : "none";
         }
     }
 
@@ -283,76 +268,52 @@ document.addEventListener("DOMContentLoaded", function () {
        10. USER MENU TOGGLE
        ===================================================== */
 
-    if (
-        userMenuButton &&
-        userMenu
-    ) {
+    if (userMenuButton && userMenu) {
+        userMenuButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
 
-        userMenuButton.addEventListener(
-            "click",
-            function (event) {
+            const isOpen = userMenu.classList.toggle("show");
 
-                event.preventDefault();
-
-                event.stopPropagation();
-
-                userMenu.classList.toggle(
-                    "show"
-                );
-            }
-        );
+            userMenuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+        });
     }
 
 
     /* =====================================================
-       11. CLOSE USER MENU
-       WHEN CLICKING OUTSIDE
+       11. CLOSE MENU WHEN CLICKING OUTSIDE
        ===================================================== */
 
-    document.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                userMenu &&
-                userMenuButton &&
-                !userMenu.contains(event.target) &&
-                !userMenuButton.contains(event.target)
-            ) {
-
-                userMenu.classList.remove(
-                    "show"
-                );
-            }
+    document.addEventListener("click", function (event) {
+        if (
+            userMenu &&
+            userMenuButton &&
+            !userMenu.contains(event.target) &&
+            !userMenuButton.contains(event.target)
+        ) {
+            userMenu.classList.remove("show");
+            userMenuButton.setAttribute("aria-expanded", "false");
         }
-    );
+    });
 
 
     /* =====================================================
-       12. CLOSE MENU WHEN CLICKING LINK
+       12. CLOSE MENU AFTER CLICKING A LINK
        ===================================================== */
 
     if (userMenu) {
+        userMenu.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                userMenu.classList.remove("show");
 
-        const menuLinks =
-            userMenu.querySelectorAll(
-                "a"
-            );
-
-        menuLinks.forEach(
-            function (link) {
-
-                link.addEventListener(
-                    "click",
-                    function () {
-
-                        userMenu.classList.remove(
-                            "show"
-                        );
-                    }
-                );
-            }
-        );
+                if (userMenuButton) {
+                    userMenuButton.setAttribute("aria-expanded", "false");
+                }
+            });
+        });
     }
 
 
@@ -361,549 +322,290 @@ document.addEventListener("DOMContentLoaded", function () {
        ===================================================== */
 
     if (logoutButton) {
+        logoutButton.addEventListener("click", function (event) {
+            event.preventDefault();
 
-        logoutButton.addEventListener(
-            "click",
-            function (event) {
+            /*
+               Remove only the active login session.
+               Keep registered accounts and personal data.
+            */
 
-                event.preventDefault();
+            localStorage.removeItem(CURRENT_USER_KEY);
+            localStorage.removeItem("respairLoggedIn");
 
-                /*
-                   Remove current user
-                */
+            sessionStorage.removeItem("respairAdminAuthenticated");
 
-                localStorage.removeItem(
-                    "respairUser"
-                );
-
-
-                /*
-                   Remove old login flag
-                */
-
-                localStorage.removeItem(
-                    "respairLoggedIn"
-                );
-
-
-                /*
-                   Remove admin session
-                */
-
-                sessionStorage.removeItem(
-                    "respairAdminAuthenticated"
-                );
-
-
-                /*
-                   Redirect to authentication page
-                */
-
-                window.location.replace(
-                    "auth.html"
-                );
-            }
-        );
+            window.location.replace("login.html");
+        });
     }
 
 
     /* =====================================================
-       14. DATE
+       14. ACCOUNT DATE
        ===================================================== */
 
-    const profileDate =
-        document.getElementById(
-            "profileDate"
-        );
+    function renderProfileDate() {
+        if (!profileDate) {
+            return;
+        }
+
+        const dateValue = user.createdAt || user.loginAt;
+
+        if (!dateValue) {
+            profileDate.textContent = "Recently";
+            return;
+        }
+
+        const date = new Date(dateValue);
+
+        if (Number.isNaN(date.getTime())) {
+            profileDate.textContent = "Recently";
+            return;
+        }
+
+        profileDate.textContent = date.toLocaleDateString("en-US", {
+            month: "short",
+            year: "numeric"
+        });
+    }
 
 
-    if (profileDate) {
+    /* =====================================================
+       15. USER STATISTICS
+       ===================================================== */
 
-        /*
-           auth.js هنگام Registration:
+    function renderStatistics() {
+        const data = getSafeUserData();
 
-           createdAt
+        const classesCount = document.getElementById("classesCount");
+        const favoritesCount = document.getElementById("favoritesCount");
+        const savedCount = document.getElementById("savedCount");
 
-           و هنگام Login:
+        if (classesCount) {
+            classesCount.textContent = data.classes.length;
+        }
 
-           loginAt
-        */
+        if (favoritesCount) {
+            favoritesCount.textContent = data.favorites.length;
+        }
 
-        const dateValue =
-            user.createdAt ||
-            user.loginAt;
-
-
-        if (dateValue) {
-
-            const date =
-                new Date(
-                    dateValue
-                );
-
-
-            if (
-                !isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                profileDate.textContent =
-                    date.toLocaleDateString(
-                        "en-US",
-                        {
-                            month: "short",
-                            year: "numeric"
-                        }
-                    );
-
-            } else {
-
-                profileDate.textContent =
-                    "Recently";
-            }
-
-        } else {
-
-            profileDate.textContent =
-                "Recently";
+        if (savedCount) {
+            savedCount.textContent = data.saved.length;
         }
     }
 
 
     /* =====================================================
-       15. STATISTICS
+       16. EDIT PROFILE ELEMENTS
        ===================================================== */
 
-    const classes =
-        Array.isArray(
-            userData.classes
-        )
-            ? userData.classes.length
-            : 0;
-
-
-    const favorites =
-        Array.isArray(
-            userData.favorites
-        )
-            ? userData.favorites.length
-            : 0;
-
-
-    const saved =
-        Array.isArray(
-            userData.saved
-        )
-            ? userData.saved.length
-            : 0;
-
-
-    const classesCount =
-        document.getElementById(
-            "classesCount"
-        );
-
-    const favoritesCount =
-        document.getElementById(
-            "favoritesCount"
-        );
-
-    const savedCount =
-        document.getElementById(
-            "savedCount"
-        );
-
-
-    if (classesCount) {
-
-        classesCount.textContent =
-            classes;
-    }
-
-
-    if (favoritesCount) {
-
-        favoritesCount.textContent =
-            favorites;
-    }
-
-
-    if (savedCount) {
-
-        savedCount.textContent =
-            saved;
-    }
-
-
-    /* =====================================================
-       16. EDIT PROFILE
-       ===================================================== */
-
-    const editButton =
-        document.getElementById(
-            "editProfileBtn"
-        );
-
-    const form =
-        document.getElementById(
-            "profileForm"
-        );
-
-    const editName =
-        document.getElementById(
-            "editName"
-        );
-
-    const editEmail =
-        document.getElementById(
-            "editEmail"
-        );
+    const editButton = document.getElementById("editProfileBtn");
+    const form = document.getElementById("profileForm");
+    const editName = document.getElementById("editName");
+    const editEmail = document.getElementById("editEmail");
+    const modalElement = document.getElementById("profileModal");
 
 
     /* =====================================================
        17. OPEN EDIT PROFILE MODAL
        ===================================================== */
 
-    if (
-        editButton &&
-        form
-    ) {
-
-        editButton.addEventListener(
-            "click",
-            function () {
-
-
-                /* -----------------------------------------
-                   CURRENT NAME
-                   ----------------------------------------- */
-
-                if (editName) {
-
-                    editName.value =
-                        name;
-                }
-
-
-                /* -----------------------------------------
-                   CURRENT EMAIL
-                   ----------------------------------------- */
-
-                if (editEmail) {
-
-                    editEmail.value =
-                        email;
-                }
-
-
-                /* -----------------------------------------
-                   MODAL
-                   ----------------------------------------- */
-
-                const modalElement =
-                    document.getElementById(
-                        "profileModal"
-                    );
-
-
-                if (
-                    modalElement &&
-                    typeof bootstrap !==
-                        "undefined"
-                ) {
-
-                    const modal =
-                        bootstrap.Modal
-                            .getOrCreateInstance(
-                                modalElement
-                            );
-
-                    modal.show();
-                }
-
+    if (editButton && form) {
+        editButton.addEventListener("click", function () {
+            if (editName) {
+                editName.value = getDisplayName();
             }
-        );
 
-
-        /* =================================================
-           18. SAVE PROFILE
-           ================================================= */
-
-        form.addEventListener(
-            "submit",
-            function (event) {
-
-                event.preventDefault();
-
-
-                /* -----------------------------------------
-                   GET NEW VALUES
-                   ----------------------------------------- */
-
-                const newName =
-                    editName
-                        ? editName.value.trim()
-                        : "";
-
-
-                const newEmail =
-                    editEmail
-                        ? editEmail.value.trim()
-                        : "";
-
-
-                /* -----------------------------------------
-                   VALIDATE NAME
-                   ----------------------------------------- */
-
-                if (!newName) {
-
-                    if (editName) {
-
-                        editName.focus();
-                    }
-
-                    return;
-                }
-
-
-                /* -----------------------------------------
-                   VALIDATE EMAIL
-                   ----------------------------------------- */
-
-                if (!newEmail) {
-
-                    if (editEmail) {
-
-                        editEmail.focus();
-                    }
-
-                    return;
-                }
-
-
-                /* -----------------------------------------
-                   UPDATE LOCAL VARIABLES
-                   ----------------------------------------- */
-
-                name =
-                    newName;
-
-                email =
-                    newEmail;
-
-
-                firstLetter =
-                    getFirstLetter(
-                        name
-                    );
-
-
-                /* -----------------------------------------
-                   UPDATE CURRENT SESSION
-                   ----------------------------------------- */
-
-                const updatedUser = {
-
-                    ...user,
-
-                    name:
-                        newName,
-
-                    email:
-                        newEmail
-                };
-
-
-                localStorage.setItem(
-                    "respairUser",
-
-                    JSON.stringify(
-                        updatedUser
-                    )
-                );
-
-
-                /* -----------------------------------------
-                   UPDATE REGISTERED ACCOUNT
-                   ----------------------------------------- */
-
-                const usersRaw =
-                    localStorage.getItem(
-                        "respairUsers"
-                    );
-
-
-                if (usersRaw) {
-
-                    try {
-
-                        const users =
-                            JSON.parse(
-                                usersRaw
-                            );
-
-
-                        const index =
-                            users.findIndex(
-                                function (item) {
-
-                                    return (
-                                        item.id ===
-                                        user.id
-                                    );
-                                }
-                            );
-
-
-                        if (index !== -1) {
-
-                            users[index].name =
-                                newName;
-
-                            users[index].email =
-                                newEmail;
-
-
-                            localStorage.setItem(
-                                "respairUsers",
-
-                                JSON.stringify(
-                                    users
-                                )
-                            );
-                        }
-
-                    } catch (error) {
-
-                        console.error(
-                            "Failed to update registered user:",
-                            error
-                        );
-                    }
-                }
-
-
-                /* -----------------------------------------
-                   UPDATE PROFILE PAGE
-                   ----------------------------------------- */
-
-                if (welcomeName) {
-
-                    welcomeName.textContent =
-                        newName;
-                }
-
-
-                if (profileName) {
-
-                    profileName.textContent =
-                        newName;
-                }
-
-
-                if (profileEmail) {
-
-                    profileEmail.textContent =
-                        newEmail;
-                }
-
-
-                /* -----------------------------------------
-                   UPDATE PROFILE AVATAR
-                   ----------------------------------------- */
-
-                if (profileAvatar) {
-
-                    profileAvatar.textContent =
-                        firstLetter;
-                }
-
-
-                /* -----------------------------------------
-                   UPDATE NAVBAR
-                   ----------------------------------------- */
-
-                if (userAvatar) {
-
-                    userAvatar.textContent =
-                        firstLetter;
-                }
-
-
-                if (menuUserName) {
-
-                    menuUserName.textContent =
-                        newName;
-                }
-
-
-                /*
-                   Close modal after saving
-                */
-
-                const modalElement =
-                    document.getElementById(
-                        "profileModal"
-                    );
-
-
-                if (
-                    modalElement &&
-                    typeof bootstrap !==
-                        "undefined"
-                ) {
-
-                    const modal =
-                        bootstrap.Modal
-                            .getOrCreateInstance(
-                                modalElement
-                            );
-
-                    modal.hide();
-                }
-
+            if (editEmail) {
+                editEmail.value = user.email || "";
             }
-        );
+
+            if (
+                modalElement &&
+                typeof bootstrap !== "undefined" &&
+                bootstrap.Modal
+            ) {
+                bootstrap.Modal
+                    .getOrCreateInstance(modalElement)
+                    .show();
+            }
+        });
     }
 
 
     /* =====================================================
-       19. DEBUG
+       18. UPDATE STORED ACCOUNT
        ===================================================== */
 
-    console.log(
-        "======================================"
-    );
+    function updateRegisteredAccount(updatedUser) {
+        const usersRaw = localStorage.getItem(USERS_KEY);
 
-    console.log(
-        "RESPAIR DAWN - PROFILE"
-    );
+        if (!usersRaw) {
+            return;
+        }
 
-    console.log(
-        "Logged-in user:",
-        user
-    );
+        try {
+            const users = JSON.parse(usersRaw);
 
-    console.log(
-        "User data:",
-        userData
-    );
+            if (!Array.isArray(users)) {
+                console.error("respairUsers must contain an array.");
+                return;
+            }
 
-    console.log(
-        "Navbar user:",
-        name
-    );
+            const targetId = user.id;
+            const targetUsername = String(user.username || "").toLowerCase();
+            const targetEmail = String(user.email || "").toLowerCase();
 
-    console.log(
-        "User role:",
-        role
-    );
+            const index = users.findIndex(function (item) {
+                if (targetId != null && item.id != null) {
+                    return String(item.id) === String(targetId);
+                }
 
-    console.log(
-        "======================================"
-    );
+                if (targetUsername && item.username) {
+                    return String(item.username).toLowerCase() === targetUsername;
+                }
+
+                return (
+                    targetEmail &&
+                    item.email &&
+                    String(item.email).toLowerCase() === targetEmail
+                );
+            });
+
+            if (index !== -1) {
+                users[index] = {
+                    ...users[index],
+                    name: updatedUser.name,
+                    email: updatedUser.email
+                };
+
+                localStorage.setItem(USERS_KEY, JSON.stringify(users));
+            } else {
+                console.warn(
+                    "Could not find the registered account to update."
+                );
+            }
+        } catch (error) {
+            console.error("Failed to update registered account:", error);
+        }
+    }
+
+
+    /* =====================================================
+       19. SAVE PROFILE
+       ===================================================== */
+
+    if (form) {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const newName = editName
+                ? editName.value.trim()
+                : "";
+
+            const newEmail = editEmail
+                ? editEmail.value.trim()
+                : "";
+
+            if (!newName) {
+                if (editName) {
+                    editName.setCustomValidity("Please enter your name.");
+                    editName.reportValidity();
+                    editName.setCustomValidity("");
+                    editName.focus();
+                }
+                return;
+            }
+
+            if (!newEmail) {
+                if (editEmail) {
+                    editEmail.setCustomValidity("Please enter your email.");
+                    editEmail.reportValidity();
+                    editEmail.setCustomValidity("");
+                    editEmail.focus();
+                }
+                return;
+            }
+
+            if (editEmail && !editEmail.checkValidity()) {
+                editEmail.reportValidity();
+                editEmail.focus();
+                return;
+            }
+
+            /*
+               Keep the old identity fields unchanged.
+               Only name and email are editable here.
+            */
+
+            const updatedUser = {
+                ...user,
+                name: newName,
+                email: newEmail
+            };
+
+            try {
+                localStorage.setItem(
+                    CURRENT_USER_KEY,
+                    JSON.stringify(updatedUser)
+                );
+
+                updateRegisteredAccount(updatedUser);
+
+                /*
+                   Update the current in-memory user.
+                */
+
+                user = updatedUser;
+
+                /*
+                   Refresh profile and navbar.
+                */
+
+                renderProfile();
+
+                /*
+                   Close the modal.
+                */
+
+                if (
+                    modalElement &&
+                    typeof bootstrap !== "undefined" &&
+                    bootstrap.Modal
+                ) {
+                    bootstrap.Modal
+                        .getOrCreateInstance(modalElement)
+                        .hide();
+                }
+
+                console.log("Profile updated successfully.");
+            } catch (error) {
+                console.error("Could not save profile:", error);
+                alert("Your profile could not be saved. Please try again.");
+            }
+        });
+    }
+
+
+    /* =====================================================
+       20. INITIALIZE PROFILE PAGE
+       ===================================================== */
+
+    renderProfile();
+    renderProfileDate();
+    renderStatistics();
+
+
+    /* =====================================================
+       21. DEBUG INFORMATION
+       ===================================================== */
+
+    console.log("======================================");
+    console.log("RESPAIR DAWN - PROFILE");
+    console.log("Logged-in user:", user);
+    console.log("User role number:", roleNumber);
+    console.log("User role name:", roleName);
+    console.log("User data:", getSafeUserData());
+    console.log("======================================");
 
 });
-
